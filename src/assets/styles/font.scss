@@ -1,0 +1,169 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&family=Roboto:wght@400;500;700;900&display=swap");
+
+@font-face {
+  font-family: "Pretendard-Regular";
+  src: url("https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff")
+    format("woff");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Pretendard-Bold";
+  src: url("https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Bold.woff")
+    format("woff");
+  font-weight: 700;
+  font-style: normal;
+}
+
+html,
+body {
+  font-family: "Roboto", "Pretendard-Light", "Noto Sans KR", sans-serif;
+  font-weight: 400;
+}
+
+$font-size: (
+  2,
+  4,
+  5,
+  6,
+  8,
+  10,
+  11,
+  12,
+  13,
+  14,
+  15,
+  16,
+  17,
+  18,
+  20,
+  22,
+  24,
+  26,
+  28,
+  30,
+  32,
+  34,
+  40,
+  48,
+  56,
+  64,
+  70
+);
+
+@media print {
+  @each $var in $font-size {
+    .text-pr-#{$var} {
+      font-size: #{$var}rem;
+    }
+  }
+}
+
+@each $var in $font-size {
+  .text-#{$var} {
+    font-size: #{$var}px !important;
+  }
+  .btn.text-#{$var} {
+    font-size: #{$var}px !important;
+    * {
+      font-size: #{$var}px !important;
+    }
+  }
+}
+
+@media screen and (min-width: 768px) {
+  @each $var in $font-size {
+    .text-md-#{$var} {
+      font-size: #{$var}px !important;
+    }
+    .btn.text-md-#{$var} {
+      font-size: #{$var}px !important;
+      * {
+        font-size: #{$var}px !important;
+      }
+    }
+  }
+}
+@media screen and (min-width: 1025px) {
+  @each $var in $font-size {
+    .text-lg-#{$var} {
+      font-size: #{$var}px !important;
+    }
+    .btn.text-lg-#{$var} {
+      font-size: #{$var}px !important;
+      * {
+        font-size: #{$var}px !important;
+      }
+    }
+  }
+}
+@media screen and (min-width: 1300px) {
+  @each $var in $font-size {
+    .text-xl-#{$var} {
+      font-size: #{$var}px;
+    }
+    .btn.text-xl-#{$var} {
+      font-size: #{$var}px !important;
+      * {
+        font-size: #{$var}px !important;
+      }
+    }
+  }
+}
+
+$line-heights: (90, 100, 120, 135, 160, 165, 170, 180, 200, 225);
+
+@each $var in $line-heights {
+  .lh-#{$var} {
+    line-height: calc(#{$var}/ 100);
+  }
+}
+
+$ellipsis: (1, 2, 3, 4, 5, 6, 7);
+@each $var in $ellipsis {
+  .ellipsis-#{$var} {
+    -webkit-line-clamp: #{$var};
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-word;
+  }
+}
+.lh-0 {
+  line-height: 0;
+}
+.word-break {
+  word-break: break-all;
+}
+.break-keep {
+  word-break: keep-all !important;
+}
+.break-initial {
+  word-break: initial !important;
+  word-wrap: break-word;
+}
+.underline {
+  text-decoration: underline !important;
+}
+
+.text-truncate {
+  &.line-2 {
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+    word-wrap: break-word;
+    line-height: 1.2em;
+    max-height: 2.4em;
+  }
+}
+
+h1.page-title {
+  font-size: 28px;
+  text-align: center;
+  font-weight: 700;
+}

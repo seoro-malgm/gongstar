@@ -1,0 +1,78 @@
+$primary: #0b318f;
+$secondary: #73c6c8;
+$gray-1: #2c2c2f;
+$gray-2: #4d5357;
+$gray-3: #ebf6fb;
+$white: #ffffff;
+
+$gradient-primary: linear-gradient(
+  90deg,
+  rgba(11, 49, 143, 1) 0%,
+  rgba(11, 49, 143, 1) 15%,
+  rgba(115, 198, 200, 1) 100%
+);
+
+// padding
+$padding-x: 16px;
+
+// shadow
+$shadow-small: 2px 4px 10px
+  rgba(
+    $color: $gray-1,
+    $alpha: 0.2,
+  );
+
+// breakpoints
+$breakpoint-sm: 575.55px;
+$breakpoint-md: 767.55px;
+$breakpoint-lg: 1023.55px;
+$breakpoint-xl: 1439.55px;
+
+// container
+$container-sm: 360px;
+$container-md: 732px;
+$container-lg: 1320px;
+$container-xl: 1320px;
+.container {
+  padding-right: $padding-x;
+
+  @media (min-width: $breakpoint-sm) {
+    max-width: $container-sm;
+    max-width: calc($container-sm - $padding-x - $padding-x);
+  }
+
+  @media (min-width: $breakpoint-md) {
+    max-width: $container-md;
+    max-width: calc($container-md - $padding-x - $padding-x);
+  }
+
+  @media (min-width: $breakpoint-lg) {
+    max-width: $container-lg;
+    max-width: calc($container-lg - $padding-x - $padding-x);
+  }
+
+  @media (min-width: $breakpoint-xl) {
+    max-width: $container-xl;
+    max-width: calc($container-xl - $padding-x - $padding-x);
+  }
+
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: $padding-x;
+  padding-right: $padding-x;
+}
+
+.container-fluid {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: $padding-x;
+  padding-right: $padding-x;
+  max-width: calc(100vw - $padding-x - $padding-x);
+}
+
+// gnb
+$gnb-height-sm: 96px;
+$gnb-height-md: 96px;
+$gnb-height-lg: 96px;
+$gnb-height-xl: 96px;

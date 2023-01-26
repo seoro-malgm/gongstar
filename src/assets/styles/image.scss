@@ -1,0 +1,40 @@
+$ratios: (13, 16, 27, 53, 73, 87, 138);
+
+.bg-img {
+  width: 100%;
+  height: 0;
+  padding-bottom: 100%;
+
+  background: transparent center no-repeat;
+  background-size: cover;
+  @each $var in $ratios {
+    &.ratio-#{$var} {
+      padding-bottom: #{$var}#{"%"};
+    }
+  }
+  @media all and (min-width: 768px) {
+    @each $var in $ratios {
+      &.md-ratio-#{$var} {
+        padding-bottom: #{$var}#{"%"};
+      }
+    }
+  }
+  @media all and (min-width: 1024px) {
+    @each $var in $ratios {
+      &.lg-ratio-#{$var} {
+        padding-bottom: #{$var}#{"%"};
+      }
+    }
+  }
+}
+
+.img-contain {
+  background-position: center center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+img {
+  width: 100%;
+  height: auto;
+}

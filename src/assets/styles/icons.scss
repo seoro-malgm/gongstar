@@ -1,0 +1,46 @@
+// variable
+$icon-size: (6, 8, 9, 10, 12, 13, 14, 16, 18, 20, 22, 24, 25, 26, 28, 30, 32, 36, 40, 56);
+$icons: ();
+i.icon {
+  min-width: 24px;
+  min-height: 24px;
+  display: inline-block;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  position: relative;
+  font-size: 16px;
+  // z-index: 2;
+
+  @each $var in $icons {
+    &.icon-#{$var} {
+      background-image: url(../assets/icons/#{$var}.svg);
+    }
+  }
+  @each $var in $icon-size {
+    &.icon-#{$var} {
+      min-width: #{$var}#{px};
+      width: #{$var}#{px};
+      height: #{$var}#{px};
+    }
+  }
+  @media all and (min-width: 768px) {
+    @each $var in $icon-size {
+      &.icon-md-#{$var} {
+        min-width: #{$var}#{px};
+        width: #{$var}#{px};
+        height: #{$var}#{px};
+      }
+    }
+  }
+
+  @media all and (min-width: 992px) {
+    @each $var in $icon-size {
+      &.icon-lg-#{$var} {
+        min-width: #{$var}#{px};
+        width: #{$var}#{px};
+        height: #{$var}#{px};
+      }
+    }
+  }
+}
