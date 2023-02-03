@@ -1,4 +1,4 @@
-$ratios: (13, 16, 27, 53, 73, 87, 138);
+$ratios: (13, 16, 27, 36, 40, 45, 53, 73, 87, 100, 138);
 
 .bg-img {
   width: 100%;
@@ -14,14 +14,14 @@ $ratios: (13, 16, 27, 53, 73, 87, 138);
   }
   @media all and (min-width: 768px) {
     @each $var in $ratios {
-      &.md-ratio-#{$var} {
+      &.ratio-md-#{$var} {
         padding-bottom: #{$var}#{"%"};
       }
     }
   }
   @media all and (min-width: 1024px) {
     @each $var in $ratios {
-      &.lg-ratio-#{$var} {
+      &.ratio-lg-#{$var} {
         padding-bottom: #{$var}#{"%"};
       }
     }

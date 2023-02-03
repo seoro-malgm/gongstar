@@ -10,7 +10,7 @@ i.icon {
   background-size: contain;
   position: relative;
   font-size: 16px;
-  // z-index: 2;
+  z-index: 1;
 
   @each $var in $icons {
     &.icon-#{$var} {

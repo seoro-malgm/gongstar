@@ -16,6 +16,7 @@ export default defineConfig(({ mode }) => {
         "@": path.resolve(__dirname, "./src"),
         find: "@vue/runtime-core",
         replacement: "@vue/runtime-core/dist/runtime-core.esm-bundler.js",
+        "~bootstrap": path.resolve(__dirname, "node_modules/bootstrap"),
       },
     },
     // lodash: ['lodash'],

@@ -1,38 +1,27 @@
 <template>
   <div>
-    <GloabalNav />
+    <global-nav />
     <main id="main">
       <router-view />
+      <div class="container-fluid">
+        <div class="row w-100">
+          <div class="col-1" v-for="i in 12" :key="i" />
+        </div>
+      </div>
     </main>
-    <!-- <GlobalFooter /> -->
+    <global-footer />
   </div>
 </template>
 
 <script>
-import GloabalNav from "@/components/Nav/GloabalNav.vue";
+import GlobalNav from "@/components/Nav/GlobalNav.vue";
 import GlobalFooter from "@/components/Nav/GlobalFooter.vue";
 export default {
   components: {
-    GloabalNav,
+    GlobalNav,
     GlobalFooter,
   },
 };
 </script>
 
-<style lang="scss" scoped>
-#main {
-  padding-top: $gnb-height-sm;
-  @media (min-width: $breakpoint-sm) {
-    padding-top: $gnb-height-sm;
-  }
-  @media (min-width: $breakpoint-md) {
-    padding-top: $gnb-height-md;
-  }
-  @media (min-width: $breakpoint-lg) {
-    padding-top: $gnb-height-lg;
-  }
-  @media (min-width: $breakpoint-xl) {
-    padding-top: $gnb-height-xl;
-  }
-}
-</style>
+<style lang="scss" scoped></style>

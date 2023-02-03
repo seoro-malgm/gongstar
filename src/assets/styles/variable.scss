@@ -32,47 +32,60 @@ $breakpoint-xl: 1439.55px;
 $container-sm: 360px;
 $container-md: 732px;
 $container-lg: 1320px;
-$container-xl: 1320px;
-.container {
-  padding-right: $padding-x;
-
-  @media (min-width: $breakpoint-sm) {
-    max-width: $container-sm;
-    max-width: calc($container-sm - $padding-x - $padding-x);
-  }
-
-  @media (min-width: $breakpoint-md) {
-    max-width: $container-md;
-    max-width: calc($container-md - $padding-x - $padding-x);
-  }
-
-  @media (min-width: $breakpoint-lg) {
-    max-width: $container-lg;
-    max-width: calc($container-lg - $padding-x - $padding-x);
-  }
-
-  @media (min-width: $breakpoint-xl) {
-    max-width: $container-xl;
-    max-width: calc($container-xl - $padding-x - $padding-x);
-  }
-
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: $padding-x;
-  padding-right: $padding-x;
-}
-
-.container-fluid {
-  width: 100%;
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: $padding-x;
-  padding-right: $padding-x;
-  max-width: calc(100vw - $padding-x - $padding-x);
-}
+$container-xl: 1440px;
 
 // gnb
-$gnb-height-sm: 96px;
-$gnb-height-md: 96px;
-$gnb-height-lg: 96px;
-$gnb-height-xl: 96px;
+$gnb-height-sm: 58px;
+$gnb-height-md: 58px;
+$gnb-height-lg: 153px;
+$gnb-height-xl: 153px;
+#main {
+  padding-top: $gnb-height-sm;
+  @media (min-width: $breakpoint-sm) {
+    padding-top: $gnb-height-sm;
+  }
+  @media (min-width: $breakpoint-md) {
+    padding-top: $gnb-height-md;
+  }
+  @media (min-width: $breakpoint-lg) {
+    padding-top: $gnb-height-lg;
+  }
+  @media (min-width: $breakpoint-xl) {
+    padding-top: $gnb-height-xl;
+  }
+}
+
+$theme-colors: (
+  // colors
+  "primary": $primary,
+  "secondary": $secondary,
+  "gray-1": $gray-1,
+  "gray-2": $gray-2,
+  "gray-3": $gray-3,
+  "white": $white,
+  "black": #000000
+);
+// Create your own map
+$custom-colors: ();
+
+// Merge the maps
+$theme-colors: map-merge($theme-colors, $custom-colors);
+
+$grid-breakpoints: (
+  xs: 0,
+  // sm: 576px,
+  md: $breakpoint-md,
+  lg: $breakpoint-lg,
+  xl: $breakpoint-xl,
+) !default;
+
+$container-max-widths: (
+  sm: 540px,
+  md: $container-md,
+  lg: $container-lg,
+  xl: $container-xl,
+) !default;
+
+.list-style-disc {
+  list-style-type: disc;
+}
