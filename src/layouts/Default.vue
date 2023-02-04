@@ -3,11 +3,6 @@
     <global-nav />
     <main id="main">
       <router-view />
-      <div class="container-fluid">
-        <div class="row w-100">
-          <div class="col-1" v-for="i in 12" :key="i" />
-        </div>
-      </div>
     </main>
     <global-footer />
   </div>

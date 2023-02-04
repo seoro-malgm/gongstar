@@ -3,12 +3,20 @@
     <section class="intro">
       <span class="text-white">로고 스케치 영상</span>
     </section>
+    <section class="section-gap mb-0">
+      <chart-directed></chart-directed>
+    </section>
   </div>
 </template>
 
 <script>
 import { ref } from "vue";
+import ChartDirected from "@/components/Chart/ChartDirected.vue";
+
 export default {
+  components: {
+    ChartDirected,
+  },
   setup() {
     return {};
   },

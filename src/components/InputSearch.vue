@@ -10,6 +10,7 @@
                 type="text"
                 class="form-control text-14 text-lg-20"
                 v-model="str"
+                autofocus="true"
                 placeholder="검색어를 입력하세요"
                 @keypress.enter="search()"
               />
