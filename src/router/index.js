@@ -29,13 +29,33 @@ const routes = [
       },
       {
         path: "archive",
-        name: "Archive",
-        component: () => import("@/pages/Archive.vue"),
+        children: [
+          {
+            path: "",
+            name: "ArchiveList",
+            component: () => import("@/pages/Archive/Index.vue"),
+          },
+          {
+            path: ":id",
+            name: "ArchiveDetail",
+            component: () => import("@/pages/Archive/Detail.vue"),
+          },
+        ],
       },
       {
         path: "news",
-        name: "News",
-        component: () => import("@/pages/News.vue"),
+        children: [
+          {
+            path: "",
+            name: "NewsList",
+            component: () => import("@/pages/News/Index.vue"),
+          },
+          {
+            path: ":id",
+            name: "NewsDetail",
+            component: () => import("@/pages/News/Detail.vue"),
+          },
+        ],
       },
       {
         path: "contact",

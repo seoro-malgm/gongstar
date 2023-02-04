@@ -26,7 +26,11 @@
                 </div>
               </td>
               <td>
-                <div class="td-container">분류</div>
+                <div class="td-container">
+                  <button class="btn btn-primary rounded-pill text-white px-3 py-1 text-13">
+                    분류이름
+                  </button>
+                </div>
               </td>
               <td>
                 <div class="td-container">

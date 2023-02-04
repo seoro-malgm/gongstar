@@ -143,7 +143,7 @@ export default {
           z-index: 10;
           .router-link {
             padding: 110px 10px 8px;
-            transition: color 0.3s;
+            transition: color 0.3s $default-ease;
             position: relative;
             &:after {
               position: absolute;
@@ -158,12 +158,13 @@ export default {
               //   rgba(115, 198, 200, 1) 100%
               // );
               background-color: $primary;
-              transition: all 0.3s;
+              transition: all 0.3s $default-ease;
               display: block;
               content: "";
               z-index: -1;
             }
             &:hover,
+            &.router-link-active,
             &.router-link-exact-active {
               &:after {
                 height: 100%;
@@ -189,11 +190,11 @@ export default {
 .hbg {
   width: 32px;
   height: 32px;
-  transition: 0.3s;
+  transition: all 0.3s $default-ease;
   position: relative;
   z-index: 1060;
   .line {
-    transition: 0.3s;
+    transition: all 0.3s $default-ease;
     transition-delay: 0.1s;
     right: 0;
     height: 2px;

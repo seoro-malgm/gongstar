@@ -1,9 +1,9 @@
 <template>
   <div>
-    <section class="my-5 py-5">
+    <section class="section-gap">
       <div class="container">
         <header class="my-3 mb-5 text-center">
-          <h1 class="text-32 text-md-72 fw-700">ABOUT DCS LAB</h1>
+          <h1 class="text-32 text-md-72 fw-900">ABOUT DCS LAB</h1>
         </header>
         <div class="row flex-column flex-md-row align-items-md-center">
           <div class="col-8 col-md-5 mx-auto mx-md-0">
@@ -29,32 +29,34 @@
         </div>
       </div>
     </section>
-    <div class="bg-img ratio-53 ratio-lg-36 bg-primary my-5"></div>
-    <div>
-      <carousel
-        :itemsToShow="2"
-        :autoplay="4000"
-        :wrapAround="true"
-        :breakpoints="{
-          700: {
-            itemsToShow: 2.5,
-          },
-          1024: {
-            itemsToShow: 3.95,
-          },
-        }"
-      >
-        <slide v-for="slide in 10" :key="slide">
-          <div class="bg-img ratio-53 bg-secondary">이미지 {{ slide }}</div>
-        </slide>
+    <section class="section-gap">
+      <div class="bg-img ratio-53 ratio-lg-36 bg-dummy my-5"></div>
+      <div>
+        <carousel
+          :itemsToShow="2"
+          :autoplay="4000"
+          :wrapAround="true"
+          :breakpoints="{
+            700: {
+              itemsToShow: 2.5,
+            },
+            1024: {
+              itemsToShow: 3.95,
+            },
+          }"
+        >
+          <slide v-for="slide in 10" :key="slide">
+            <div class="bg-img ratio-53 bg-dummy">이미지 {{ slide }}</div>
+          </slide>
 
-        <template #addons>
-          <navigation />
-        </template>
-      </carousel>
-    </div>
+          <template #addons>
+            <navigation />
+          </template>
+        </carousel>
+      </div>
+    </section>
 
-    <div class="mt-5 pt-5">
+    <section class="section-gap mb-0">
       <div class="row mx-0 align-items-stretch">
         <div class="col-12 px-0">
           <div class="row mx-0 align-items-stretch">
@@ -106,7 +108,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </section>
   </div>
 </template>
 

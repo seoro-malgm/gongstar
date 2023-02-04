@@ -99,6 +99,7 @@ export default {
             content: "";
             z-index: -1;
           }
+          &.router-link-active,
           &.router-link-exact-active {
             &:after {
               width: 100%;

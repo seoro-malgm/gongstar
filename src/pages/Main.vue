@@ -1,6 +1,8 @@
 <template>
   <div>
-    <section class="intro"></section>
+    <section class="intro">
+      <span class="text-white">로고 스케치 영상</span>
+    </section>
   </div>
 </template>
 
@@ -30,5 +32,10 @@ export default {
   @media (min-width: $breakpoint-xl) {
     max-height: calc(100vh - $gnb-height-xl);
   }
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 </style>

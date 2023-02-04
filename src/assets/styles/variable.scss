@@ -1,5 +1,6 @@
 $primary: #0b318f;
 $secondary: #73c6c8;
+$dummy: #999999;
 $gray-1: #2c2c2f;
 $gray-2: #4d5357;
 $gray-3: #ebf6fb;
@@ -63,7 +64,8 @@ $theme-colors: (
   "gray-2": $gray-2,
   "gray-3": $gray-3,
   "white": $white,
-  "black": #000000
+  "black": #000000,
+  "dummy": $dummy
 );
 // Create your own map
 $custom-colors: ();
@@ -89,3 +91,14 @@ $container-max-widths: (
 .list-style-disc {
   list-style-type: disc;
 }
+
+.section-gap {
+  margin-top: 96px;
+  margin-bottom: 96px;
+  @media (min-width: 1320px) {
+    margin-top: 120px;
+    margin-bottom: 120px;
+  }
+}
+
+$default-ease: cubic-bezier(0.35, 0.05, 0.45, 0.98);
