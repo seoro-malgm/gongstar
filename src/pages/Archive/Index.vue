@@ -1,54 +1,61 @@
 <template>
-  <div class="container min-vh-100 section-gap mt-5">
+  <div class="container-fluid min-vh-100 section-gap mt-5">
     <header class="my-3 mt-md-5 mb-4">
       <h1 class="page-title">ARCHIVE</h1>
     </header>
-    <div class="row justify-content-center">
-      <div class="col-12 col-md-10 col-lg-9">
-        <transition-group name="swipe" tag="div" class="row mx-n1" appear>
-          <div
-            class="col-6 col-md-4 archive-item-column mb-1 mb-md-3 px-1"
-            :class="`swipe-${side[Math.round(Math.random() * (side.length - 1))]} ${Math.round(
-              Math.random() * side.length - 1
-            )}`"
-            v-for="(item, i) in items"
-            :key="i"
-            :data-index="i"
-            :style="{
-              transitionDelay: `${i * 0.4 + 1}s`,
-            }"
-            @mouseenter="hoveredItem = item"
-            @mouseleave="hoveredItem = null"
-            @click="
-              $router.push({
-                name: 'ArchiveDetail',
-                params: {
-                  id: item.id,
-                },
-              })
-            "
-          >
-            <figure class="archive-item bg-img ratio-138">
-              <img
-                class="item-image"
-                :src="getURL('images/dummy.png')"
-                :alt="`${item.title} 썸네일 이미지`"
-              />
-              <figcaption class="p-3">
-                <strong class="text-15 text-md-16 mb-2">
-                  {{ item.title }}
-                </strong>
-                <span class="text-13 text-md-14">
-                  {{ item.author }}
-                </span>
-              </figcaption>
-            </figure>
-          </div>
-        </transition-group>
-      </div>
-    </div>
+    <section>
+      <transition-group name="swipe" tag="div" class="row mx-n1" appear>
+        <div
+          class="col-12 col-md-6 col-lg-4 archive-item-column mb-1 mb-md-3 px-1"
+          :class="`swipe-${side[Math.round(Math.random() * (side.length - 1))]} ${Math.round(
+            Math.random() * side.length - 1
+          )}`"
+          v-for="(item, i) in items"
+          :key="i"
+          :data-index="i"
+          :style="{
+            transitionDelay: `${i * 0.4 + 1}s`,
+          }"
+          @mouseenter="hoveredItem = item"
+          @mouseleave="hoveredItem = null"
+          @click="
+            $router.push({
+              name: 'ArchiveDetail',
+              params: {
+                id: item.id,
+              },
+            })
+          "
+        >
+          <figure class="archive-item bg-img ratio-56">
+            <img
+              class="item-image"
+              :src="getURL('/assets/images/dummy.png')"
+              :alt="`${item.title} 썸네일 이미지`"
+            />
+            <figcaption class="p-3">
+              <strong
+                class="text-22 text-md-24 text-truncate line-2"
+                :style="{ top: '1rem', left: '1rem' }"
+              >
+                {{ item.title }}
+              </strong>
+              <span class="text-13 text-md-14" :style="{ top: '1rem', right: '1rem' }">
+                {{ item.author }}
+              </span>
+              <span class="text-13 text-md-14" :style="{ bottom: '1rem', left: '1rem' }">
+                {{ item.category }}
+              </span>
+              <span class="text-13 text-md-14" :style="{ bottom: '1rem', right: '1rem' }">
+                {{ item.date }}
+              </span>
+            </figcaption>
+          </figure>
+        </div>
+      </transition-group>
+    </section>
 
-    <transition name="fade-right">
+    <!-- <transition name="fade-right">
       <header class="page-header" v-if="hoveredItem">
         <h1>
           {{ hoveredItem?.title }}
@@ -57,67 +64,90 @@
           {{ hoveredItem?.author }}
         </strong>
       </header>
-    </transition>
+    </transition> -->
   </div>
 </template>
 
 <script>
 import { ref, inject } from "vue";
+// import allArchive from "@/database/archive.json";
 
 export default {
   setup() {
+    // const items = allArchive;
+    // console.log("items:", items);
     const getURL = inject("getImageURL");
     const side = ref(["top", "bottom", "left", "right"]);
     const items = ref([
       {
         id: 1,
-        title: "잔무늬거울 재현",
+        title: "잔무늬거울 재현 잔무늬거울 재현 잔무늬거울 재현 잔무늬거울 재현 잔무늬거울 재현 ",
         author: "DCS LAB",
+        date: "2022-03-01",
+        category: "3D",
       },
       {
         id: 2,
         title: "잔무늬거울 재현",
         author: "DCS LAB",
+        date: "2022-03-01",
+        category: "3D",
       },
       {
         id: 3,
         title: "잔무늬거울 재현",
         author: "DCS LAB",
+        date: "2022-03-01",
+        category: "3D",
       },
       {
         id: 4,
         title: "잔무늬거울 재현",
         author: "DCS LAB",
+        date: "2022-03-01",
+        category: "3D",
       },
       {
         id: 5,
         title: "잔무늬거울 재현",
         author: "DCS LAB",
+        date: "2022-03-01",
+        category: "3D",
       },
       {
         id: 6,
         title: "잔무늬거울 재현",
         author: "DCS LAB",
+        date: "2022-03-01",
+        category: "3D",
       },
       {
         id: 7,
         title: "잔무늬거울 재현",
         author: "DCS LAB",
+        date: "2022-03-01",
+        category: "3D",
       },
       {
         id: 8,
         title: "잔무늬거울 재현",
         author: "DCS LAB",
+        date: "2022-03-01",
+        category: "3D",
       },
       {
         id: 9,
         title: "잔무늬거울 재현",
         author: "DCS LAB",
+        date: "2022-03-01",
+        category: "3D",
       },
       {
         id: 10,
         title: "잔무늬거울 재현",
         author: "DCS LAB",
+        date: "2022-03-01",
+        category: "3D",
       },
     ]);
 
@@ -162,19 +192,22 @@ export default {
       width: 100%;
       height: 100%;
       background-color: rgba($color: #000000, $alpha: 0.4);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      color: white;
+      // display: flex;
+      // flex-direction: column;
+      // align-items: center;
+      // justify-content: center;
       opacity: 0;
-      strong {
+      color: white;
+
+      strong,
+      span {
+        position: absolute;
         padding: 4px;
-        border-bottom: 1px solid white;
+        max-width: 50%;
       }
       @media (max-width: 1320px) {
         opacity: 1;
-        height: 40%;
+        height: 65%;
         top: unset;
         bottom: 0;
         transform: translate(-50%, 0);

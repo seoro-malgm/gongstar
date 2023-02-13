@@ -10,7 +10,7 @@
             <article class="row flex-column align-items-center justify-content-center">
               <div class="col-10 col-md-7 col-lg-4">
                 <img
-                  :src="getURL('images/profressor.png')"
+                  :src="getURL('/assets/images/profressor.png')"
                   alt="교수님 이미지"
                   class="profressor-image"
                 />
@@ -54,7 +54,7 @@
         <h1 class="page-title">PROPESSOR</h1>
       </header>
       <section class="profressor-section">
-        <img :src="getURL('images/profressor.png')" alt="교수님 이미지" class="profressor-image" />
+        <img :src="getURL('/assets/images/profressor.png')" alt="교수님 이미지" class="profressor-image" />
       </section>
     </article> -->
   </div>

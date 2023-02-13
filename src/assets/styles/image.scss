@@ -1,4 +1,4 @@
-$ratios: (13, 16, 27, 36, 40, 45, 53, 73, 87, 100, 138, 150);
+$ratios: (13, 16, 27, 36, 40, 45, 53, 56, 67, 73, 87, 100, 138, 150);
 
 .bg-img {
   width: 100%;
@@ -37,4 +37,9 @@ $ratios: (13, 16, 27, 36, 40, 45, 53, 73, 87, 100, 138, 150);
 img {
   width: 100%;
   height: auto;
+}
+
+.bg-pattern {
+  background: url("../images/pattern-short.svg");
+  background-repeat: repeat-y;
 }

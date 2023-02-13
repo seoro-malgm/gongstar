@@ -9,7 +9,7 @@
           <div class="col-8 col-md-5 mx-auto mx-md-0">
             <div class="row justify-content-center w-100">
               <div class="col-12 col-md-6 col-lg-8">
-                <img :src="getURL('logo-vertical.svg')" alt="dcs lab 로고 이미지" />
+                <img :src="getURL('/assets/logo-vertical.svg')" alt="dcs lab 로고 이미지" />
               </div>
             </div>
           </div>
@@ -36,7 +36,7 @@
             <div class="col-12 col-md-6 px-0">
               <div
                 class="bg-img ratio-100 ratio-lg-53"
-                :style="{ backgroundImage: `url(${getURL('images/about-1.png')})` }"
+                :style="{ backgroundImage: `url(${getURL('/assets/images/about-1.png')})` }"
               ></div>
             </div>
             <div
@@ -67,7 +67,7 @@
               class="col-12 col-md-6 px-0 py-5 py-md-0 bg-black d-flex flex-column align-items-center justify-content-center order-1 order-md-0"
             >
               <img
-                :src="getURL('logo-white.svg')"
+                :src="getURL('/assets/logo-white.svg')"
                 alt="dcs lab 로고 이미지"
                 :style="{ width: '25%' }"
               />
@@ -75,7 +75,7 @@
             <div class="col-12 col-md-6 px-0 order-0 order-md-1">
               <div
                 class="bg-img ratio-100 ratio-lg-53"
-                :style="{ backgroundImage: `url(${getURL('images/about-2.png')})` }"
+                :style="{ backgroundImage: `url(${getURL('/assets/images/about-2.png')})` }"
               ></div>
             </div>
           </div>

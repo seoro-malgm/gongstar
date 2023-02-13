@@ -67,6 +67,21 @@ const routes = [
         name: "SearchResult",
         component: () => import("@/pages/SearchResult.vue"),
       },
+      {
+        path: "admin",
+        children: [
+          {
+            path: "",
+            name: "AdminIndex",
+            component: () => import("@/pages/Admin/Index.vue"),
+          },
+          {
+            path: "write",
+            name: "AdminArchiveWrite",
+            component: () => import("@/pages/Admin/Write.vue"),
+          },
+        ],
+      },
     ],
   },
 ];

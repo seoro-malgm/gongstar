@@ -8,9 +8,9 @@
       </div>
     </section>
     <div class="container-fluid container-md pb-5">
-      <transition-group name="fade-up" tag="div" class="row mx-0" appear @enter="onEnter">
+      <transition-group name="fade-up" tag="div" class="row" appear @enter="onEnter">
         <div
-          class="col-6 col-md-3 px-0 member-column"
+          class="col-6 col-md-3 member-column mb-3"
           v-for="(item, i) in members"
           :key="i"
           :data-index="i"
@@ -19,7 +19,7 @@
           }"
         >
           <div class="member">
-            <div class="bg-img ratio-100 bg-secondary" />
+            <div class="bg-img ratio-138 bg-secondary" />
             <div class="member-info">
               <h6 class="text-18 text-md-22">이름</h6>
               <span class="text-14 text-md-16">소속, sns 등</span>

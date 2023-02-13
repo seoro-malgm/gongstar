@@ -1,37 +1,74 @@
 <template>
-  <header id="global-nav">
-    <nav class="nav-wrap">
-      <router-link class="logo" to="/">
-        <img
-          class="d-none d-lg-block"
-          :src="getURL('logo-vertical.svg')"
-          alt="dcs lab 로고 이미지"
-        />
-        <img class="d-block d-lg-none" :src="getURL('lettertype.svg')" alt="dcs lab 로고 이미지" />
-      </router-link>
-      <div class="gnb-utils">
-        <div class="links">
-          <div class="link-item" v-for="(item, i) in links" :key="i">
-            <router-link :to="item.url" class="router-link">
-              {{ item.name }}
-            </router-link>
-          </div>
-          <div class="">
-            <button class="btn btn-text rounded-circle px-2" @click="showSearch = true">
-              <i class="icon icon-search-1 text-20"></i>
-            </button>
-          </div>
-        </div>
-        <button class="btn btn-text p-0 d-block d-lg-none" @click="showSidebar = !showSidebar">
-          <div class="hbg" :class="{ toggle: showSidebar }">
+  <header id="global-nav" class="col-2 col-lg-1" :class="{ collapsed: collapsed }">
+    <template v-if="collapsed">
+      <div class="bg-pattern h-100 w-100">
+        <button class="btn btn-text px-1 m-1 bg-white border-primary" @click="$emit('toggle')">
+          <div class="hbg">
             <span class="line" />
             <span class="line" />
           </div>
         </button>
       </div>
-    </nav>
-    <sidebar-nav :active="showSidebar" :links="links" @on-search="search" />
-    <input-search v-show="showSearch" @on-search="search" @on-close="showSearch = false" />
+    </template>
+    <template v-else>
+      <nav class="nav-wrap">
+        <router-link class="logo" to="/">
+          <img class="" :src="getURL('/assets/logo-vertical.svg')" alt="dcs lab 로고 이미지" />
+          <!-- <img
+            class="d-none d-lg-block"
+            :src="getURL('/assets/logo-vertical.svg')"
+            alt="dcs lab 로고 이미지"
+          />
+          <img
+            class="d-block d-lg-none"
+            :src="getURL('/assets/lettertype.svg')"
+            alt="dcs lab 로고 이미지"
+          /> -->
+        </router-link>
+        <div class="gnb-utils">
+          <div class="links">
+            <div class="link-item" v-for="(item, i) in links" :key="i">
+              <router-link :to="item.url" class="router-link text-18">
+                <span>
+                  {{ item.name }}
+                </span>
+              </router-link>
+            </div>
+            <!-- <div class="">
+            <button class="btn btn-text rounded-circle px-2" @click="showSearch = true">
+              <i class="icon icon-search-1 text-20"></i>
+            </button>
+          </div> -->
+          </div>
+          <button
+            class="btn btn-text p-1 rounded-0 d-block d-lg-none border-primary bprder-2"
+            @click="showSidebar = !showSidebar"
+          >
+            <div class="hbg" :class="{ toggle: showSidebar }">
+              <span class="line" />
+              <span class="line" />
+            </div>
+          </button>
+        </div>
+        <div class="gnb-footer text-center pb-4 d-none d-lg-block">
+          <h4 class="text-14 mb-1 fw-700 text-gray-2">국립공주대학교 문화재보존과학과</h4>
+          <h6 class="text-14 mb-0 fw-700 text-gray-2">디지털보존솔루션랩</h6>
+          <div class="d-flex align-items-center justify-content-center mt-2">
+            <button class="btn btn-gray-2 rounded-circle p-1">
+              <i class="icon icon-mail text-16"></i>
+            </button>
+            <button class="btn btn-gray-2 rounded-circle p-1 mx-1">
+              <i class="icon icon-instagram text-16"></i>
+            </button>
+            <button class="btn btn-gray-2 rounded-circle p-1">
+              <i class="icon icon-facebook text-16"></i>
+            </button>
+          </div>
+        </div>
+      </nav>
+      <sidebar-nav :active="showSidebar" :links="links" @on-search="search" />
+      <!-- <input-search v-show="showSearch" @on-search="search" @on-close="showSearch = false" /> -->
+    </template>
   </header>
 </template>
 
@@ -46,6 +83,12 @@ export default {
     InputSearch,
     SidebarNav,
   },
+  props: {
+    collapsed: {
+      type: Boolean,
+      default: false,
+    },
+  },
   setup() {
     const getURL = inject("getImageURL");
     const router = useRouter();
@@ -53,26 +96,31 @@ export default {
     const links = ref([
       {
         name: "ABOUT",
+        // name: "어바웃",
         url: "/about",
       },
-      {
-        name: "PROFESSOR",
-        url: "/professor",
-      },
+      // {
+      //   name: "PROFESSOR",
+      //   url: "/professor",
+      // },
       {
         name: "MEMBERS",
+        // name: "멤버",
         url: "/members",
       },
       {
         name: "ARCHIVE",
+        // name: "아카이브",
         url: "/archive",
       },
       {
         name: "NEWS",
+        // name: "소식",
         url: "/news",
       },
       {
         name: "CONTACT",
+        // name: "연락하기",
         url: "/contact",
       },
     ]);
@@ -110,15 +158,26 @@ export default {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;
-  max-width: 100vw;
+  // width: 100vw;
+  // width: 120px;
+  // width: 8.33333333%;
+  // max-width: 8.33333333vw;
+  // &.collapsed {
+  //   width: 50px;
+  //   max-width: unset;
+  // }
+  padding: 0 8px;
+  height: 100vh;
+  // max-width: 100vw;
   background-color: $white;
   z-index: 1055;
   .nav-wrap {
     display: flex;
+    flex-direction: column;
     align-items: center;
+    height: 100%;
     justify-content: space-between;
-    padding: 0 $padding-x 12px;
+    // padding: 0 $padding-x 12px;
     @media (max-width: 1320px) {
       padding-top: 12px;
     }
@@ -128,23 +187,38 @@ export default {
         margin-top: 0;
       }
       img {
-        width: 102px;
+        width: 100px;
+        max-width: 100%;
       }
     }
     .gnb-utils {
+      // margin-left: auto;
+      width: 100%;
+      margin-top: 24px;
+      flex-grow: 1;
       .links {
-        position: fixed;
-        top: 0;
-        left: 50%;
-        transform: translateX(-50%);
+        // position: fixed;
+        // top: 0;
+        // left: 50%;
+        // transform: translateX(-50%);
         display: flex;
-        align-items: end;
+        flex-direction: column;
+        align-items: flex-start;
+        width: 100%;
+
         .link-item {
+          width: 100%;
           z-index: 10;
+          text-align: center;
           .router-link {
-            padding: 110px 10px 8px;
+            padding: 8px 10px 8px;
             transition: color 0.3s $default-ease;
             position: relative;
+            width: 100%;
+            font-weight: 900;
+            span {
+              // background-color: $white;
+            }
             &:after {
               position: absolute;
               top: 0;
@@ -158,6 +232,9 @@ export default {
               //   rgba(115, 198, 200, 1) 100%
               // );
               background-color: $primary;
+              // background: url("../../assets/images/pattern.svg");
+              // background-repeat: repeat-y;
+              // background-size: cover;
               transition: all 0.3s $default-ease;
               display: block;
               content: "";
@@ -196,7 +273,7 @@ export default {
   .line {
     transition: all 0.3s $default-ease;
     transition-delay: 0.1s;
-    right: 0;
+    left: 0;
     height: 2px;
     background-color: $primary;
     display: block;
