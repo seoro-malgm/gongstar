@@ -5,6 +5,7 @@ $gray-1: #2c2c2f;
 $gray-2: #4d5357;
 $gray-3: #ebf6fb;
 $white: #ffffff;
+$error: #a20000;
 
 $gradient-primary: linear-gradient(
   90deg,
@@ -65,7 +66,8 @@ $theme-colors: (
   "gray-3": $gray-3,
   "white": $white,
   "black": #000000,
-  "dummy": $dummy
+  "dummy": $dummy,
+  "error": $error
 );
 // Create your own map
 $custom-colors: ();

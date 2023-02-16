@@ -1,5 +1,6 @@
 import { createApp } from "vue";
 import commons from "@/plugins/commons";
+import firebase from "@/plugins/firebase";
 import globals from "@/plugins/globalComponents";
 
 import "@/assets/styles/index.scss";
@@ -12,6 +13,7 @@ import router from "@/router/index.js";
 createApp(App)
   .use(router)
   .use(store)
+  .use(firebase)
   .use(commons)
   .use(globals)
   // .use(VueI18n)

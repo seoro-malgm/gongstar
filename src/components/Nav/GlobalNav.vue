@@ -88,42 +88,14 @@ export default {
       type: Boolean,
       default: false,
     },
+    links: {
+      type: Array,
+      default: null,
+    },
   },
   setup() {
     const getURL = inject("getImageURL");
     const router = useRouter();
-
-    const links = ref([
-      {
-        name: "ABOUT",
-        // name: "어바웃",
-        url: "/about",
-      },
-      // {
-      //   name: "PROFESSOR",
-      //   url: "/professor",
-      // },
-      {
-        name: "MEMBERS",
-        // name: "멤버",
-        url: "/members",
-      },
-      {
-        name: "ARCHIVE",
-        // name: "아카이브",
-        url: "/archive",
-      },
-      {
-        name: "NEWS",
-        // name: "소식",
-        url: "/news",
-      },
-      {
-        name: "CONTACT",
-        // name: "연락하기",
-        url: "/contact",
-      },
-    ]);
 
     const showSearch = ref(false);
 
@@ -148,7 +120,7 @@ export default {
         if (showSidebar.value) showSidebar.value = false;
       }
     );
-    return { getURL, links, showSearch, search, showSidebar, path };
+    return { getURL, showSearch, search, showSidebar, path };
   },
 };
 </script>

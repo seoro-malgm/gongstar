@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory, RouterView } from "vue-router";
 import beforeEach from "./beforeEach.js";
 import LayoutDefault from "@/layouts/Default.vue";
+import LayoutAdmin from "@/layouts/Admin.vue";
 const routes = [
   {
     path: "/",
@@ -69,16 +70,54 @@ const routes = [
       },
       {
         path: "admin",
+        component: LayoutAdmin,
         children: [
           {
             path: "",
-            name: "AdminIndex",
-            component: () => import("@/pages/Admin/Index.vue"),
+            name: "Admin",
+            redirect: "/admin/archive",
+          },
+          {
+            path: "login",
+            name: "AdminLogin",
+            component: () => import("@/pages/Admin/Login.vue"),
+            meta: {
+              title: "로그인",
+            },
+          },
+          {
+            path: "archive",
+            name: "AdminArchive",
+            component: () => import("@/pages/Admin/Archive.vue"),
+            meta: {
+              title: "아카이브 관리",
+            },
+          },
+          {
+            path: "members",
+            name: "AdminMembers",
+            component: () => import("@/pages/Admin/Members.vue"),
+            meta: {
+              title: "멤버 관리",
+            },
+          },
+          {
+            path: "news",
+            name: "AdminNews",
+            component: () => import("@/pages/Admin/News.vue"),
+            meta: {
+              title: "뉴스 관리",
+            },
           },
           {
             path: "write",
             name: "AdminArchiveWrite",
             component: () => import("@/pages/Admin/Write.vue"),
+          },
+          {
+            path: "logout",
+            name: "Logout",
+            component: () => import("@/pages/Admin/Logout.vue"),
           },
         ],
       },

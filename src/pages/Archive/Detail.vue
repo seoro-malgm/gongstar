@@ -38,7 +38,7 @@
         <section class="desc my-lg-5 py-5">
           <template v-if="item?.images?.length">
             <figure v-for="(image, i) in item.images" class="mb-5">
-              <img :src="getURL(`archive/${id}/${image.src}`, true)" :alt="image?.caption" />
+              <img :src="getURL(`/aseets/archive/${id}/${image.src}`)" :alt="image?.caption" />
               <figcaption v-if="image.caption" class="text-13 text-md-14">
                 {{ image.caption }}
               </figcaption>

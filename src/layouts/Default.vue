@@ -1,6 +1,6 @@
 <template>
   <div>
-    <global-nav :collapsed="collapsed" @toggle="collapsed = true" />
+    <global-nav :links="links" :collapsed="collapsed" @toggle="collapsed = true" />
     <div class="row">
       <main id="main" class="col-10 col-lg-11 offset-2 offset-lg-1">
         <router-view />
@@ -21,8 +21,40 @@ export default {
   },
   setup(app, context) {
     const collapsed = ref(false);
+    const links = ref([
+      {
+        name: "ABOUT",
+        // name: "어바웃",
+        url: "/about",
+      },
+      // {
+      //   name: "PROFESSOR",
+      //   url: "/professor",
+      // },
+      {
+        name: "MEMBERS",
+        // name: "멤버",
+        url: "/members",
+      },
+      {
+        name: "ARCHIVE",
+        // name: "아카이브",
+        url: "/archive",
+      },
+      {
+        name: "NEWS",
+        // name: "소식",
+        url: "/news",
+      },
+      {
+        name: "CONTACT",
+        // name: "연락하기",
+        url: "/contact",
+      },
+    ]);
     return {
       collapsed,
+      links,
     };
   },
 };
