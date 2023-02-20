@@ -2,56 +2,93 @@
   <div>
     <section class="py-3">
       <div class="row">
-        <div class="col-12 col-md-6 mb-3">
+        <div class="col-12 col-md-3 mb-3">
           <div class="form-group">
-            <label for="title">제목</label>
-            <input type="text" class="form-control" id="title" v-model="form.title" />
+            <h6>프로필</h6>
+            <label
+              for="profile"
+              class="bg-img ratio-138 rounded position-relative"
+              :style="{
+                background: form?.profile ? `url(${form.profile})` : '#999999',
+              }"
+            >
+              <template v-if="!form?.profile">
+                <div class="absoulte-center">여기를 눌러 프로필 추가하세요.</div>
+              </template>
+              <template v-else-if="pending.profile">
+                <div class="spinner"></div>
+              </template>
+              <template v-else-if="form?.profile && !pending.profile">
+                <div class="position-absolute" :style="{ top: '10px', right: '10px' }">
+                  <button class="btn btn-black px-2 py-1" @click.prevent="form.profile = null">
+                    삭제
+                  </button>
+                </div>
+              </template>
+            </label>
+            <input
+              type="file"
+              class="form-control d-none"
+              id="profile"
+              accept=".png, .jpg, .jpeg"
+              @change="($event) => uploadProfile($event)"
+            />
           </div>
         </div>
-        <div class="col-12 col-md-6 mb-3">
+        <div class="col-12 col-md-3 mb-3">
           <div class="form-group">
-            <label for="subtitle">부제목</label>
-            <input type="text" class="form-control" id="subtitle" v-model="form.subtitle" />
+            <h6>마우스오버용 프로필</h6>
+            <label
+              for="profileHovered"
+              class="bg-img ratio-138 rounded position-relative"
+              :style="{
+                background: form?.profileHovered ? `url(${form.profileHovered})` : '#999999',
+              }"
+            >
+              <template v-if="!form?.profileHovered">
+                <div class="absoulte-center">여기를 눌러 마우스오버 프로필 추가하세요.</div>
+              </template>
+              <template v-else-if="pending.profileHovered">
+                <div class="spinner"></div>
+              </template>
+              <template v-else-if="form?.profileHovered && !pending.profileHovered">
+                <div class="position-absolute" :style="{ top: '10px', right: '10px' }">
+                  <button
+                    class="btn btn-black px-2 py-1"
+                    @click.prevent="form.profileHovered = null"
+                  >
+                    삭제
+                  </button>
+                </div>
+              </template>
+            </label>
+            <input
+              type="file"
+              class="form-control d-none"
+              id="profileHovered"
+              accept=".png, .jpg, .jpeg"
+              @change="($event) => uploadProfile($event, 'hover')"
+            />
           </div>
         </div>
-        <div class="col-12 col-md-6 mb-3">
-          <div class="form-group">
-            <label for="subject">과업</label>
-            <input type="text" class="form-control" id="subject" v-model="form.subject" />
+        <div class="col-12 col-md-6">
+          <div class="form-group mb-3">
+            <label for="no">순서번호(이 순서번호의 역순으로 정리됩니다)</label>
+            <input type="number" class="form-control" id="no" v-model="form.no" />
+          </div>
+          <div class="form-group mb-3">
+            <label for="name">이름</label>
+            <input type="text" class="form-control" id="name" v-model="form.name" />
+          </div>
+          <div class="form-group mb-3">
+            <label for="type">분류(학사,석사과정 등)</label>
+            <input type="text" class="form-control" id="type" v-model="form.type" />
+          </div>
+          <div class="form-group mb-3">
+            <label for="employment">소속</label>
+            <input type="text" class="form-control" id="employment" v-model="form.employment" />
           </div>
         </div>
-        <div class="col-12 col-md-6 mb-3">
-          <div class="form-group">
-            <label for="client">지원기관</label>
-            <input type="text" class="form-control" id="client" v-model="form.client" />
-          </div>
-        </div>
-        <div class="col-12 col-md-6 mb-3">
-          <label for="start">작업 시작</label>
-          <div class="form-group">
-            <input type="date" class="form-control" id="start" v-model="form.date.start" />
-          </div>
-        </div>
-        <div class="col-12 col-md-6 mb-3">
-          <label for="end">작업 시작일</label>
-          <div class="form-group">
-            <input type="date" class="form-control" id="end" v-model="form.date.end" />
-          </div>
-        </div>
-        <div class="col-12 col-md-6 mb-3">
-          <label for="keyword">키워드(#제외)</label>
-          <div class="form-group">
-            <input type="text" class="form-control" id="keyword" v-model="form.keyword" />
-          </div>
-        </div>
-        <div class="col-12 mb-3">
-          <label for="summary">요약</label>
-          <textarea class="form-control" id="summary" v-model="form.summary" rows="5" />
-        </div>
-      </div>
-      <div class="">
-        <label for="desc">내용</label>
-        <quill-editor theme="snow" />
       </div>
     </section>
     <section class="row justify-content-end">
@@ -69,9 +106,9 @@
 </template>
 
 <script>
-import { ref, computed, inject } from "vue";
-import { QuillEditor } from "@vueup/vue-quill";
-import "@vueup/vue-quill/dist/vue-quill.snow.css";
+import { ref, computed, inject, onMounted } from "vue";
+import { useRoute, useRouter } from "vue-router";
+
 export default {
   props: {
     id: {
@@ -80,25 +117,123 @@ export default {
     },
   },
   components: {
-    QuillEditor,
+    // QuillEditor,
   },
   setup() {
+    const { boardAPI, storageAPI } = inject("firebase");
+    const router = useRouter();
+    const route = useRoute();
+
+    const pending = ref({
+      init: false,
+      profile: false,
+      submit: false,
+    });
+
     const form = ref({
-      title: null,
-      subtitle: null,
-      subject: null,
-      client: null,
-      date: {
-        start: null,
-        end: null,
-      },
-      summary: null,
-      keyword: [],
-      images: [],
+      no: null,
+      profile: null,
+      profileHovered: null,
+      name: null,
+      type: null,
+      employment: "국립공주대학교 디지털보존솔루션랩",
+    });
+
+    const keyword = ref(null);
+    const addKeyword = (word) => {
+      form.value.keyword.push(word);
+      keyword.value = null;
+    };
+
+    const resize = inject("resize");
+    // 이미지 업로드 후 url 불러오기
+    const uploadProfile = async (e, path) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      // 초기화
+      const oldURL = path ? form.value.profileHovered : form.value.profile;
+      if (oldURL) {
+        storageAPI.deleteImage(`profile/${oldURL}`);
+      }
+      if (path) {
+        form.value.profileHovered = null;
+      } else {
+        form.value.profile = null;
+      }
+      // pending 시작
+      pending.value.profile = true;
+      const type = file?.type.split("/").at(-1);
+      const fileName = `profile_${new Date().valueOf()}.${type}`;
+      // gif 이미지 업로드
+      if (type === "gif") {
+        try {
+          const { name, url } = await storageAPI.getImageURL(file, "gif", "profile/gif/", fileName);
+          if (name && url) {
+            if (path) {
+              form.value.profileHovered = url;
+            } else {
+              form.value.profile = url;
+            }
+          }
+        } catch (error) {
+          window.toast("파일업로드 실패");
+        }
+      } else {
+        // gif 이미지가 아닌 경우 파일 업로드
+        // 가로 1000으로 리사이징하여 url 적용함
+        resize.photo("w", file, 1000, "object", async (result) => {
+          const { name, url } = await storageAPI.getImageURL(
+            result.blob,
+            result.blob.type,
+            "profile",
+            fileName
+          );
+          if (name && url) {
+            if (path) {
+              form.value.profileHovered = url;
+            } else {
+              form.value.profile = url;
+            }
+          }
+        });
+      }
+      pending.value.profile = false;
+    };
+
+    // 수정 불러오기
+    const id = computed(() => {
+      return route?.query?.id;
+    });
+    const init = async (documentName, id) => {
+      pending.value.init = true;
+      try {
+        const data = await boardAPI.getBoard(documentName, id);
+        if (data) {
+          // ref를 찾은 뒤에 form에 적용함
+          form.value = {
+            ...data,
+          };
+        }
+      } catch (error) {
+        window.toast("잘못된 접근입니다");
+        console.error("error:", error);
+        router.push("/admin/member");
+      }
+      pending.value.init = false;
+    };
+    onMounted(() => {
+      form.value.no = route?.query?.no;
+      if (id.value) {
+        init("member", id.value);
+      }
     });
 
     return {
       form,
+      keyword,
+      addKeyword,
+      uploadProfile,
+      pending,
     };
   },
 };

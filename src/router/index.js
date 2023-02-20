@@ -24,9 +24,9 @@ const routes = [
         component: () => import("@/pages/Professor.vue"),
       },
       {
-        path: "members",
-        name: "Members",
-        component: () => import("@/pages/Members.vue"),
+        path: "member",
+        name: "Member",
+        component: () => import("@/pages/Member.vue"),
       },
       {
         path: "archive",
@@ -94,9 +94,9 @@ const routes = [
             },
           },
           {
-            path: "members",
-            name: "AdminMembers",
-            component: () => import("@/pages/Admin/Members.vue"),
+            path: "member",
+            name: "AdminMember",
+            component: () => import("@/pages/Admin/Member.vue"),
             meta: {
               title: "멤버 관리",
             },

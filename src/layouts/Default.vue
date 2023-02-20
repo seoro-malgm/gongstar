@@ -34,7 +34,7 @@ export default {
       {
         name: "MEMBERS",
         // name: "멤버",
-        url: "/members",
+        url: "/member",
       },
       {
         name: "ARCHIVE",

@@ -60,7 +60,22 @@
           }"
         >
           <div class="member">
-            <div class="bg-img ratio-138 bg-secondary" />
+            <div class="position-relative" :style="{ paddingBottom: '138%' }">
+              <div
+                class="bg-img ratio-138 profile"
+                :style="{
+                  background: `url(${item.profile})`,
+                }"
+              />
+              <div
+                class="bg-img ratio-138 profile-hovered"
+                v-if="item.profileHovered"
+                :style="{
+                  background: `url(${item.profileHovered})`,
+                }"
+              />
+            </div>
+
             <div class="member-info">
               <div class="d-flex align-items-end mb-1">
                 <h6 class="text-20 text-md-26 mb-0">{{ item.name }}</h6>
@@ -77,11 +92,11 @@
 
 <script>
 import { ref, computed, inject, onMounted } from "vue";
-import members from "@/database/members";
+// import members from "@/database/members";
 export default {
   setup() {
     const getURL = inject("getImageURL");
-    const items = ref(members);
+    // const items = ref(members);
     const show = ref(false);
 
     const infos = ref([
@@ -101,6 +116,16 @@ export default {
       // });
     }
 
+    const { boardAPI } = inject("firebase");
+    const items = ref(null);
+    const getItems = async () => {
+      const data = await boardAPI.getAllBoards("member");
+      items.value = data;
+    };
+    onMounted(() => {
+      getItems();
+    });
+
     return { getURL, infos, items, onEnter };
   },
 };
@@ -109,6 +134,20 @@ export default {
 <style lang="scss" scoped>
 .member {
   position: relative;
+  .bg-img {
+    position: absolute;
+    width: 100%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: opacity 0.4s ease-in-out;
+    &.profile {
+      opacity: 1;
+    }
+    &.profile-hovered {
+      opacity: 0;
+    }
+  }
   .member-info {
     position: absolute;
     bottom: 0;
@@ -121,6 +160,16 @@ export default {
     }
     span {
       color: rgba($color: #ffffff, $alpha: 0.5);
+    }
+  }
+  &:hover {
+    .bg-img {
+      &.profile {
+        opacity: 0;
+      }
+      &.profile-hovered {
+        opacity: 1;
+      }
     }
   }
 }

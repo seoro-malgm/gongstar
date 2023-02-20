@@ -46,7 +46,7 @@ export default {
       },
       {
         name: "멤버 관리",
-        url: "/admin/members",
+        url: "/admin/member",
       },
       {
         name: "뉴스 관리",

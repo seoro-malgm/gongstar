@@ -28,11 +28,7 @@
           "
         >
           <figure class="archive-item bg-img ratio-56">
-            <img
-              class="item-image"
-              :src="getURL('/assets/images/dummy.png')"
-              :alt="`${item.title} 썸네일 이미지`"
-            />
+            <img class="item-image" :src="item.thumbnail" :alt="`${item.title} 썸네일 이미지`" />
             <figcaption class="p-3">
               <strong
                 class="text-22 text-md-24 text-truncate line-2"
@@ -47,7 +43,8 @@
                 {{ item.category }}
               </span>
               <span class="text-13 text-md-14" :style="{ bottom: '1rem', right: '1rem' }">
-                {{ item.date }}
+                {{ item.date.start }}
+                <template v-if="item.date?.end"> ~ {{ item.date.end }} </template>
               </span>
             </figcaption>
           </figure>
@@ -69,7 +66,7 @@
 </template>
 
 <script>
-import { ref, inject } from "vue";
+import { ref, inject, onMounted } from "vue";
 // import allArchive from "@/database/archive.json";
 
 export default {
@@ -78,78 +75,87 @@ export default {
     // console.log("items:", items);
     const getURL = inject("getImageURL");
     const side = ref(["top", "bottom", "left", "right"]);
-    const items = ref([
-      {
-        id: 1,
-        title: "잔무늬거울 재현 잔무늬거울 재현 잔무늬거울 재현 잔무늬거울 재현 잔무늬거울 재현 ",
-        author: "DCS LAB",
-        date: "2022-03-01",
-        category: "3D",
-      },
-      {
-        id: 2,
-        title: "잔무늬거울 재현",
-        author: "DCS LAB",
-        date: "2022-03-01",
-        category: "3D",
-      },
-      {
-        id: 3,
-        title: "잔무늬거울 재현",
-        author: "DCS LAB",
-        date: "2022-03-01",
-        category: "3D",
-      },
-      {
-        id: 4,
-        title: "잔무늬거울 재현",
-        author: "DCS LAB",
-        date: "2022-03-01",
-        category: "3D",
-      },
-      {
-        id: 5,
-        title: "잔무늬거울 재현",
-        author: "DCS LAB",
-        date: "2022-03-01",
-        category: "3D",
-      },
-      {
-        id: 6,
-        title: "잔무늬거울 재현",
-        author: "DCS LAB",
-        date: "2022-03-01",
-        category: "3D",
-      },
-      {
-        id: 7,
-        title: "잔무늬거울 재현",
-        author: "DCS LAB",
-        date: "2022-03-01",
-        category: "3D",
-      },
-      {
-        id: 8,
-        title: "잔무늬거울 재현",
-        author: "DCS LAB",
-        date: "2022-03-01",
-        category: "3D",
-      },
-      {
-        id: 9,
-        title: "잔무늬거울 재현",
-        author: "DCS LAB",
-        date: "2022-03-01",
-        category: "3D",
-      },
-      {
-        id: 10,
-        title: "잔무늬거울 재현",
-        author: "DCS LAB",
-        date: "2022-03-01",
-        category: "3D",
-      },
-    ]);
+    // const items = ref([
+    //   {
+    //     id: 1,
+    //     title: "잔무늬거울 재현 잔무늬거울 재현 잔무늬거울 재현 잔무늬거울 재현 잔무늬거울 재현 ",
+    //     author: "DCS LAB",
+    //     date: "2022-03-01",
+    //     category: "3D",
+    //   },
+    //   {
+    //     id: 2,
+    //     title: "잔무늬거울 재현",
+    //     author: "DCS LAB",
+    //     date: "2022-03-01",
+    //     category: "3D",
+    //   },
+    //   {
+    //     id: 3,
+    //     title: "잔무늬거울 재현",
+    //     author: "DCS LAB",
+    //     date: "2022-03-01",
+    //     category: "3D",
+    //   },
+    //   {
+    //     id: 4,
+    //     title: "잔무늬거울 재현",
+    //     author: "DCS LAB",
+    //     date: "2022-03-01",
+    //     category: "3D",
+    //   },
+    //   {
+    //     id: 5,
+    //     title: "잔무늬거울 재현",
+    //     author: "DCS LAB",
+    //     date: "2022-03-01",
+    //     category: "3D",
+    //   },
+    //   {
+    //     id: 6,
+    //     title: "잔무늬거울 재현",
+    //     author: "DCS LAB",
+    //     date: "2022-03-01",
+    //     category: "3D",
+    //   },
+    //   {
+    //     id: 7,
+    //     title: "잔무늬거울 재현",
+    //     author: "DCS LAB",
+    //     date: "2022-03-01",
+    //     category: "3D",
+    //   },
+    //   {
+    //     id: 8,
+    //     title: "잔무늬거울 재현",
+    //     author: "DCS LAB",
+    //     date: "2022-03-01",
+    //     category: "3D",
+    //   },
+    //   {
+    //     id: 9,
+    //     title: "잔무늬거울 재현",
+    //     author: "DCS LAB",
+    //     date: "2022-03-01",
+    //     category: "3D",
+    //   },
+    //   {
+    //     id: 10,
+    //     title: "잔무늬거울 재현",
+    //     author: "DCS LAB",
+    //     date: "2022-03-01",
+    //     category: "3D",
+    //   },
+    // ]);
+    const { boardAPI } = inject("firebase");
+    const items = ref(null);
+    const getItems = async () => {
+      const data = await boardAPI.getAllBoards("archive");
+      items.value = data;
+    };
+    onMounted(() => {
+      getItems();
+    });
 
     const hoveredItem = ref(null);
     return { getURL, side, items, hoveredItem };

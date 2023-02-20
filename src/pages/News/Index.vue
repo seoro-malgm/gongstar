@@ -19,7 +19,13 @@
           }"
         >
           <div class="news">
-            <div class="bg-img ratio-100 bg-secondary" />
+            <a
+              role="link"
+              :href="item.url"
+              target="_blank"
+              class="bg-img ratio-100 d-block b-btn btn-text"
+              :style="{ background: `url(${item.images[0]})` }"
+            />
           </div>
         </div>
       </transition-group>
@@ -86,11 +92,19 @@
 </template>
 
 <script>
-import { ref, computed, inject } from "vue";
+import { ref, computed, inject, onMounted } from "vue";
 export default {
   setup() {
     const getURL = inject("getImageURL");
-    const items = ref(["", "", "", "", "", "", "", "", "", "", ""]);
+    const { boardAPI } = inject("firebase");
+    const items = ref(null);
+    const getItems = async () => {
+      const data = await boardAPI.getAllBoards("news");
+      items.value = data;
+    };
+    onMounted(() => {
+      getItems();
+    });
     return { getURL, items };
   },
 };

@@ -36,14 +36,15 @@
           </ul>
         </section>
         <section class="desc my-lg-5 py-5">
-          <template v-if="item?.images?.length">
+          <p v-html="item.desc" />
+          <!-- <template v-if="item?.images?.length">
             <figure v-for="(image, i) in item.images" class="mb-5">
               <img :src="getURL(`/aseets/archive/${id}/${image.src}`)" :alt="image?.caption" />
               <figcaption v-if="image.caption" class="text-13 text-md-14">
                 {{ image.caption }}
               </figcaption>
             </figure>
-          </template>
+          </template> -->
         </section>
       </template>
 
@@ -74,21 +75,30 @@
 <script>
 import { ref, computed, onMounted, inject } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import allArchive from "@/database/archive.json";
+// import allArchive from "@/database/archive.json";
 
 export default {
   setup() {
-    const items = allArchive;
+    // const items = allArchive;
     const getURL = inject("getImageURL");
-    console.log("items:", items);
     const route = useRoute();
     const id = computed(() => {
       return route?.params?.id;
     });
 
-    const item = computed(() => {
-      return items?.find((el) => el.id === id.value);
+    const { boardAPI } = inject("firebase");
+    const item = ref(null);
+    const getItem = async () => {
+      const data = await boardAPI.getBoard("archive", id.value);
+      item.value = data;
+    };
+    onMounted(() => {
+      getItem();
     });
+
+    // const item = computed(() => {
+    //   return items?.find((el) => el.id === id.value);
+    // });
 
     return { getURL, id, item };
   },

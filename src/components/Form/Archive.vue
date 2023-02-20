@@ -5,7 +5,13 @@
         <div class="col-12 col-md-6 mb-3">
           <div class="form-group">
             <h6>썸네일</h6>
-            <label for="thumbnail" class="bg-img ratio-53 bg-dummy rounded position-relative">
+            <label
+              for="thumbnail"
+              class="bg-img ratio-53 rounded position-relative"
+              :style="{
+                background: form?.thumbnail ? `url(${form.thumbnail})` : '#999999',
+              }"
+            >
               <template v-if="!form?.thumbnail">
                 <div class="absoulte-center">여기를 눌러 썸네일을 추가하세요.</div>
               </template>
@@ -14,18 +20,24 @@
               </template>
               <template v-else-if="form?.thumbnail && !pending.thumbnail">
                 <div class="position-absolute" :style="{ top: '10px', right: '10px' }">
-                  <button class="btn btn-black px-2 py-1" @click="form.thumbnail = null">
+                  <button class="btn btn-black px-2 py-1" @click.prevent="form.thumbnail = null">
                     삭제
                   </button>
                 </div>
               </template>
             </label>
-            <input type="file" class="form-control d-none" id="thumbnail" @change="uploadImage" />
+            <input
+              type="file"
+              class="form-control d-none"
+              id="thumbnail"
+              accept=".png, .jpg, .jpeg"
+              @change="uploadThumbnail"
+            />
           </div>
         </div>
         <div class="col-12 col-md-6 mb-3">
           <div class="form-group my-3">
-            <label for="no">순서번호</label>
+            <label for="no">순서번호(이 순서번호의 역순으로 정리됩니다)</label>
             <input type="number" class="form-control" id="no" v-model="form.no" />
           </div>
           <div class="form-group mb-3">
@@ -93,7 +105,7 @@
           <label for="category">카테고리</label>
           <div class="form-group">
             <input
-              type="date"
+              type="text"
               class="form-control"
               id="category"
               placeholder="카테고리 예시) 3D"
@@ -108,7 +120,7 @@
       </div>
       <div class="">
         <label for="desc">내용</label>
-        <BaseEditor @update="($event) => (form.desc = $event)" />
+        <BaseEditor @update="($event) => (form.desc = $event)" :content="form.desc" />
       </div>
     </section>
     <section class="row justify-content-end">
@@ -122,11 +134,31 @@
         </button>
       </div>
     </section>
+    <pre
+      style="
+        position: fixed;
+        bottom: 0;
+        right: 0;
+        z-index: 3000;
+        background-color: #ededed;
+        padding: 0.5rem;
+        width: 300px;
+        height: 500px;
+        overflow-y: scroll;
+        font-size: 14px;
+        line-height: 17px;
+        color: #000;
+        text-align: left;
+      "
+    >
+    form: {{ form }}
+    </pre>
   </div>
 </template>
 
 <script>
-import { ref, computed, inject } from "vue";
+import { ref, computed, inject, onMounted } from "vue";
+import { useRoute, useRouter } from "vue-router";
 
 export default {
   props: {
@@ -139,9 +171,14 @@ export default {
     // QuillEditor,
   },
   setup() {
+    const { boardAPI, storageAPI } = inject("firebase");
+    const router = useRouter();
+    const route = useRoute();
+
     const form = ref({
       no: null,
       title: null,
+      thumbnail: null,
       subtitle: null,
       subject: null,
       client: null,
@@ -151,7 +188,7 @@ export default {
       },
       summary: null,
       keyword: [],
-      desc: null,
+      desc: "",
     });
 
     const pending = ref({
@@ -165,20 +202,87 @@ export default {
       keyword.value = null;
     };
 
-    const uploadImage = async () => {
+    const resize = inject("resize");
+    // 이미지 업로드 후 url 불러오기
+    const uploadThumbnail = async (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      // 초기화
+      const oldURL = form.value.thumbnail;
+      if (oldURL) {
+        storageAPI.deleteImage(`thumbnail/${oldURL}`);
+      }
+      form.value.thumbnail = null;
+      // pending 시작
       pending.value.thumbnail = true;
-      try {
-      } catch (error) {
-        console.error("error:", error);
+      const type = file?.type.split("/").at(-1);
+      const fileName = `thumbnail_${new Date().valueOf()}.${type}`;
+      // gif 이미지 업로드
+      if (type === "gif") {
+        try {
+          const { name, url } = await storageAPI.getImageURL(
+            file,
+            "gif",
+            "thumbnail/gif/",
+            fileName
+          );
+          if (name && url) {
+            form.value.thumbnail = url;
+          }
+        } catch (error) {
+          window.toast("파일업로드 실패");
+        }
+      } else {
+        // gif 이미지가 아닌 경우 파일 업로드
+        // 가로 1000으로 리사이징하여 url 적용함
+        resize.photo("w", file, 1000, "object", async (result) => {
+          const { name, url } = await storageAPI.getImageURL(
+            result.blob,
+            result.blob.type,
+            "thumbnail",
+            fileName
+          );
+          if (name && url) {
+            form.value.thumbnail = url;
+          }
+        });
       }
       pending.value.thumbnail = false;
     };
+
+    // 수정 불러오기
+    const id = computed(() => {
+      return route?.query?.id;
+    });
+    const init = async (documentName, id) => {
+      pending.value.init = true;
+      try {
+        const data = await boardAPI.getBoard(documentName, id);
+        if (data) {
+          // ref를 찾은 뒤에 form에 적용함
+          form.value = {
+            ...data,
+          };
+        }
+      } catch (error) {
+        window.toast("잘못된 접근입니다");
+        console.error("error:", error);
+        router.push("/admin/archive");
+      }
+      pending.value.init = false;
+    };
+    onMounted(() => {
+      form.value.no = route?.query?.no;
+      if (id.value) {
+        init("archive", id.value);
+      }
+    });
 
     return {
       form,
       keyword,
       addKeyword,
-      uploadImage,
+      uploadThumbnail,
       pending,
     };
   },
