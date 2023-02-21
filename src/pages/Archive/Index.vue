@@ -3,7 +3,7 @@
     <header class="my-3 mt-md-5 mb-4">
       <h1 class="page-title">ARCHIVE</h1>
     </header>
-    <section>
+    <section v-if="items?.length">
       <transition-group name="swipe" tag="div" class="row mx-n1" appear>
         <div
           class="col-12 col-md-6 col-lg-4 archive-item-column mb-1 mb-md-3 px-1"

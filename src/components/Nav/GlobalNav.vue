@@ -57,12 +57,16 @@
             <button class="btn btn-gray-2 rounded-circle p-1">
               <i class="icon icon-mail text-16"></i>
             </button>
-            <button class="btn btn-gray-2 rounded-circle p-1 mx-1">
+            <a
+              class="btn btn-gray-2 rounded-circle p-1 mx-1"
+              :href="infos.instagram"
+              target="_blank"
+            >
               <i class="icon icon-instagram text-16"></i>
-            </button>
-            <button class="btn btn-gray-2 rounded-circle p-1">
+            </a>
+            <a class="btn btn-gray-2 rounded-circle p-1" :href="infos.facebook" target="_blank">
               <i class="icon icon-facebook text-16"></i>
-            </button>
+            </a>
           </div>
         </div>
       </nav>
@@ -77,6 +81,7 @@ import { ref, computed, inject, watch } from "vue";
 import InputSearch from "@/components/InputSearch.vue";
 import SidebarNav from "@/components/Nav/SidebarNav.vue";
 import { useRoute, useRouter } from "vue-router";
+import { useStore } from "vuex";
 export default {
   name: "GloabalNav",
   components: {
@@ -96,6 +101,7 @@ export default {
   setup() {
     const getURL = inject("getImageURL");
     const router = useRouter();
+    const store = useStore();
 
     const showSearch = ref(false);
 
@@ -120,7 +126,11 @@ export default {
         if (showSidebar.value) showSidebar.value = false;
       }
     );
-    return { getURL, showSearch, search, showSidebar, path };
+
+    const infos = computed(() => {
+      return store.getters["auth/getInfos"];
+    });
+    return { getURL, showSearch, search, showSidebar, path, infos };
   },
 };
 </script>

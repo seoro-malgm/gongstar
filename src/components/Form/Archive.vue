@@ -134,7 +134,7 @@
         </button>
       </div>
     </section>
-    <pre
+    <!-- <pre
       style="
         position: fixed;
         bottom: 0;
@@ -152,7 +152,7 @@
       "
     >
     form: {{ form }}
-    </pre>
+    </pre> -->
   </div>
 </template>
 

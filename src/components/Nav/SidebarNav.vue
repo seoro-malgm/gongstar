@@ -39,12 +39,16 @@
                 <button class="btn btn-gray-2 rounded-circle p-1">
                   <i class="icon icon-mail text-16"></i>
                 </button>
-                <button class="btn btn-gray-2 rounded-circle p-1 mx-1">
+                <a
+                  class="btn btn-gray-2 rounded-circle p-1 mx-1"
+                  :href="infos.instagram"
+                  target="_blank"
+                >
                   <i class="icon icon-instagram text-16"></i>
-                </button>
-                <button class="btn btn-gray-2 rounded-circle p-1">
+                </a>
+                <a class="btn btn-gray-2 rounded-circle p-1" :href="infos.facebook" target="_blank">
                   <i class="icon icon-facebook text-16"></i>
-                </button>
+                </a>
               </div>
             </div>
           </div>
@@ -57,6 +61,7 @@
 
 <script>
 import { ref, computed, inject, watch } from "vue";
+import { useStore } from "vuex";
 
 export default {
   props: {
@@ -70,6 +75,7 @@ export default {
     },
   },
   setup(app, context) {
+    const store = useStore();
     const str = ref(null);
     const getURL = inject("getImageURL");
 
@@ -77,7 +83,12 @@ export default {
       context.emit("on-search", str.value);
       str.value = null;
     };
-    return { getURL, str, search };
+
+    const infos = computed(() => {
+      return store.getters["auth/getInfos"];
+    });
+
+    return { getURL, str, search, infos };
   },
 };
 </script>

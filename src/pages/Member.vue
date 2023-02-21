@@ -20,7 +20,7 @@
             </div>
 
             <ul class="list-unstyled text-center">
-              <li v-for="(item, i) in infos" :key="i" class="mb-2">
+              <li v-for="(item, i) in professorInfos" :key="i" class="mb-2">
                 <span class="text-16 text-lg-20">
                   {{ item }}
                 </span>
@@ -99,7 +99,7 @@ export default {
     // const items = ref(members);
     const show = ref(false);
 
-    const infos = ref([
+    const professorInfos = ref([
       "디지털 유산(기록화, 복원·복제, 영상분석, 콘텐츠), 건전성평가",
       "산학연구관204호",
       "실험실 / 디지털보존솔루션랩(연구관418호)",
@@ -126,7 +126,7 @@ export default {
       getItems();
     });
 
-    return { getURL, infos, items, onEnter };
+    return { getURL, professorInfos, items, onEnter };
   },
 };
 </script>

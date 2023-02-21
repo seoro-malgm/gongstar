@@ -1,6 +1,7 @@
 import authAPI from "@/apis/auth";
 import boardAPI from "@/apis/board";
 import storageAPI from "@/apis/storage";
+import mailAPI from "@/apis/mail";
 
 // export default { ...authAPI, ...worksAPI, ...storageAPI, ...blogAPI }
 
@@ -11,6 +12,7 @@ export default {
       authAPI,
       boardAPI,
       storageAPI,
+      mailAPI,
     };
     app.provide("firebase", firebase);
   },
