@@ -4,28 +4,29 @@
       <div class="row">
         <div class="col-12 col-md-3 mb-3">
           <div class="form-group">
-            <h6>프로필</h6>
+            <h6>원경 프로필</h6>
             <label
               for="profile"
-              class="bg-img ratio-138 rounded position-relative"
+              class="bg-img ratio-138 rounded position-relative img-contain"
               :style="{
                 background: form?.profile ? `url(${form.profile})` : '#999999',
               }"
             >
-              <template v-if="!form?.profile">
-                <div class="absoulte-center">여기를 눌러 프로필 추가하세요.</div>
-              </template>
-              <template v-else-if="pending.profile">
+              <template v-if="pending.profile">
                 <div class="spinner"></div>
               </template>
+              <template v-else-if="!form?.profile && !pending.profile">
+                <div class="absoulte-center">여기를 눌러 원경 프로필 추가하세요.</div>
+              </template>
               <template v-else-if="form?.profile && !pending.profile">
-                <div class="position-absolute" :style="{ top: '10px', right: '10px' }">
+                <!-- <div class="position-absolute" :style="{ top: '10px', right: '10px' }">
                   <button class="btn btn-black px-2 py-1" @click.prevent="form.profile = null">
                     삭제
                   </button>
-                </div>
+                </div> -->
               </template>
             </label>
+            <small v-if="form?.profile">이미지를 눌러 새 사진을 불러올 수 있습니다.</small>
             <input
               type="file"
               class="form-control d-none"
@@ -37,31 +38,32 @@
         </div>
         <div class="col-12 col-md-3 mb-3">
           <div class="form-group">
-            <h6>마우스오버용 프로필</h6>
+            <h6>근경 프로필(마우스오버)</h6>
             <label
               for="profileHovered"
-              class="bg-img ratio-138 rounded position-relative"
+              class="bg-img ratio-138 rounded position-relative img-contain"
               :style="{
                 background: form?.profileHovered ? `url(${form.profileHovered})` : '#999999',
               }"
             >
-              <template v-if="!form?.profileHovered">
-                <div class="absoulte-center">여기를 눌러 마우스오버 프로필 추가하세요.</div>
-              </template>
-              <template v-else-if="pending.profileHovered">
+              <template v-if="pending.profileHovered">
                 <div class="spinner"></div>
               </template>
+              <template v-else-if="!form?.profileHovered && !pending.profileHovered">
+                <div class="absoulte-center">여기를 눌러 근경 프로필 추가하세요.</div>
+              </template>
               <template v-else-if="form?.profileHovered && !pending.profileHovered">
-                <div class="position-absolute" :style="{ top: '10px', right: '10px' }">
+                <!-- <div class="position-absolute" :style="{ top: '10px', right: '10px' }">
                   <button
                     class="btn btn-black px-2 py-1"
                     @click.prevent="form.profileHovered = null"
                   >
                     삭제
                   </button>
-                </div>
+                </div> -->
               </template>
             </label>
+            <small v-if="form?.profileHovered">이미지를 눌러 새 사진을 불러올 수 있습니다.</small>
             <input
               type="file"
               class="form-control d-none"
@@ -73,7 +75,7 @@
         </div>
         <div class="col-12 col-md-6">
           <div class="form-group mb-3">
-            <label for="no">순서번호(이 순서번호의 역순으로 정리됩니다)</label>
+            <label for="no">순서번호(이 순서번호의 순서대로 정리됩니다)</label>
             <input type="number" class="form-control" id="no" v-model="form.no" />
           </div>
           <div class="form-group mb-3">
@@ -108,6 +110,7 @@
 <script>
 import { ref, computed, inject, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
+// import allMembers from "@/database/members.json";
 
 export default {
   props: {
@@ -119,7 +122,7 @@ export default {
   components: {
     // QuillEditor,
   },
-  setup() {
+  setup(props, context) {
     const { boardAPI, storageAPI } = inject("firebase");
     const router = useRouter();
     const route = useRoute();
@@ -151,17 +154,19 @@ export default {
       const file = e.target.files[0];
       if (!file) return;
       // 초기화
-      const oldURL = path ? form.value.profileHovered : form.value.profile;
-      if (oldURL) {
-        storageAPI.deleteImage(`profile/${oldURL}`);
-      }
+      // const oldURL = path ? form.value.profileHovered : form.value.profile;
+      // if (oldURL) {
+      //   storageAPI.deleteImage(`profile/${oldURL}`);
+      // }
+      // pending 시작
       if (path) {
         form.value.profileHovered = null;
+        pending.value.profileHovered = true;
       } else {
         form.value.profile = null;
+        pending.value.profile = true;
       }
-      // pending 시작
-      pending.value.profile = true;
+
       const type = file?.type.split("/").at(-1);
       const fileName = `profile_${new Date().valueOf()}.${type}`;
       // gif 이미지 업로드
@@ -226,6 +231,12 @@ export default {
       if (id.value) {
         init("member", id.value);
       }
+      // console.log("allMembers:", allMembers);
+      // console.log("context:", context);
+      // for (let index = 0; index < allMembers.length; index++) {
+      //   const element = allMembers[index];
+      //   context.emit("submit", element);
+      // }
     });
 
     return {

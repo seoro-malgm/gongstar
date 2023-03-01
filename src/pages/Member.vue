@@ -5,28 +5,38 @@
     </header>
     <div class="row justify-content-center">
       <div class="col-12 col-md-9">
-        <article class="row flex-column align-items-center justify-content-center">
-          <div class="col-8 col-md-7 col-lg-4">
-            <img
-              :src="getURL('/assets/images/profressor.png')"
-              alt="교수님 이미지"
-              class="profressor-image"
-            />
+        <article class="row align-items-center justify-content-center mb-5">
+          <div class="col-10 col-md-7 col-lg-4">
+            <div class="member bg-img ratio-138">
+              <div
+                class="bg-img ratio-138 profile img-contain"
+                :style="{
+                  background: `url(${getURL('/assets/images/profressor2.png')})`,
+                  opacity: active ? 1 : 0,
+                }"
+              />
+              <div
+                class="bg-img ratio-138 profile-hovered img-contain"
+                :style="{
+                  background: `url(${getURL('/assets/images/profressor.png')})`,
+                  opacity: active ? 0 : 1,
+                }"
+              />
+            </div>
           </div>
-          <div class="col-12 col-lg-7 pb-5">
-            <div class="mb-3 text-center mt-3">
+          <div class="col-10 col-lg-7 pb-5">
+            <div class="mb-3 mt-3">
               <h2 class="text-28 text-lg-40 text-md-30 fw-700 mb-0">조영훈</h2>
               <span class="text-14">CHO YOUNG HUN</span>
             </div>
-
-            <ul class="list-unstyled text-center">
+            <ul class="list-unstyled">
               <li v-for="(item, i) in professorInfos" :key="i" class="mb-2">
                 <span class="text-16 text-lg-20">
                   {{ item }}
                 </span>
               </li>
             </ul>
-            <div class="d-flex align-items-center justify-content-center">
+            <div class="d-flex align-items-center">
               <button class="btn btn-primary rounded-circle px-2 py-2">
                 <i class="icon icon-mail text-20"></i>
               </button>
@@ -62,13 +72,13 @@
           <div class="member">
             <div class="position-relative" :style="{ paddingBottom: '138%' }">
               <div
-                class="bg-img ratio-138 profile"
+                class="bg-img ratio-138 profile img-contain"
                 :style="{
                   background: `url(${item.profile})`,
                 }"
               />
               <div
-                class="bg-img ratio-138 profile-hovered"
+                class="bg-img ratio-138 profile-hovered img-contain"
                 v-if="item.profileHovered"
                 :style="{
                   background: `url(${item.profileHovered})`,
@@ -93,19 +103,28 @@
 <script>
 import { ref, computed, inject, onMounted } from "vue";
 // import members from "@/database/members";
+import { useStore } from "vuex";
 export default {
   setup() {
     const getURL = inject("getImageURL");
     // const items = ref(members);
     const show = ref(false);
 
-    const professorInfos = ref([
-      "디지털 유산(기록화, 복원·복제, 영상분석, 콘텐츠), 건전성평가",
-      "산학연구관204호",
-      "실험실 / 디지털보존솔루션랩(연구관418호)",
-      "041)850-8539",
-      "joyh@kongju.ac.kr",
-    ]);
+    const store = useStore();
+    const infos = computed(() => {
+      return store.getters["auth/getInfos"];
+    });
+
+    const professorInfos = computed(() => {
+      const { home, email, tel, phone, address, facebook, instagram, addressSummary } = infos.value;
+      return [
+        "디지털 유산(기록화, 복원·복제, 영상분석, 콘텐츠), 건전성평가",
+        addressSummary,
+        "실험실 / 디지털보존솔루션랩(연구관418호)",
+        tel,
+        email,
+      ];
+    });
 
     function onEnter(el, done) {
       // gsap.to(el, {
@@ -119,14 +138,19 @@ export default {
     const { boardAPI } = inject("firebase");
     const items = ref(null);
     const getItems = async () => {
-      const data = await boardAPI.getAllBoards("member");
+      const data = await boardAPI.getAllBoards("member", { text: "no", value: "asc" });
       items.value = data;
     };
     onMounted(() => {
       getItems();
     });
 
-    return { getURL, professorInfos, items, onEnter };
+    const active = ref(false);
+    setInterval(() => {
+      active.value = active.value ? false : true;
+    }, 4000);
+
+    return { getURL, professorInfos, items, onEnter, infos, active };
   },
 };
 </script>
@@ -154,12 +178,15 @@ export default {
     width: 100%;
     min-height: 25%;
     padding: 1rem 1.5rem;
-    background-color: rgba($color: #000000, $alpha: 0.4);
+    @media (max-width: 1024px) {
+      padding: 0.5rem 1rem;
+    }
+    background-color: rgba($color: #000000, $alpha: 0.7);
     h6 {
       color: white;
     }
     span {
-      color: rgba($color: #ffffff, $alpha: 0.5);
+      color: rgba($color: #ffffff, $alpha: 0.7);
     }
   }
   &:hover {
@@ -180,7 +207,7 @@ export default {
 .fade-up-move,
 .fade-up-enter-active,
 .fade-up-leave-active {
-  transition: opacity 0.5s $default-ease;
+  transition: opacity 0.3s $default-ease;
 }
 
 .fade-up-enter-from,

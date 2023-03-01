@@ -6,6 +6,7 @@ const state = {
     tel: "041-850-8539",
     phone: "041-850-8539",
     address: "(32588) 충청남도 공주시 공주대학로 56 국립공주대학교 산학연구관 204호",
+    addressSummary: "국립공주대학교 산학연구관 204호",
     facebook: "https://www.facebook.com/profile.php?id=100085628826902",
     instagram: "https://www.instagram.com/dcs_lab/?hl=ko",
   },

@@ -150,10 +150,10 @@ export default {
       // console.log("data:", data);
       try {
         const response = await emailjs.send(
-          "service_l5l9i11",
-          "template_94gn9gi",
+          import.meta.env.VITE_EMAIL_SERVICE_ID,
+          import.meta.env.VITE_EMAIL_TEMPLATE_ID,
           data,
-          "7jcQG2Xyy2AjvRe1D"
+          import.meta.env.VITE_EMAIL_API_KEY
         );
         if (response) {
           // console.log("response:", response);

@@ -18,18 +18,20 @@
       </button>
     </header>
     <section>
-      <!-- {{ items }} -->
       <ul class="list-unstyled my-4 py-2 row">
         <template v-if="items !== null && items?.length">
-          <li class="col-3" v-for="(item, i) in items" :key="i">
-            <header>
-              {{ item.no }}
-            </header>
-            <section>
+          <li class="col-6 col-md-4 col-lg-2 mb-5" v-for="(item, i) in items" :key="i">
+            <section class="position-relative">
+              <header
+                class="position-absolute bg-primary text-white p-2"
+                :stlye="{ top: '24px', left: '24px' }"
+              >
+                {{ item.no }}
+              </header>
               <div
-                class="bg-img ratio-138"
+                class="bg-img ratio-138 img-contain"
                 :style="{
-                  background: item?.profile ? `url(${item.profile})` : '#999999',
+                  background: item?.profileHovered ? `url(${item.profileHovered})` : '#999999',
                 }"
               ></div>
             </section>
@@ -40,8 +42,8 @@
                 <li>{{ item.employment }}</li>
               </ul>
             </section>
-            <footer class="row mx-n2 mt-2">
-              <div class="col-8 px-2">
+            <footer class="row mx-n1 mt-2">
+              <div class="col-7 px-1">
                 <button
                   class="btn btn-outline-primary mb-2 w-100"
                   @click="
@@ -57,7 +59,7 @@
                   수정
                 </button>
               </div>
-              <div class="col-4 px-2">
+              <div class="col-5 px-1">
                 <button class="btn btn-error w-100" @click="removeItem('member', item.id)">
                   삭제
                 </button>
@@ -87,7 +89,7 @@ export default {
 
     const items = ref(null);
     const getItems = async () => {
-      const data = await boardAPI.getAllBoards("member");
+      const data = await boardAPI.getAllBoards("member", { text: "no", value: "asc" });
       items.value = data;
     };
     onMounted(() => {

@@ -19,12 +19,18 @@ const db = getFirestore(app);
 
 class blogAPI {
   // board 전체 불러오기
-  getAllBoards = async (documentName) => {
+  getAllBoards = async (
+    documentName,
+    orderOptions = {
+      text: "no",
+      value: "desc",
+    }
+  ) => {
     try {
       const col = collection(db, documentName);
 
       // const q = query(col, category ? where('category', '==', category) : null)
-      const q = query(col, orderBy("no", "desc"));
+      const q = query(col, orderBy(orderOptions.text, orderOptions.value));
       const snapshot = await getDocs(q);
       if (snapshot) {
         const boards = snapshot.docs.map((doc) => {

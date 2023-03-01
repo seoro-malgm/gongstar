@@ -26,6 +26,11 @@ $ratios: (13, 16, 27, 36, 40, 45, 53, 56, 67, 73, 87, 100, 138, 150);
       }
     }
   }
+  &.img-contain {
+    background-position: center center !important;
+    background-size: contain !important;
+    background-repeat: no-repeat !important;
+  }
 }
 
 .img-contain {
