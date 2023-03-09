@@ -10,7 +10,7 @@
     <div class="container-fluid container-md pb-5">
       <transition-group name="fade-up" tag="div" class="row m-1" appear>
         <div
-          class="col-6 col-md-3 news-column px-1 mb-2"
+          class="col-6 col-md-3 blog-column px-1 mb-2"
           v-for="(item, i) in items"
           :key="i"
           :data-index="i"
@@ -18,7 +18,7 @@
             transitionDelay: `${i * 0.1}s`,
           }"
         >
-          <div class="news">
+          <div class="blog">
             <a
               role="link"
               :href="item.url"
@@ -55,7 +55,7 @@
               </td>
               <td>
                 <div class="td-container">
-                  <a href="#" class="news-link">
+                  <a href="#" class="blog-link">
                     제목 {{ i }}
                     Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nihil, totam.
                   </a>
@@ -99,7 +99,7 @@ export default {
     const { boardAPI } = inject("firebase");
     const items = ref(null);
     const getItems = async () => {
-      const data = await boardAPI.getAllBoards("news");
+      const data = await boardAPI.getAllBoards("blog");
       items.value = data;
     };
     onMounted(() => {
@@ -111,14 +111,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.news-link {
+.blog-link {
   text-decoration: none;
   color: $gray-1;
 }
 
-.news {
+.blog {
   position: relative;
-  .news-info {
+  .blog-info {
     position: absolute;
     bottom: 0;
     width: 100%;
@@ -133,7 +133,7 @@ export default {
   }
 }
 
-// .news-column {
+// .blog-column {
 //   transition-delay: 0.25s;
 // }
 .fade-up-move,

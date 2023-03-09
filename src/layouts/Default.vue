@@ -23,7 +23,7 @@ export default {
     const collapsed = ref(false);
     const links = ref([
       {
-        name: "ABOUT",
+        name: "소개",
         // name: "어바웃",
         url: "/about",
       },
@@ -32,22 +32,22 @@ export default {
       //   url: "/professor",
       // },
       {
-        name: "MEMBERS",
+        name: "멤버",
         // name: "멤버",
         url: "/member",
       },
       {
-        name: "ARCHIVE",
-        // name: "아카이브",
-        url: "/archive",
+        name: "프로젝트",
+        // name: "프로젝트",
+        url: "/project",
       },
       {
-        name: "NEWS",
+        name: "블로그",
         // name: "소식",
-        url: "/news",
+        url: "/blog",
       },
       {
-        name: "CONTACT",
+        name: "연락하기",
         // name: "연락하기",
         url: "/contact",
       },

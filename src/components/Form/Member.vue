@@ -13,7 +13,7 @@
               }"
             >
               <template v-if="pending.profile">
-                <div class="spinner"></div>
+                <div class="spinner-border" role="status" />
               </template>
               <template v-else-if="!form?.profile && !pending.profile">
                 <div class="absoulte-center">여기를 눌러 원경 프로필 추가하세요.</div>
@@ -47,7 +47,7 @@
               }"
             >
               <template v-if="pending.profileHovered">
-                <div class="spinner"></div>
+                <div class="spinner-border" role="status" />
               </template>
               <template v-else-if="!form?.profileHovered && !pending.profileHovered">
                 <div class="absoulte-center">여기를 눌러 근경 프로필 추가하세요.</div>
@@ -80,11 +80,24 @@
           </div>
           <div class="form-group mb-3">
             <label for="name">이름</label>
-            <input type="text" class="form-control" id="name" v-model="form.name" />
+            <input
+              type="text"
+              class="form-control"
+              id="name"
+              v-model="form.name"
+              placeholder="멤버의 이름을 선택하세요"
+            />
           </div>
           <div class="form-group mb-3">
             <label for="type">분류(학사,석사과정 등)</label>
-            <input type="text" class="form-control" id="type" v-model="form.type" />
+            <select class="form-select" v-model="form.type">
+              <option :value="null" selected disabled>분류를 선택하세요</option>
+              <option value="연구원">연구원</option>
+              <option value="박사과정">박사과정</option>
+              <option value="석사과정">석사과정</option>
+              <option value="학사과정">학사과정</option>
+              <option value="졸업생">졸업생</option>
+            </select>
           </div>
           <div class="form-group mb-3">
             <label for="employment">소속</label>

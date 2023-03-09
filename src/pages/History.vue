@@ -1,5 +1,5 @@
 <template>
-  <div>관리자페이지</div>
+  <div>history</div>
 </template>
 
 <script>

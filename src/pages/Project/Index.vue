@@ -6,7 +6,7 @@
     <section v-if="items?.length">
       <transition-group name="swipe" tag="div" class="row mx-n1" appear>
         <div
-          class="col-12 col-md-6 col-lg-4 archive-item-column mb-1 mb-md-3 px-1"
+          class="col-12 col-md-6 col-lg-3 project-item-column mb-1 mb-md-3 px-1"
           :class="`swipe-${side[Math.round(Math.random() * (side.length - 1))]} ${Math.round(
             Math.random() * side.length - 1
           )}`"
@@ -20,14 +20,14 @@
           @mouseleave="hoveredItem = null"
           @click="
             $router.push({
-              name: 'ArchiveDetail',
+              name: 'ProjectDetail',
               params: {
                 id: item.id,
               },
             })
           "
         >
-          <figure class="archive-item bg-img ratio-56">
+          <figure class="project-item bg-img ratio-56">
             <img class="item-image" :src="item.thumbnail" :alt="`${item.title} 썸네일 이미지`" />
             <figcaption class="p-3">
               <strong
@@ -67,11 +67,11 @@
 
 <script>
 import { ref, inject, onMounted } from "vue";
-// import allArchive from "@/database/archive.json";
+// import allProject from "@/database/project.json";
 
 export default {
   setup() {
-    // const items = allArchive;
+    // const items = allProject;
     // console.log("items:", items);
     const getURL = inject("getImageURL");
     const side = ref(["top", "bottom", "left", "right"]);
@@ -148,13 +148,14 @@ export default {
     //   },
     // ]);
     const { boardAPI } = inject("firebase");
-    const items = ref(null);
+    const items = ref([]);
     const getItems = async () => {
-      const data = await boardAPI.getAllBoards("archive");
+      const data = await boardAPI.getAllBoards("project");
       items.value = data;
     };
     onMounted(() => {
       getItems();
+      console.log("items.value:", items.value);
     });
 
     const hoveredItem = ref(null);
@@ -164,8 +165,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.archive-item-column {
-  .archive-item {
+.project-item-column {
+  .project-item {
     position: relative;
     overflow: hidden;
     transition: transform 0.3s $default-ease;
@@ -233,7 +234,7 @@ export default {
     }
   }
   &.swipe-top {
-    .archive-item {
+    .project-item {
       &:after {
         top: 0;
         left: 0;
@@ -241,7 +242,7 @@ export default {
     }
   }
   &.swipe-bottom {
-    .archive-item {
+    .project-item {
       &:after {
         bottom: 0;
         left: 0;
@@ -249,7 +250,7 @@ export default {
     }
   }
   &.swipe-left {
-    .archive-item {
+    .project-item {
       &:after {
         top: 0;
         left: 0;
@@ -259,7 +260,7 @@ export default {
     }
   }
   &.swipe-right {
-    .archive-item {
+    .project-item {
       &:after {
         top: 0;
         right: 0;
@@ -273,7 +274,7 @@ export default {
 .swipe-move,
 .swipe-enter-active,
 .swipe-leave-active {
-  .archive-item {
+  .project-item {
     &:after {
       transition-delay: 2s;
       transition: all 0.8s $default-ease;
@@ -285,7 +286,7 @@ export default {
 .swipe-leave-to {
   &.swipe-top,
   &.swipe-bottom {
-    .archive-item {
+    .project-item {
       &:after {
         height: 100%;
       }
@@ -293,7 +294,7 @@ export default {
   }
   &.swipe-left,
   &.swipe-right {
-    .archive-item {
+    .project-item {
       &:after {
         width: 100%;
       }

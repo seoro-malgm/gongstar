@@ -7,25 +7,21 @@
             <h6>썸네일</h6>
             <label
               for="thumbnail"
-              class="bg-img ratio-53 rounded position-relative"
-              :style="{
-                background: form?.thumbnail ? `url(${form.thumbnail})` : '#999999',
-              }"
+              class="btn btn-primary position-relative"
+              v-if="!form?.thumbnail && !pending.thumbnail"
             >
-              <template v-if="!form?.thumbnail">
-                <div class="absoulte-center">여기를 눌러 썸네일을 추가하세요.</div>
-              </template>
-              <template v-else-if="pending.thumbnail">
-                <div class="spinner"></div>
-              </template>
-              <template v-else-if="form?.thumbnail && !pending.thumbnail">
-                <div class="position-absolute" :style="{ top: '10px', right: '10px' }">
-                  <button class="btn btn-black px-2 py-1" @click.prevent="form.thumbnail = null">
-                    삭제
-                  </button>
-                </div>
-              </template>
+              썸네일 등록하기
             </label>
+            <template v-if="pending.thumbnail">
+              <div class="spinner-border" role="status" />
+            </template>
+
+            <template v-if="form?.thumbnail && !pending.thumbnail">
+              <button class="btn btn-black px-2 py-1 mb-2" @click.prevent="form.thumbnail = null">
+                썸네일 삭제
+              </button>
+              <img :src="form.thumbnail" alt="" />
+            </template>
             <input
               type="file"
               class="form-control d-none"
@@ -208,17 +204,13 @@ export default {
       const file = e.target.files[0];
       if (!file) return;
       // 초기화
-      const oldURL = form.value.thumbnail;
-      if (oldURL) {
-        storageAPI.deleteImage(`thumbnail/${oldURL}`);
-      }
       form.value.thumbnail = null;
-      // pending 시작
-      pending.value.thumbnail = true;
       const type = file?.type.split("/").at(-1);
       const fileName = `thumbnail_${new Date().valueOf()}.${type}`;
       // gif 이미지 업로드
       if (type === "gif") {
+        // pending 시작
+        pending.value.thumbnail = true;
         try {
           const { name, url } = await storageAPI.getImageURL(
             file,
@@ -228,26 +220,38 @@ export default {
           );
           if (name && url) {
             form.value.thumbnail = url;
+            pending.value.thumbnail = false;
           }
         } catch (error) {
           window.toast("파일업로드 실패");
+          pending.value.thumbnail = false;
         }
-      } else {
-        // gif 이미지가 아닌 경우 파일 업로드
+      }
+      // gif 이미지가 아닌 경우 파일 업로드
+      else {
+        // pending 시작
+        pending.value.thumbnail = true;
+        console.log("1:", pending.value.thumbnail);
         // 가로 1000으로 리사이징하여 url 적용함
         resize.photo("w", file, 1000, "object", async (result) => {
-          const { name, url } = await storageAPI.getImageURL(
-            result.blob,
-            result.blob.type,
-            "thumbnail",
-            fileName
-          );
-          if (name && url) {
-            form.value.thumbnail = url;
+          try {
+            const { name, url } = await storageAPI.getImageURL(
+              result.blob,
+              result.blob.type,
+              "thumbnail",
+              fileName
+            );
+            if (name && url) {
+              form.value.thumbnail = url;
+              pending.value.thumbnail = false;
+              console.log("2:", pending.value.thumbnail);
+            }
+          } catch (error) {
+            window.toast("파일업로드 실패");
+            pending.value.thumbnail = false;
           }
         });
       }
-      pending.value.thumbnail = false;
     };
 
     // 수정 불러오기
@@ -267,14 +271,14 @@ export default {
       } catch (error) {
         window.toast("잘못된 접근입니다");
         console.error("error:", error);
-        router.push("/admin/archive");
+        router.push("/admin/project");
       }
       pending.value.init = false;
     };
     onMounted(() => {
       form.value.no = route?.query?.no;
       if (id.value) {
-        init("archive", id.value);
+        init("project", id.value);
       }
     });
 

@@ -39,7 +39,7 @@
           <p v-html="item.desc" />
           <!-- <template v-if="item?.images?.length">
             <figure v-for="(image, i) in item.images" class="mb-5">
-              <img :src="getURL(`/aseets/archive/${id}/${image.src}`)" :alt="image?.caption" />
+              <img :src="getURL(`/aseets/project/${id}/${image.src}`)" :alt="image?.caption" />
               <figcaption v-if="image.caption" class="text-13 text-md-14">
                 {{ image.caption }}
               </figcaption>
@@ -75,11 +75,11 @@
 <script>
 import { ref, computed, onMounted, inject } from "vue";
 import { useRoute, useRouter } from "vue-router";
-// import allArchive from "@/database/archive.json";
+// import allProject from "@/database/project.json";
 
 export default {
   setup() {
-    // const items = allArchive;
+    // const items = allProject;
     const getURL = inject("getImageURL");
     const route = useRoute();
     const id = computed(() => {
@@ -89,7 +89,7 @@ export default {
     const { boardAPI } = inject("firebase");
     const item = ref(null);
     const getItem = async () => {
-      const data = await boardAPI.getBoard("archive", id.value);
+      const data = await boardAPI.getBoard("project", id.value);
       item.value = data;
     };
     onMounted(() => {

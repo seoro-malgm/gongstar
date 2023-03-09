@@ -89,7 +89,7 @@
             <div class="member-info">
               <div class="d-flex align-items-end mb-1">
                 <h6 class="text-20 text-md-26 mb-0">{{ item.name }}</h6>
-                <span class="text-16 text-md-18 ms-2 text-white">{{ item.type }}</span>
+                <!-- <span class="text-16 text-md-18 ms-2 text-white">{{ item.type }}</span> -->
               </div>
               <span class="text-14 text-md-16">{{ item.employment }}</span>
             </div>

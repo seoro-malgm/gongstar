@@ -41,17 +41,22 @@ export default {
     const collapsed = ref(false);
     const links = ref([
       {
-        name: "아카이브 관리",
-        url: "/admin/archive",
+        name: "프로젝트 관리",
+        url: "/admin/project",
       },
       {
         name: "멤버 관리",
         url: "/admin/member",
       },
       {
-        name: "뉴스 관리",
-        url: "/admin/news",
+        name: "연구실적 관리",
+        url: "/admin/history",
       },
+      {
+        name: "블로그 관리",
+        url: "/admin/blog",
+      },
+
       {
         name: "로그아웃",
         url: "/admin/logout",

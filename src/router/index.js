@@ -19,42 +19,47 @@ const routes = [
         component: () => import("@/pages/About.vue"),
       },
       {
-        path: "professor",
-        name: "Professor",
-        component: () => import("@/pages/Professor.vue"),
+        path: "history",
+        name: "History",
+        component: () => import("@/pages/History.vue"),
       },
+      // {
+      //   path: "professor",
+      //   name: "Professor",
+      //   component: () => import("@/pages/Professor.vue"),
+      // },
       {
         path: "member",
         name: "Member",
         component: () => import("@/pages/Member.vue"),
       },
       {
-        path: "archive",
+        path: "project",
         children: [
           {
             path: "",
-            name: "ArchiveList",
-            component: () => import("@/pages/Archive/Index.vue"),
+            name: "ProjectList",
+            component: () => import("@/pages/Project/Index.vue"),
           },
           {
             path: ":id",
-            name: "ArchiveDetail",
-            component: () => import("@/pages/Archive/Detail.vue"),
+            name: "ProjectDetail",
+            component: () => import("@/pages/Project/Detail.vue"),
           },
         ],
       },
       {
-        path: "news",
+        path: "blog",
         children: [
           {
             path: "",
-            name: "NewsList",
-            component: () => import("@/pages/News/Index.vue"),
+            name: "BlogList",
+            component: () => import("@/pages/Blog/Index.vue"),
           },
           {
             path: ":id",
-            name: "NewsDetail",
-            component: () => import("@/pages/News/Detail.vue"),
+            name: "BlogDetail",
+            component: () => import("@/pages/Blog/Detail.vue"),
           },
         ],
       },
@@ -75,7 +80,7 @@ const routes = [
           {
             path: "",
             name: "Admin",
-            redirect: "/admin/archive",
+            redirect: "/admin/project",
           },
           {
             path: "login",
@@ -86,11 +91,11 @@ const routes = [
             },
           },
           {
-            path: "archive",
-            name: "AdminArchive",
-            component: () => import("@/pages/Admin/Archive.vue"),
+            path: "project",
+            name: "AdminProject",
+            component: () => import("@/pages/Admin/Project.vue"),
             meta: {
-              title: "아카이브 관리",
+              title: "프로젝트 관리",
             },
           },
           {
@@ -102,16 +107,24 @@ const routes = [
             },
           },
           {
-            path: "news",
-            name: "AdminNews",
-            component: () => import("@/pages/Admin/News.vue"),
+            path: "history",
+            name: "AdminHistory",
+            component: () => import("@/pages/Admin/History.vue"),
             meta: {
-              title: "뉴스 관리",
+              title: "연구실적 관리",
+            },
+          },
+          {
+            path: "blog",
+            name: "AdminBlog",
+            component: () => import("@/pages/Admin/Blog.vue"),
+            meta: {
+              title: "블로그 관리",
             },
           },
           {
             path: "write",
-            name: "AdminArchiveWrite",
+            name: "AdminWrite",
             component: () => import("@/pages/Admin/Write.vue"),
           },
           {

@@ -3,6 +3,7 @@ import commons from "@/plugins/commons";
 import firebase from "@/plugins/firebase";
 import globals from "@/plugins/globalComponents";
 
+import "bootstrap";
 import "@/assets/styles/index.scss";
 // import "@/locales/i18n.js";
 import App from "./App.vue";

@@ -3,11 +3,11 @@
     <header class="pb-4 border-bottom">
       <h4>{{ typeKor }} {{ id ? "수정하기" : "새로 올리기" }}</h4>
     </header>
-    <template v-if="type === 'archive'">
-      <FormArchive
+    <template v-if="type === 'project'">
+      <FormProject
         :id="id"
-        @submit="($event) => submit('archive', $event)"
-        @update="($event) => update('archive', { id, ...$event })"
+        @submit="($event) => submit('project', $event)"
+        @update="($event) => update('project', { id, ...$event })"
       />
     </template>
     <template v-if="type === 'member'">
@@ -17,11 +17,11 @@
         @update="($event) => update('member', { id, ...$event })"
       />
     </template>
-    <template v-if="type === 'news'">
-      <FormNews
+    <template v-if="type === 'blog'">
+      <FormBlog
         :id="id"
-        @submit="($event) => submit('news', $event)"
-        @update="($event) => update('news', { id, ...$event })"
+        @submit="($event) => submit('blog', $event)"
+        @update="($event) => update('blog', { id, ...$event })"
       />
     </template>
 
@@ -35,14 +35,14 @@
 <script>
 import { computed, inject, onMounted, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import FormArchive from "@/components/Form/Archive.vue";
+import FormProject from "@/components/Form/Project.vue";
 import FormMember from "@/components/Form/Member.vue";
-import FormNews from "@/components/Form/News.vue";
+import FormBlog from "@/components/Form/Blog.vue";
 export default {
   components: {
-    FormArchive,
+    FormProject,
     FormMember,
-    FormNews,
+    FormBlog,
   },
   setup() {
     const route = useRoute();
@@ -62,9 +62,9 @@ export default {
     });
     const typeKor = computed(() => {
       const types = {
-        archive: "아카이브",
+        project: "프로젝트",
         member: "멤버",
-        news: "뉴스",
+        blog: "블로그",
       };
       return types[type.value] || "";
     });

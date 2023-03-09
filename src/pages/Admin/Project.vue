@@ -8,7 +8,7 @@
           $router.push({
             path: '/admin/write',
             query: {
-              type: 'news',
+              type: 'project',
               no: items?.length ? +items[0].no + 1 : null,
             },
           })
@@ -19,37 +19,42 @@
     </header>
     <section>
       <!-- {{ items }} -->
-      <ul class="list-unstyled my-4 py-2 row">
-        <template v-if="items?.length">
-          <li class="col-6 col-md-3 border-bottom py-2" v-for="(item, i) in items" :key="i">
-            <div>
+      <ul class="list-unstyled my-4 py-2">
+        <template v-if="items !== null && items?.length">
+          <li class="row mb-2 bg-gray-2 text-white py-2 d-none d-md-flex">
+            <div class="col-1">번호</div>
+            <div class="col-2">이미지</div>
+            <div class="col-7">정보</div>
+            <div class="col-2 text-right">관리</div>
+          </li>
+          <li class="row border-bottom py-2" v-for="(item, i) in items" :key="i">
+            <div class="col-1 col-md-1">
               {{ item.no }}
             </div>
-            <div>
+            <div class="col-11 col-md-2">
               <div
                 class="bg-img ratio-53"
                 :style="{
-                  background: item?.images ? `url(${item.images[0]})` : '#999999',
+                  background: item?.thumbnail ? `url(${item.thumbnail})` : '#999999',
                 }"
               ></div>
             </div>
-            <div>
-              <p class="text-truncate line-2 mb-2 pt-1">
-                {{ item.desc }}
-              </p>
-              <a :href="item.url" class="btn btn-text p-0">
-                <i class="icon icon-link text-24"></i>
-              </a>
+            <div class="col-12 col-md-7">
+              <h6 class="text-truncate">{{ item.title }}</h6>
+              <ul class="p-0 m-0 text-gray-2 text-13 text-truncate">
+                <li>{{ item.subtitle }}</li>
+                <li>{{ item.client }}</li>
+              </ul>
             </div>
-            <div>
+            <div class="col-12 col-md-2">
               <div class="d-flex flex-column">
                 <button
-                  class="btn btn-outline-primary mb-2 w-100"
+                  class="btn btn-outline-primary mb-2"
                   @click="
                     $router.push({
                       path: '/admin/write',
                       query: {
-                        type: 'news',
+                        type: 'project',
                         id: item.id,
                       },
                     })
@@ -57,9 +62,7 @@
                 >
                   수정
                 </button>
-                <button class="btn btn-error w-100" @click="removeItem('news', item.id)">
-                  삭제
-                </button>
+                <button class="btn btn-error" @click="removeItem('project', item.id)">삭제</button>
               </div>
             </div>
           </li>
@@ -69,7 +72,7 @@
             <template v-if="!items">
               <div class="spinner-border" role="status" />
             </template>
-            <template v-else> 업로드된 뉴스 데이터가 없습니다. </template>
+            <template v-else> 업로드된 프로젝트 데이터가 없습니다. </template>
           </li>
         </template>
       </ul>
@@ -86,7 +89,7 @@ export default {
 
     const items = ref(null);
     const getItems = async () => {
-      const data = await boardAPI.getAllBoards("news");
+      const data = await boardAPI.getAllBoards("project");
       items.value = data;
     };
     onMounted(() => {
