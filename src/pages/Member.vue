@@ -52,51 +52,61 @@
       </div>
     </div>
     <section>
-      <div class="container my-auto">
-        <header class="my-3 mt-md-5 mb-4">
-          <h1 class="page-title">MEMBERS</h1>
-        </header>
+      <div class="container-fluid container-md pb-5">
+        <div v-for="(value, key) in members" :key="key">
+          <div class="container my-auto">
+            <header class="my-3 mt-md-5 mb-4">
+              <h1 class="page-title">{{ types[key] }}</h1>
+            </header>
+          </div>
+          <transition-group
+            name="fade-up"
+            tag="div"
+            class="row mx-n1 mx-md-n2"
+            appear
+            @enter="onEnter"
+          >
+            <div
+              class="col-6 col-md-3 member-column mb-1 mb-md-3 px-1 px-md-2"
+              v-for="(item, i) in value"
+              :key="i"
+              :data-index="i"
+              :style="{
+                transitionDelay: `${i * 0.1}s`,
+              }"
+            >
+              <div class="member">
+                <div class="position-relative" :style="{ paddingBottom: '138%' }">
+                  <div
+                    class="bg-img ratio-138 profile img-contain"
+                    :style="{
+                      background: `url(${item.profile})`,
+                    }"
+                  />
+                  <div
+                    class="bg-img ratio-138 profile-hovered img-contain"
+                    v-if="item.profileHovered"
+                    :style="{
+                      background: `url(${item.profileHovered})`,
+                    }"
+                  />
+                </div>
+
+                <div class="member-info">
+                  <div class="d-flex align-items-end mb-1">
+                    <h6 class="text-14 text-md-26 mb-0">{{ item.name }}</h6>
+                    <!-- <span class="text-16 text-md-18 ms-2 text-white">{{ item.type }}</span> -->
+                  </div>
+                  <p class="text-12 text-md-16 lh-90 mb-0">{{ item.employment }}</p>
+                </div>
+              </div>
+            </div>
+          </transition-group>
+        </div>
       </div>
     </section>
-    <div class="container-fluid container-md pb-5">
-      <transition-group name="fade-up" tag="div" class="row" appear @enter="onEnter">
-        <div
-          class="col-6 col-md-3 member-column mb-3"
-          v-for="(item, i) in items"
-          :key="i"
-          :data-index="i"
-          :style="{
-            transitionDelay: `${i * 0.1}s`,
-          }"
-        >
-          <div class="member">
-            <div class="position-relative" :style="{ paddingBottom: '138%' }">
-              <div
-                class="bg-img ratio-138 profile img-contain"
-                :style="{
-                  background: `url(${item.profile})`,
-                }"
-              />
-              <div
-                class="bg-img ratio-138 profile-hovered img-contain"
-                v-if="item.profileHovered"
-                :style="{
-                  background: `url(${item.profileHovered})`,
-                }"
-              />
-            </div>
 
-            <div class="member-info">
-              <div class="d-flex align-items-end mb-1">
-                <h6 class="text-20 text-md-26 mb-0">{{ item.name }}</h6>
-                <!-- <span class="text-16 text-md-18 ms-2 text-white">{{ item.type }}</span> -->
-              </div>
-              <span class="text-14 text-md-16">{{ item.employment }}</span>
-            </div>
-          </div>
-        </div>
-      </transition-group>
-    </div>
+    <!-- {{ members }} -->
   </div>
 </template>
 
@@ -150,7 +160,26 @@ export default {
       active.value = active.value ? false : true;
     }, 4000);
 
-    return { getURL, professorInfos, items, onEnter, infos, active };
+    const types = ref({
+      researcher: "연구원",
+      bachelor: "학사과정",
+      master: "석사과정",
+      doctor: "박사과정",
+      graduate: "졸업생",
+    });
+
+    const members = computed(() => {
+      if (!items?.value) return null;
+      return {
+        researcher: items.value.filter((i) => i.type === "연구원"),
+        bachelor: items.value.filter((i) => i.type === "학사과정"),
+        master: items.value.filter((i) => i.type === "석사과정"),
+        doctor: items.value.filter((i) => i.type === "박사과정"),
+        graduate: items.value.filter((i) => i.type === "졸업생"),
+      };
+    });
+
+    return { getURL, professorInfos, items, onEnter, infos, active, types, members };
   },
 };
 </script>
@@ -185,7 +214,7 @@ export default {
     h6 {
       color: white;
     }
-    span {
+    p {
       color: rgba($color: #ffffff, $alpha: 0.7);
     }
   }

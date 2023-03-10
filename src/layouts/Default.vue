@@ -42,10 +42,16 @@ export default {
         url: "/project",
       },
       {
+        name: "연구실적",
+        // name: "소식",
+        url: "/history",
+      },
+      {
         name: "블로그",
         // name: "소식",
         url: "/blog",
       },
+
       {
         name: "연락하기",
         // name: "연락하기",

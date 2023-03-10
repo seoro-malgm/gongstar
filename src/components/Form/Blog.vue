@@ -87,15 +87,6 @@ export default {
       no: null,
       title: null,
       thumbnail: null,
-      subtitle: null,
-      subject: null,
-      client: null,
-      date: {
-        start: null,
-        end: null,
-      },
-      summary: null,
-      keyword: [],
       desc: "",
     });
 

@@ -29,17 +29,14 @@
               <div
                 class="bg-img ratio-53"
                 :style="{
-                  background: item?.images ? `url(${item.images[0]})` : '#999999',
+                  background: item?.thumbnail ? `url(${item.thumbnail})` : '#999999',
                 }"
               ></div>
             </div>
             <div>
               <p class="text-truncate line-2 mb-2 pt-1">
-                {{ item.desc }}
+                <div v-html="item.desc" class="desc"></div>
               </p>
-              <a :href="item.url" class="btn btn-text p-0">
-                <i class="icon icon-link text-24"></i>
-              </a>
             </div>
             <div>
               <div class="d-flex flex-column">
@@ -113,4 +110,12 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+
+.desc::v-deep * {
+    font-size: 14px;
+    margin-top: 2px;
+    font-weight: 400;
+    color: #222 !important;
+  }
+</style>

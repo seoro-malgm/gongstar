@@ -1,7 +1,7 @@
 <template>
   <div class="container-fluid min-vh-100 section-gap mt-5">
     <header class="my-3 mt-md-5 mb-4">
-      <h1 class="page-title">ARCHIVE</h1>
+      <h1 class="page-title">PROJECT</h1>
     </header>
     <section v-if="items?.length">
       <transition-group name="swipe" tag="div" class="row mx-n1" appear>

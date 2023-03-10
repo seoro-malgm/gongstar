@@ -62,7 +62,7 @@ class blogAPI {
   // board 추가
   addBoard = async (documentName, data) => {
     const docRef = await addDoc(collection(db, documentName), data);
-    // console.log('docRef:', docRef)
+    console.log("docRef:", docRef);
     if (docRef?.id) {
       return docRef.id;
     }
@@ -84,6 +84,26 @@ class blogAPI {
     });
     await setDoc(doc(db, documentName, id), data);
     return true;
+  };
+
+  setHistory = async (collectionName = "history", sections) => {
+    const response = new Promise(async (resolve, reject) => {
+      for (let index = 0; index <= sections.length; index++) {
+        const sec = sections[index];
+        if (sec?.isNew) {
+          this.addBoard(collectionName, {
+            ...sec,
+            isNew: false,
+          });
+        } else {
+          if (sec?.id) {
+            this.updateBoard(collectionName, sec.id, sec);
+          }
+        }
+      }
+      return resolve(true);
+    });
+    return response;
   };
 }
 

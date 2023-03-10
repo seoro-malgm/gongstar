@@ -3,14 +3,15 @@
     <section>
       <div class="container my-auto">
         <header class="my-3 mt-md-5 mb-4">
-          <h1 class="page-title">NEWS</h1>
+          <h1 class="page-title">블로그</h1>
         </header>
       </div>
     </section>
     <div class="container-fluid container-md pb-5">
-      <transition-group name="fade-up" tag="div" class="row m-1" appear>
+      <div class="grid-container">
+        <!-- <transition-group name="fade-up" tag="div" appear> -->
         <div
-          class="col-6 col-md-3 blog-column px-1 mb-2"
+          class="grid-item"
           v-for="(item, i) in items"
           :key="i"
           :data-index="i"
@@ -18,17 +19,14 @@
             transitionDelay: `${i * 0.1}s`,
           }"
         >
-          <div class="blog">
-            <a
-              role="link"
-              :href="item.url"
-              target="_blank"
-              class="bg-img ratio-100 d-block b-btn btn-text"
-              :style="{ background: `url(${item.images[0]})` }"
-            />
+          <div class="grid-item-content">
+            <a role="link" target="_blank" class="b-btn btn-text">
+              <img :src="item.thumbnail" alt="" />
+            </a>
           </div>
         </div>
-      </transition-group>
+        <!-- </transition-group> -->
+      </div>
       <!-- <div class="table-wrapper">
         <table class="table">
           <thead>
@@ -93,7 +91,11 @@
 
 <script>
 import { ref, computed, inject, onMounted } from "vue";
+import VueMasonry from "vue-masonry-css";
 export default {
+  components: {
+    VueMasonry,
+  },
   setup() {
     const getURL = inject("getImageURL");
     const { boardAPI } = inject("firebase");
@@ -111,26 +113,18 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.blog-link {
-  text-decoration: none;
-  color: $gray-1;
+.grid-container {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-content: start;
+  max-height: 92vh;
+  padding: 0 10px;
 }
 
-.blog {
-  position: relative;
-  .blog-info {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    padding: 1rem 1.5rem;
-    background-color: rgba($color: #000000, $alpha: 0.4);
-    h6 {
-      color: white;
-    }
-    span {
-      color: rgba($color: #ffffff, $alpha: 0.5);
-    }
-  }
+.grid-item {
+  width: 20%;
+  padding: 0.3rem;
 }
 
 // .blog-column {
