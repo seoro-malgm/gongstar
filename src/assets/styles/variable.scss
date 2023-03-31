@@ -1,18 +1,11 @@
-$primary: #0b318f;
+$primary: #231815;
 $secondary: #73c6c8;
 $dummy: #999999;
-$gray-1: #2c2c2f;
-$gray-2: #4d5357;
-$gray-3: #ebf6fb;
+$gray-1: #171717;
+$gray-2: #555555;
+$gray-3: #e7e7e7;
 $white: #ffffff;
-$error: #a20000;
-
-$gradient-primary: linear-gradient(
-  90deg,
-  rgba(11, 49, 143, 1) 0%,
-  rgba(11, 49, 143, 1) 15%,
-  rgba(115, 198, 200, 1) 100%
-);
+$error: #890707;
 
 // padding
 $padding-x: 16px;
@@ -92,15 +85,6 @@ $container-max-widths: (
 
 .list-style-disc {
   list-style-type: disc;
-}
-
-.section-gap {
-  margin-top: 96px;
-  margin-bottom: 96px;
-  @media (min-width: 1320px) {
-    margin-top: 120px;
-    margin-bottom: 120px;
-  }
 }
 
 $default-ease: cubic-bezier(0.35, 0.05, 0.45, 0.98);

@@ -130,7 +130,7 @@ export default {
       margin: 0;
       .link-item {
         .router-link {
-          padding: 16px 10px;
+          padding: 8px;
           font-size: 16px;
           position: relative;
           display: block;
@@ -153,7 +153,7 @@ export default {
             content: "";
             z-index: -1;
           }
-          &.router-link-active,
+          // &.router-link-active,
           &.router-link-exact-active {
             &:after {
               width: 100%;

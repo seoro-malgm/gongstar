@@ -1,12 +1,10 @@
 <template>
-  <div>
+  <div class="layout-default">
     <global-nav :links="links" :collapsed="collapsed" @toggle="collapsed = true" />
-    <div class="row">
-      <main id="main" class="col-10 col-lg-11 offset-2 offset-lg-1">
-        <router-view />
-      </main>
-      <!-- <global-footer /> -->
-    </div>
+    <main id="main">
+      <router-view />
+    </main>
+    <!-- <global-footer /> -->
   </div>
 </template>
 
@@ -23,29 +21,15 @@ export default {
     const collapsed = ref(false);
     const links = ref([
       {
-        name: "소개",
-        // name: "어바웃",
-        url: "/about",
-      },
-      // {
-      //   name: "PROFESSOR",
-      //   url: "/professor",
-      // },
-      {
-        name: "멤버",
-        // name: "멤버",
-        url: "/member",
+        name: "홈",
+        url: "/",
       },
       {
         name: "프로젝트",
         // name: "프로젝트",
         url: "/project",
       },
-      {
-        name: "연구실적",
-        // name: "소식",
-        url: "/history",
-      },
+
       {
         name: "블로그",
         // name: "소식",
@@ -68,8 +52,9 @@ export default {
 
 <style lang="scss" scoped>
 .layout-default {
-  display: flex;
-  flex-direction: row;
-  align-items: stretch;
+  #main {
+    min-height: 4000px;
+    padding-top: 88px;
+  }
 }
 </style>

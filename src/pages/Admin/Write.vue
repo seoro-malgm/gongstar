@@ -10,13 +10,6 @@
         @update="($event) => update('project', { id, ...$event })"
       />
     </template>
-    <template v-if="type === 'member'">
-      <FormMember
-        :id="id"
-        @submit="($event) => submit('member', $event)"
-        @update="($event) => update('member', { id, ...$event })"
-      />
-    </template>
     <template v-if="type === 'blog'">
       <FormBlog
         :id="id"
@@ -36,12 +29,10 @@
 import { computed, inject, onMounted, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import FormProject from "@/components/Form/Project.vue";
-import FormMember from "@/components/Form/Member.vue";
 import FormBlog from "@/components/Form/Blog.vue";
 export default {
   components: {
     FormProject,
-    FormMember,
     FormBlog,
   },
   setup() {

@@ -3,7 +3,7 @@
     <section>
       <div class="container my-auto">
         <header class="my-3 mt-md-5 mb-4">
-          <h1 class="page-title">블로그</h1>
+          <h1 class="page-title">BLOG</h1>
         </header>
       </div>
     </section>
@@ -20,9 +20,9 @@
           }"
         >
           <div class="grid-item-content">
-            <a role="link" target="_blank" class="b-btn btn-text">
+            <router-link role="link" class="b-btn btn-text" :to="`/blog/${item.id}`">
               <img :src="item.thumbnail" alt="" />
-            </a>
+            </router-link>
           </div>
         </div>
         <!-- </transition-group> -->
@@ -91,10 +91,10 @@
 
 <script>
 import { ref, computed, inject, onMounted } from "vue";
-import VueMasonry from "vue-masonry-css";
+// import VueMasonry from "vue-masonry-css";
 export default {
   components: {
-    VueMasonry,
+    // VueMasonry,
   },
   setup() {
     const getURL = inject("getImageURL");
@@ -125,6 +125,16 @@ export default {
 .grid-item {
   width: 20%;
   padding: 0.3rem;
+  .grid-item-content {
+    img {
+      transition: transform 0.2s;
+    }
+    &:hover {
+      img {
+        transform: scale(1.03);
+      }
+    }
+  }
 }
 
 // .blog-column {

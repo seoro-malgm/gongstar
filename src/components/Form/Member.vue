@@ -5,6 +5,7 @@
         <div class="col-12 col-md-3 mb-3">
           <div class="form-group">
             <h6>원경 프로필</h6>
+
             <label
               for="profile"
               class="bg-img ratio-138 rounded position-relative img-contain"
@@ -13,7 +14,7 @@
               }"
             >
               <template v-if="pending.profile">
-                <div class="spinner-border" role="status" />
+                <div class="spinner-border absolute-center" role="status" />
               </template>
               <template v-else-if="!form?.profile && !pending.profile">
                 <div class="absoulte-center">여기를 눌러 원경 프로필 추가하세요.</div>
@@ -47,7 +48,7 @@
               }"
             >
               <template v-if="pending.profileHovered">
-                <div class="spinner-border" role="status" />
+                <div class="spinner-border absolute-center" role="status" />
               </template>
               <template v-else-if="!form?.profileHovered && !pending.profileHovered">
                 <div class="absoulte-center">여기를 눌러 근경 프로필 추가하세요.</div>
@@ -89,16 +90,25 @@
             />
           </div>
           <div class="form-group mb-3">
-            <label for="type">분류(학사,석사과정 등)</label>
-            <select class="form-select" v-model="form.type">
+            <label for="category">대분류(연구원/재학생/졸업생)</label>
+            <select class="form-select" v-model="form.category">
               <option :value="null" selected disabled>분류를 선택하세요</option>
               <option value="연구원">연구원</option>
-              <option value="박사과정">박사과정</option>
-              <option value="석사과정">석사과정</option>
-              <option value="학사과정">학사과정</option>
+              <option value="재학생">재학생</option>
               <option value="졸업생">졸업생</option>
             </select>
           </div>
+          <div class="form-group mb-3">
+            <label for="type">중분류(학사,석사과정 등)</label>
+            <input
+              type="text"
+              class="form-control"
+              id="type"
+              v-model="form.type"
+              placeholder="멤버의 분류를 입력하세요"
+            />
+          </div>
+
           <div class="form-group mb-3">
             <label for="employment">소속</label>
             <input type="text" class="form-control" id="employment" v-model="form.employment" />
@@ -123,7 +133,7 @@
 <script>
 import { ref, computed, inject, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
-// import allMembers from "@/database/members.json";
+import allMembers from "@/database/members.json";
 
 export default {
   props: {
@@ -143,6 +153,7 @@ export default {
     const pending = ref({
       init: false,
       profile: false,
+      profileHovered: false,
       submit: false,
     });
 
@@ -189,12 +200,16 @@ export default {
           if (name && url) {
             if (path) {
               form.value.profileHovered = url;
+              pending.value.profileHovered = false;
             } else {
               form.value.profile = url;
+              pending.value.profile = false;
             }
           }
         } catch (error) {
           window.toast("파일업로드 실패");
+          pending.value.profileHovered = false;
+          pending.value.profile = false;
         }
       } else {
         // gif 이미지가 아닌 경우 파일 업로드
@@ -209,13 +224,14 @@ export default {
           if (name && url) {
             if (path) {
               form.value.profileHovered = url;
+              pending.value.profileHovered = false;
             } else {
               form.value.profile = url;
+              pending.value.profile = false;
             }
           }
         });
       }
-      pending.value.profile = false;
     };
 
     // 수정 불러오기
@@ -244,8 +260,7 @@ export default {
       if (id.value) {
         init("member", id.value);
       }
-      // console.log("allMembers:", allMembers);
-      // console.log("context:", context);
+
       // for (let index = 0; index < allMembers.length; index++) {
       //   const element = allMembers[index];
       //   context.emit("submit", element);

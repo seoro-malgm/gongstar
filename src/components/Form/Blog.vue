@@ -141,7 +141,6 @@ export default {
       else {
         // pending 시작
         pending.value.thumbnail = true;
-        console.log("1:", pending.value.thumbnail);
         // 가로 1000으로 리사이징하여 url 적용함
         resize.photo("w", file, 1000, "object", async (result) => {
           try {
@@ -154,7 +153,6 @@ export default {
             if (name && url) {
               form.value.thumbnail = url;
               pending.value.thumbnail = false;
-              console.log("2:", pending.value.thumbnail);
             }
           } catch (error) {
             window.toast("파일업로드 실패");
