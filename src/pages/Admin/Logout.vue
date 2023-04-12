@@ -17,7 +17,7 @@ export default {
 
     onMounted(() => {
       // 세션스토리지 삭제
-      sessionStorage.removeItem("dcs-lab-token");
+      sessionStorage.removeItem("gongstar-token");
       // store에서도 삭제
       store.dispatch("auth/setState", ["user", null]);
       router.replace("/");

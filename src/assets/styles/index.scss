@@ -66,8 +66,8 @@ input {
   &.hover,
   &:active,
   &.active {
-    outline: none !important;
-    box-shadow: none !important;
+    // outline: none !important;
+    // box-shadow: none !important;
   }
 }
 
@@ -78,5 +78,14 @@ input[type="number"] {
       -webkit-appearance: none;
       margin: 0;
     }
+  }
+}
+
+.section-gap {
+  margin-top: 132px;
+  margin-bottom: 132px;
+  @media (max-width: $breakpoint-md) {
+    margin-top: 80px;
+    margin-bottom: 80px;
   }
 }

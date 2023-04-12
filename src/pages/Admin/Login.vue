@@ -42,7 +42,7 @@ export default {
         const token = await authAPI.login(email, password);
         if (token) {
           // 세션스토리지에 저장
-          sessionStorage.setItem("dcs-lab-token", token);
+          sessionStorage.setItem("gongstar-token", token);
           // store에 저장
           store.dispatch("auth/setState", ["user", token]);
           router.push("/admin");

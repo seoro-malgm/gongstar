@@ -1,5 +1,20 @@
 export default {
   install: (app, options) => {
+    // 클립보드 글자 복사
+    const copyText = (text, msg) => {
+      const board = navigator.clipboard;
+      board
+        .writeText(text)
+        .then(() => {
+          // console.log(window.toast);
+          window.toast(`${msg ? `${msg} ` : ``}` + "클립보드에 복사되었습니다");
+        })
+        .catch((error) => {
+          window.toast(error);
+        });
+    };
+    app.provide("copyText", copyText);
+
     // 컴포넌트, 페이지로 이동
     const getImageURL = (path) => {
       const url = new URL(path, import.meta.url).href;

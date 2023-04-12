@@ -1,7 +1,7 @@
 <template>
   <div>
     <header id="global-nav">
-      <nav class="container">
+      <nav class="container-fluid">
         <router-link class="logo" to="/" replace>
           <default-symbol class="symbol" :style="logoStyle" />
           <img class="lettertype" :src="getURL('/assets/lettertype.svg')" alt="" />
@@ -19,14 +19,62 @@
       </nav>
     </header>
     <aside id="sidebar" :class="{ active: onMenuToggle }">
-      <div class="container">
+      <div class="container-fluid h-100">
         <div class="utils">
           <ul class="list-links">
             <li v-for="(item, i) in links" :key="i">
-              <router-link :to="item.url" class="link-item"> {{ item.name }}</router-link>
+              <router-link :to="item.url" class="link-item btn btn-link text-secondary">
+                {{ item.name }}</router-link
+              >
               <small v-if="item.description"> {{ item.description }} </small>
             </li>
           </ul>
+          <div class="sidebar-footer">
+            <ul class="links">
+              <li>
+                <button
+                  class="btn btn-text px-2 py-1 text-secondary"
+                  @click="copyText(infos.email, '전화번호가')"
+                >
+                  <i class="icon icon-phone-outline text-24" />
+                  <span class="ms-2">
+                    {{ infos.phone }}
+                  </span>
+                </button>
+              </li>
+              <li>
+                <button
+                  class="btn btn-text px-2 py-1 text-secondary"
+                  @click="copyText(infos.email, '이메일 주소가')"
+                >
+                  <i class="icon icon-mail-2 text-24" />
+                  <span class="ms-2">
+                    {{ infos.email }}
+                  </span>
+                </button>
+              </li>
+              <li>
+                <button
+                  class="btn btn-text px-2 py-1 text-secondary"
+                  @click="copyText(infos.addressSummary, '주소가')"
+                >
+                  <i class="icon icon-compass text-24" />
+                  <span class="ms-2">
+                    {{ infos.address }}
+                  </span>
+                </button>
+              </li>
+              <li>
+                <a
+                  class="btn btn-text px-2 py-1 text-secondary"
+                  :href="infos.instagram"
+                  target="_blank"
+                >
+                  <i class="icon icon-instagram text-24" />
+                </a>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </aside>
@@ -52,6 +100,7 @@ export default {
   },
   setup() {
     const getURL = inject("getImageURL");
+    const copyText = inject("copyText");
     const router = useRouter();
     const store = useStore();
     const route = useRoute();
@@ -85,12 +134,21 @@ export default {
       }
     );
 
-    return { getURL, logoStyle, onMenuToggle };
+    // 정보
+    const infos = computed(() => {
+      return store.getters["auth/getInfos"];
+    });
+
+    return { getURL, logoStyle, onMenuToggle, infos, copyText };
   },
 };
 </script>
 
 <style lang="scss" scoped>
+// gnb 높이
+$gnb-height: 72px;
+
+// gnb
 #global-nav {
   position: fixed;
   top: 0;
@@ -99,6 +157,7 @@ export default {
   max-width: 100vw;
   padding: 1rem 0;
   z-index: 2000;
+  background-color: white;
   > nav {
     display: flex;
     align-items: center;
@@ -131,7 +190,7 @@ export default {
       display: block;
       width: 100%;
       height: 6px;
-      background-color: $primary;
+      background-color: $secondary;
       margin: 3px 0;
       opacity: 1;
       transition: all 0.3s;
@@ -153,19 +212,18 @@ export default {
     }
   }
 }
-
 // 사이드바
 #sidebar {
   opacity: 0;
   transform: translateY(100%);
   transition: all 0.3s;
   position: fixed;
-  top: 88px;
+  top: $gnb-height;
   left: 0;
-  background-color: white;
+  background-color: $primary;
   width: 100%;
-  height: calc(100% - 88px);
-  padding: 1rem;
+  height: calc(100% - $gnb-height);
+  padding: 2rem 1rem;
   z-index: 2020;
   // 열렸을 때
   &.active {
@@ -175,10 +233,15 @@ export default {
 
   // 유틸 목록
   .utils {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
     .list-links {
+      // flex-grow: 1;
       display: flex;
       flex-direction: column;
-      margin: 0;
+      margin: auto 0;
       padding: 0;
       li {
         margin-right: 4px;
@@ -200,8 +263,8 @@ export default {
           &:hover,
           &.router-link-active,
           &.router-link-exact-active {
-            background-color: $primary;
-            color: white;
+            background-color: $secondary;
+            color: $primary !important;
           }
         }
         // 링크 설명
@@ -223,6 +286,21 @@ export default {
             font-size: 14px;
             margin-bottom: 0;
             margin-top: 3px;
+          }
+        }
+      }
+    }
+    .sidebar-footer {
+      margin-top: auto;
+      margin-bottom: 1rem;
+      .links {
+        margin: 0;
+        padding: 0;
+        li {
+          margin-bottom: 2px;
+          a {
+            display: inline-flex;
+            align-items: center;
           }
         }
       }

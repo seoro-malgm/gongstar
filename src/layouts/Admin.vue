@@ -64,7 +64,7 @@ export default {
     ]);
 
     const user = computed(() => {
-      return sessionStorage.getItem("dcs-lab-token") || store.getters["auth/getUser"];
+      return sessionStorage.getItem("gongstar-token") || store.getters["auth/getUser"];
     });
 
     onMounted(() => {

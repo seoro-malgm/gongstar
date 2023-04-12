@@ -64,6 +64,7 @@ export default {
   height: inherit;
   background-color: #222;
   padding: 16px;
+  z-index: 3000;
 
   p {
     text-align: center;

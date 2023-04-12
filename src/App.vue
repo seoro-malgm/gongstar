@@ -1,6 +1,6 @@
 <template>
   <router-view />
-  <BaseToast :option="toast" @close="toast = { show: false, meessage: null }" />
+  <BaseToast :option="toast" @close="toast = { show: false, message: null }" />
 </template>
 
 <script>
@@ -19,6 +19,7 @@ export default {
       message: null,
     });
     window.toast = (message) => {
+      console.log(message);
       toast.value = {
         show: true,
         message,

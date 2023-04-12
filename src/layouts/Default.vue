@@ -4,7 +4,7 @@
     <main id="main">
       <router-view />
     </main>
-    <!-- <global-footer /> -->
+    <global-footer />
   </div>
 </template>
 
@@ -34,7 +34,7 @@ export default {
       {
         name: "contact",
         url: "/contact",
-        description: "견적문의",
+        description: "프로젝트 문의",
       },
     ]);
     return {
@@ -47,8 +47,8 @@ export default {
 <style lang="scss" scoped>
 .layout-default {
   #main {
-    min-height: 4000px;
-    padding-top: 88px;
+    padding-top: 72px;
+    padding-bottom: 120px;
   }
 }
 </style>

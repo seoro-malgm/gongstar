@@ -1,14 +1,14 @@
 const state = {
   user: null,
   infos: {
-    home: "국립공주대학교 문화재보존과학과 디지털보존솔루션랩(DCS LAB)",
-    email: "joyh@kongju.ac.kr",
-    tel: "041-850-8539",
-    phone: "041-850-8539",
-    address: "(32588) 충청남도 공주시 공주대학로 56 국립공주대학교 산학연구관 204호",
-    addressSummary: "국립공주대학교 산학연구관 204호",
-    facebook: "https://www.facebook.com/profile.php?id=100085628826902",
-    instagram: "https://www.instagram.com/dcs_lab/?hl=ko",
+    home: "공스타",
+    email: "gongstar2021@gmail.com",
+    tel: "010-3314-4124",
+    phone: "010-3314-4124",
+    address: "(32588) 충청남도 공주시 공주대학로 56 국립공주대학교 산학연구관 222호",
+    addressSummary: "국립공주대학교 산학연구관 222호",
+    // facebook: "https://www.facebook.com/profile.php?id=100085628826902",
+    instagram: "https://www.instagram.com/gong__star2021/?hl=ko",
   },
 };
 
