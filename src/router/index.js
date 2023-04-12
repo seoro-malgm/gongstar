@@ -13,26 +13,7 @@ const routes = [
         name: "Main",
         component: () => import("@/pages/Main.vue"),
       },
-      {
-        path: "about",
-        name: "About",
-        component: () => import("@/pages/About.vue"),
-      },
-      {
-        path: "history",
-        name: "History",
-        component: () => import("@/pages/History.vue"),
-      },
-      // {
-      //   path: "professor",
-      //   name: "Professor",
-      //   component: () => import("@/pages/Professor.vue"),
-      // },
-      {
-        path: "member",
-        name: "Member",
-        component: () => import("@/pages/Member.vue"),
-      },
+      // 프로젝트
       {
         path: "project",
         children: [
@@ -49,30 +30,27 @@ const routes = [
         ],
       },
       {
-        path: "blog",
+        path: "insight",
         children: [
           {
             path: "",
-            name: "BlogList",
-            component: () => import("@/pages/Blog/Index.vue"),
+            name: "InsightList",
+            component: () => import("@/pages/Insight/Index.vue"),
           },
           {
             path: ":id",
-            name: "BlogDetail",
-            component: () => import("@/pages/Blog/Detail.vue"),
+            name: "InsightDetail",
+            component: () => import("@/pages/Insight/Detail.vue"),
           },
         ],
       },
+      // 연락하기
       {
         path: "contact",
         name: "Contact",
         component: () => import("@/pages/Contact.vue"),
       },
-      {
-        path: "search",
-        name: "SearchResult",
-        component: () => import("@/pages/SearchResult.vue"),
-      },
+      // 어드민
       {
         path: "admin",
         component: LayoutAdmin,
@@ -80,7 +58,7 @@ const routes = [
           {
             path: "",
             name: "Admin",
-            redirect: "/admin/project",
+            redirect: "/admin/insights",
           },
           {
             path: "login",
@@ -90,43 +68,27 @@ const routes = [
               title: "로그인",
             },
           },
-          {
-            path: "project",
-            name: "AdminProject",
-            component: () => import("@/pages/Admin/Project.vue"),
-            meta: {
-              title: "프로젝트 관리",
-            },
-          },
-          {
-            path: "member",
-            name: "AdminMember",
-            component: () => import("@/pages/Admin/Member.vue"),
-            meta: {
-              title: "멤버 관리",
-            },
-          },
-          {
-            path: "history",
-            name: "AdminHistory",
-            component: () => import("@/pages/Admin/History.vue"),
-            meta: {
-              title: "연구실적 관리",
-            },
-          },
-          {
-            path: "blog",
-            name: "AdminBlog",
-            component: () => import("@/pages/Admin/Blog.vue"),
-            meta: {
-              title: "블로그 관리",
-            },
-          },
-          {
-            path: "write",
-            name: "AdminWrite",
-            component: () => import("@/pages/Admin/Write.vue"),
-          },
+          // {
+          //   path: "insights",
+          //   name: "AdminInsights",
+          //   component: () => import("@/pages/Admin/Insights.vue"),
+          //   meta: {
+          //     title: "인사이트 관리",
+          //   },
+          // },
+          // {
+          //   path: "member",
+          //   name: "AdminMember",
+          //   component: () => import("@/pages/Admin/Member.vue"),
+          //   meta: {
+          //     title: "멤버 관리",
+          //   },
+          // },
+          // {
+          //   path: "write",
+          //   name: "AdminWrite",
+          //   component: () => import("@/pages/Admin/Write.vue"),
+          // },
           {
             path: "logout",
             name: "Logout",

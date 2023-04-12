@@ -1,6 +1,6 @@
 <template>
   <div class="layout-default">
-    <global-nav :links="links" :collapsed="collapsed" @toggle="collapsed = true" />
+    <global-nav :links="links" @toggle="collapsed = true" />
     <main id="main">
       <router-view />
     </main>
@@ -18,32 +18,26 @@ export default {
     GlobalFooter,
   },
   setup(app, context) {
-    const collapsed = ref(false);
     const links = ref([
       {
-        name: "홈",
-        url: "/",
-      },
-      {
-        name: "프로젝트",
-        // name: "프로젝트",
+        name: "project",
         url: "/project",
+        description: "프로젝트 소개",
       },
 
       {
-        name: "블로그",
-        // name: "소식",
-        url: "/blog",
+        name: "insight",
+        url: "/insight",
+        description: "인사이트",
       },
 
       {
-        name: "연락하기",
-        // name: "연락하기",
+        name: "contact",
         url: "/contact",
+        description: "견적문의",
       },
     ]);
     return {
-      collapsed,
       links,
     };
   },
