@@ -48,7 +48,6 @@ export default {
 .layout-default {
   #main {
     padding-top: 72px;
-    padding-bottom: 120px;
   }
 }
 </style>

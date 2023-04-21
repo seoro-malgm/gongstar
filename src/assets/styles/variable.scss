@@ -83,8 +83,24 @@ $container-max-widths: (
   xl: $container-xl,
 ) !default;
 
+ul,
+ol {
+  margin: 0;
+  padding: 0;
+}
 .list-style-disc {
   list-style-type: disc;
 }
 
-$default-ease: cubic-bezier(0.35, 0.05, 0.45, 0.98);
+figure,
+figcaption {
+  margin: 0;
+  padding: 0;
+}
+
+// transition
+$default-ease: cubic-bezier(0.785, 0.135, 0.15, 0.86);
+
+.btn {
+  border-radius: 0;
+}

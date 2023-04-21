@@ -1,11 +1,55 @@
 <template>
   <div class="container-fluid min-vh-100 section-gap mt-5">
     <header class="my-3 mt-md-5 mb-4">
-      <h1 class="page-title">INSIGHTS</h1>
+      <h1 class="page-title text-center">INSIGHTS</h1>
     </header>
-    <section v-if="items?.length">
-      <transition-group name="swipe" tag="div" class="row mx-n1" appear> </transition-group>
+    <!-- <section class="section-filtering">
+      <ul class="list-category">
+        <li class="list-item" v-for="(item, i) in categories" :key="i">
+          <button
+            class="btn btn-outline-gray-1 btn-category"
+            :class="{ active: categorySelected === item.id }"
+            @click="
+              $router.push({
+                path: '/insight',
+                query: {
+                  category: item.id,
+                },
+              })
+            "
+          >
+            <span>주제1</span>
+          </button>
+        </li>
+      </ul>
     </section>
+    <section>
+      <ul class="list-insight" v-if="items?.length">
+        <li class="list-item" v-for="(item, i) in items" :key="i">
+          <article class="item-insight">
+            <header class="header-insight">
+              <router-link
+                class="text-24 text-md-40 btn btn-text btn-text-gray-1"
+                :to="{
+                  name: 'InsightDetail',
+                  params: {
+                    id: item.id,
+                  },
+                }"
+              >
+                {{ item.title }}
+              </router-link>
+            </header>
+            <div
+              class="item-thumbnail"
+              :style="{
+                backgroundColor: '#ededed',
+              }"
+            ></div>
+          </article>
+        </li>
+      </ul>
+    </section> -->
 
     <!-- <transition name="fade-right">
       <header class="page-header" v-if="hoveredItem">
@@ -17,12 +61,22 @@
         </strong>
       </header>
     </transition> -->
+    <section>
+      <div class="d-flex align-items-center justify-content-center p-3">
+        <base-error />
+      </div>
+      <div class="my-4">
+        <p class="text-14 text-md-16 text-gray-2 text-center">
+          일과 문화에 대한 공스타의 인사이트를 작성중입니다. 금방 공개하겠습니다!
+        </p>
+      </div>
+    </section>
   </div>
 </template>
 
 <script>
-import { ref, inject, onMounted } from "vue";
-// import allProject from "@/database/project.json";
+import { ref, inject, computed, onMounted, watch } from "vue";
+import { useRoute } from "vue-router";
 
 export default {
   setup() {
@@ -32,192 +86,145 @@ export default {
     const side = ref(["top", "bottom", "left", "right"]);
 
     const { boardAPI } = inject("firebase");
-    const items = ref([]);
-    const getItems = async () => {
-      // const data = await boardAPI.getAllBoards("project");
+    const items = ref([
+      {
+        id: 1,
+        title: "블로그 글  타이틀",
+        category: "카테고리",
+        thumbnail: "",
+      },
+      {
+        id: 1,
+        title: "블로그 글  타이틀",
+        category: "카테고리",
+        thumbnail: "",
+      },
+      {
+        id: 1,
+        title: "블로그 글  타이틀",
+        category: "카테고리",
+        thumbnail: "",
+      },
+      {
+        id: 1,
+        title: "블로그 글  타이틀",
+        category: "카테고리",
+        thumbnail: "",
+      },
+      {
+        id: 1,
+        title: "블로그 글  타이틀",
+        category: "카테고리",
+        thumbnail: "",
+      },
+      {
+        id: 1,
+        title: "블로그 글  타이틀",
+        category: "카테고리",
+        thumbnail: "",
+      },
+    ]);
+
+    const getItems = async (category) => {
+      // const data = await boardAPI.getAllBoards("blog");
       // items.value = data;
     };
     onMounted(() => {
-      getItems();
-      console.log("items.value:", items.value);
+      // getItems();
+      // console.log("items.value:", items.value);
     });
 
-    const hoveredItem = ref(null);
-    return { getURL, side, items, hoveredItem };
+    const categories = ref([
+      {
+        id: "1",
+        text: "주제1",
+      },
+      {
+        id: "2",
+        text: "주제2",
+      },
+      {
+        id: "3",
+        text: "주제3",
+      },
+    ]);
+    const route = useRoute();
+    const categorySelected = computed(() => {
+      return route?.query?.category;
+    });
+    watch(
+      () => categorySelected.value,
+      (n) => {
+        getItems(n);
+      }
+    );
+
+    return { getURL, side, items, categories, categorySelected };
   },
 };
 </script>
 
 <style lang="scss" scoped>
-.project-item-column {
-  .project-item {
+// 필터링
+.section-filtering {
+  padding: 1rem 1rem 0.5rem;
+  border-top: 1px solid $gray-2;
+  border-bottom: 1px solid $gray-2;
+
+  .list-category {
+    display: inline-flex;
+    align-items: center;
+    .list-item {
+      margin: 0 12px 12px 0;
+      .btn-category {
+        &.active {
+          background-color: $gray-1;
+          border-color: $gray-1;
+        }
+      }
+    }
+  }
+}
+
+// 목록
+.list-insight {
+  padding-bottom: 40px;
+  .list-item {
+    margin-bottom: 24px;
+    padding: 0.75rem 0.5rem;
+    border-bottom: 1px solid $gray-2;
     position: relative;
-    overflow: hidden;
-    transition: transform 0.3s $default-ease;
-
-    &:after {
-      position: absolute;
-      content: "";
-      display: block;
-      width: 100%;
-      height: 0;
-      z-index: 2;
-      background-color: $primary;
-    }
-
-    .item-image,
-    figcaption {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      transition: all 0.3s;
-    }
-
-    .item-image {
-      transform: scale(1) translate(-50%, -50%);
-      transition: transform 0.3s $default-ease;
-    }
-
-    figcaption {
-      width: 100%;
-      height: 100%;
-      background-color: rgba($color: #000000, $alpha: 0.4);
-      // display: flex;
-      // flex-direction: column;
-      // align-items: center;
-      // justify-content: center;
-      opacity: 0;
-      color: white;
-
-      strong,
-      span {
-        position: absolute;
-        padding: 4px;
-        max-width: 50%;
+    .item-insight {
+      .header-insight {
       }
-      @media (max-width: 1320px) {
-        opacity: 1;
-        height: 65%;
-        top: unset;
-        bottom: 0;
-        transform: translate(-50%, 0);
-      }
-    }
 
-    &:hover {
-      transform: scale(0.96);
-      cursor: pointer;
-      .item-image {
-        transform: scale(1.45) translate(-50%, -50%);
+      .item-thumbnail {
+        transform: translateY(-50%) scale(0.2);
+        transition: transform 0.4s $default-ease;
+        user-select: none;
       }
-      figcaption {
-        opacity: 1;
-        transition: opacity 0.3s $default-ease;
+
+      &:hover {
+        .item-thumbnail {
+          position: absolute;
+          top: 50%;
+          right: 8vw;
+          width: 420px;
+          padding-bottom: 420px;
+          @media (max-width: $breakpoint-md) {
+            width: 400px;
+            max-width: 45vw;
+            padding-bottom: 45vw;
+            right: 3vw;
+          }
+          transform: translateY(-50%) scale(1);
+          z-index: 10;
+          background-position: center center;
+          background-repeat: no-repeat;
+          background-size: contain;
+        }
       }
     }
   }
-  &.swipe-top {
-    .project-item {
-      &:after {
-        top: 0;
-        left: 0;
-      }
-    }
-  }
-  &.swipe-bottom {
-    .project-item {
-      &:after {
-        bottom: 0;
-        left: 0;
-      }
-    }
-  }
-  &.swipe-left {
-    .project-item {
-      &:after {
-        top: 0;
-        left: 0;
-        width: 0;
-        height: 100%;
-      }
-    }
-  }
-  &.swipe-right {
-    .project-item {
-      &:after {
-        top: 0;
-        right: 0;
-        width: 0;
-        height: 100%;
-      }
-    }
-  }
-}
-
-.swipe-move,
-.swipe-enter-active,
-.swipe-leave-active {
-  .project-item {
-    &:after {
-      transition-delay: 2s;
-      transition: all 0.8s $default-ease;
-    }
-  }
-}
-
-.swipe-enter-from,
-.swipe-leave-to {
-  &.swipe-top,
-  &.swipe-bottom {
-    .project-item {
-      &:after {
-        height: 100%;
-      }
-    }
-  }
-  &.swipe-left,
-  &.swipe-right {
-    .project-item {
-      &:after {
-        width: 100%;
-      }
-    }
-  }
-}
-
-.page-header {
-  position: fixed;
-  z-index: 1056;
-  top: 240px;
-  right: 0;
-  user-select: none;
-  h1 {
-    font-size: 70px;
-    padding-right: 10vw;
-    border-bottom: 1px solid white;
-    font-weight: 900;
-    color: white;
-  }
-  mix-blend-mode: difference;
-  strong {
-    font-size: 24px;
-    color: white;
-  }
-  @media (max-width: 1320px) {
-    display: none;
-  }
-}
-
-.fade-right-move,
-.fade-right-enter-active,
-.fade-right-leave-active {
-  transition: all 0.4s $default-ease;
-}
-
-.fade-right-enter-from,
-.fade-right-leave-to {
-  opacity: 0;
-  transform: translateX(110%);
 }
 </style>

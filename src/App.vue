@@ -19,7 +19,6 @@ export default {
       message: null,
     });
     window.toast = (message) => {
-      console.log(message);
       toast.value = {
         show: true,
         message,

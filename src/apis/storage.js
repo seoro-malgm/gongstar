@@ -124,6 +124,23 @@ class storageAPI {
     let desertRef = ref(storage, path);
     deleteObject(desertRef);
   };
+
+  // 파일 추가 후 url 불러오기
+  addFile = (file, type, path, fileName) => {
+    // Upload file and metadata to the object 'images/mountains.jpg'
+    const storage = getStorage();
+    const storageRef = ref(storage, `${path}/${fileName}`, {
+      contentType: type,
+    });
+
+    // 'file' comes from the Blob or File API
+    return uploadBytes(storageRef, file).then((snapshot) => {
+      // console.log('snapshot.ref:', snapshot.ref)
+      return getDownloadURL(snapshot.ref).then((url) => {
+        return { name: snapshot.ref.name, url };
+      });
+    });
+  };
 }
 
 export default new storageAPI();

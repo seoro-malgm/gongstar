@@ -9,7 +9,10 @@
           <div class="col-4 col-md-2">
             <img class="logo" :src="getURL('/assets/logo.svg')" alt="" />
           </div>
-          <ul class="links mt-4">
+          <ul class="links mt-4 px-3">
+            <li>
+              <h1 class="my-2 text-14 text-md-15 fw-700">주식회사 공스타</h1>
+            </li>
             <li>
               <button
                 class="btn btn-text p-0 text-secondary"
@@ -34,12 +37,12 @@
             </li>
             <li>
               <button
-                class="btn btn-text p-0 text-secondary"
+                class="btn btn-text p-0 text-secondary text-start"
                 @click="copyText(infos.addressSummary, '주소가')"
               >
                 <i class="icon icon-compass text-16" />
                 <span class="ms-2 text-14">
-                  {{ infos.address }}
+                  {{ infos.addressSummary }}
                 </span>
               </button>
             </li>
@@ -74,9 +77,8 @@ export default {
 
 <style lang="scss" scoped>
 #global-footer {
-  background-color: $primary;
   font-size: 14px;
-  padding: 2rem 0;
+  padding: 2rem 0.5rem;
   .title {
     padding: 8px 0;
     border-bottom: 1px solid $gray-1;

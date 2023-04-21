@@ -3,8 +3,22 @@
     <header class="my-3 mt-md-5 mb-4">
       <h1 class="page-title">Projects</h1>
     </header>
-    <section v-if="items?.length">
-      <transition-group name="swipe" tag="div" class="row mx-n1" appear> </transition-group>
+    <!-- <section v-if="items?.length">
+      <transition-group name="swipe" tag="div" class="row mx-n1" appear>
+        <div v-for="item in items" :key="item.id">
+          {{ item }}
+        </div>
+      </transition-group>
+    </section> -->
+    <section>
+      <div class="d-flex align-items-center justify-content-center p-3">
+        <base-error />
+      </div>
+      <div class="my-4">
+        <p class="text-14 text-md-16 text-gray-2 text-center">
+          프로젝트 작성을 준비중입니다! 좋은 프로젝트들을 곧 보여드리겠습니다!
+        </p>
+      </div>
     </section>
 
     <!-- <transition name="fade-right">
@@ -32,14 +46,27 @@ export default {
     const side = ref(["top", "bottom", "left", "right"]);
 
     const { boardAPI } = inject("firebase");
-    const items = ref([]);
+    const items = ref([
+      {
+        id: 0,
+        title: "더미 0",
+      },
+      {
+        id: 1,
+        title: "더미 1",
+      },
+      {
+        id: 2,
+        title: "더미 2",
+      },
+    ]);
     const getItems = async () => {
-      // const data = await boardAPI.getAllBoards("project");
-      // items.value = data;
+      const data = await boardAPI.getAllBoards("project");
+      items.value = data;
     };
     onMounted(() => {
-      getItems();
-      console.log("items.value:", items.value);
+      // getItems();
+      // console.log("items.value:", items.value);
     });
 
     const hoveredItem = ref(null);

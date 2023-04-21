@@ -78,6 +78,7 @@ import { useRoute, useRouter } from "vue-router";
 // import allProject from "@/database/project.json";
 
 export default {
+  name: "InsightDetail",
   setup() {
     // const items = allProject;
     const getURL = inject("getImageURL");

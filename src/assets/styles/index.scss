@@ -48,7 +48,7 @@ body {
   // 글자 선택시
   *::selection {
     background-color: $primary;
-    color: white;
+    color: $gray-1;
   }
 }
 
@@ -87,5 +87,14 @@ input[type="number"] {
   @media (max-width: $breakpoint-md) {
     margin-top: 80px;
     margin-bottom: 80px;
+  }
+}
+
+.section-gap-padding {
+  padding-top: 132px;
+  padding-bottom: 132px;
+  @media (max-width: $breakpoint-md) {
+    padding-top: 80px;
+    padding-bottom: 80px;
   }
 }
