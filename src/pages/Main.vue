@@ -6,7 +6,7 @@
           <img :src="getURL('/assets/lettertype.svg')" alt="" />
         </div>
         <header class="section-title">
-          <h1 class="text-24 text-md-32 text-lg-48">문화를 선도하는 공스타입니다</h1>
+          <h1 class="text-24 text-md-32 text-lg-48 mix-dif">디지털로 지역을 SAVE하다</h1>
         </header>
         <div class="scroll-down">
           <p class="mb-1 fw-700 text-16 text-md-18">Scroll Down</p>

@@ -68,27 +68,27 @@ const routes = [
               title: "로그인",
             },
           },
-          // {
-          //   path: "insights",
-          //   name: "AdminInsights",
-          //   component: () => import("@/pages/Admin/Insights.vue"),
-          //   meta: {
-          //     title: "인사이트 관리",
-          //   },
-          // },
-          // {
-          //   path: "member",
-          //   name: "AdminMember",
-          //   component: () => import("@/pages/Admin/Member.vue"),
-          //   meta: {
-          //     title: "멤버 관리",
-          //   },
-          // },
-          // {
-          //   path: "write",
-          //   name: "AdminWrite",
-          //   component: () => import("@/pages/Admin/Write.vue"),
-          // },
+          {
+            path: "insights",
+            name: "AdminInsights",
+            component: () => import("@/pages/Admin/Insights.vue"),
+            meta: {
+              title: "인사이트 관리",
+            },
+          },
+          {
+            path: "project",
+            name: "AdminProject",
+            component: () => import("@/pages/Admin/Project.vue"),
+            meta: {
+              title: "프로젝트 관리",
+            },
+          },
+          {
+            path: "write",
+            name: "AdminWrite",
+            component: () => import("@/pages/Admin/Write.vue"),
+          },
           {
             path: "logout",
             name: "Logout",

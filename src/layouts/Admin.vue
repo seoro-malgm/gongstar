@@ -46,17 +46,12 @@ export default {
       },
       {
         name: "멤버 관리",
-        url: "/admin/member",
+        url: "/admin/insights",
       },
       {
-        name: "연구실적 관리",
+        name: "연혁 관리",
         url: "/admin/history",
       },
-      {
-        name: "블로그 관리",
-        url: "/admin/blog",
-      },
-
       {
         name: "로그아웃",
         url: "/admin/logout",

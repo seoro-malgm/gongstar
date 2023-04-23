@@ -1,7 +1,8 @@
 <template>
   <div class="container section-gap">
-    <header class="my-3 mt-md-5 mb-4">
+    <header class="my-3 mt-md-5 mb-4 text-center">
       <h1 class="page-title">CONTACT US</h1>
+      <p>공스타에 프로젝트를 문의하세요. 확인 후 견적을 도와드리겠습니다.</p>
     </header>
     <section>
       <div class="row justify-content-center">
@@ -207,15 +208,13 @@ export default {
       agree: false,
     });
     const types = ref([
-      "브랜딩 영상",
-      "홍보 영상",
-      "광고 영상",
-      "패션 필름 영상",
-      "메이킹 필름 영상",
-      "모션그래픽 개발",
-      "콘텐츠 개발",
-      "현장 스케치 영상",
-      "기타 영상",
+      "웹 개발",
+      "브랜딩 디자인",
+      "F&B - 케이터링, 푸드컨설팅",
+      "미디어 브랜딩",
+      "각종 시각 디자인",
+      "컨설팅",
+      "교욱 관련 콘텐츠",
     ]);
     const pending = ref({
       file: false,
@@ -246,11 +245,11 @@ export default {
       try {
         const data = await storageAPI.addFile(file, type, "files", fileName);
         if (data) {
-          form.value.file = {
-            name: file.name,
-            url: data,
-          };
-          console.log("data:", data);
+          // form.value.file = {
+          //   name: file.name,
+          //   url: data,
+          // };
+          form.value.file = data.url;
           pending.value.file = false;
         }
       } catch (error) {
@@ -294,6 +293,8 @@ export default {
             },
             agree: false,
           };
+
+          // todo: 견적에 추가함
         }
       } catch (error) {
         console.error("error:", error);

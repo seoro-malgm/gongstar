@@ -1,73 +1,164 @@
 <template>
-  <div class="section-wrapper">
-    <section class="section section-history" :class="{ fixed: fixed }">
-      <div class="interaction-start" ref="start"></div>
+  <section class="section section-history section-gap-padding">
+    <div class="container">
       <header class="">
-        <h1 class="section-title text-center text-white">
-          공스타의 연혁
-
-          {{ fixed }}
-        </h1>
+        <h1 class="section-title text-white">공스타의 연혁</h1>
       </header>
-      <div class="logo-rotate">
-        <section-logo-rotate :size="2.2" mode="black" />
-      </div>
-    </section>
-    <div class="mt-auto" ref="end"></div>
-  </div>
+      <div ref="target"></div>
+      <section class="mt-4">
+        <transition-group name="fade" tag="ul" class="list-history">
+          <li
+            v-for="(item, i) in items"
+            :key="item.date"
+            v-show="animated"
+            :data-index="i"
+            :style="{
+              transition: `all ${i * 0.5}s ease-in-out`,
+              transitionDelay: `${i * 0.4}s`,
+            }"
+            class="list-item"
+          >
+            <div class="row mx-n1">
+              <div class="col-1 dot-wrap px-1">
+                <div class="dot" />
+                <div class="line" />
+              </div>
+              <div class="col-11 px-1">
+                <div class="p-3 py-md-5 px-md-3">
+                  <h3 class="date text-32 text-md-48">
+                    {{ item.date }}
+                  </h3>
+                  <h2 class="content text-28 text-md-32">
+                    {{ item.text }}
+                  </h2>
+                </div>
+              </div>
+            </div>
+          </li>
+        </transition-group>
+      </section>
+    </div>
+  </section>
 </template>
 
 <script>
-import { ref } from "vue";
-import SectionLogoRotate from "@/components/Sections/LogoRotate.vue";
+import { ref, onMounted } from "vue";
 import { useIntersectionObserver } from "@/plugins/useIntersectionObserver";
 export default {
-  components: {
-    SectionLogoRotate,
-  },
+  components: {},
 
   setup(props, context) {
-    const fixed = ref(false);
-    const start = useIntersectionObserver((entry) => {
-      console.log(entry);
+    const items = ref([
+      {
+        date: "2021-11",
+        text: "법인 설립",
+      },
+      {
+        date: "2022-03",
+        text: "사회적 기업 육성지원사업 선정, 농촌 신활력 플러스 지원사업 선정",
+      },
+      {
+        date: "2022-07",
+        text: "충남지방중소기업벤처 여성 기업 지정",
+      },
+      {
+        date: "2022-11",
+        text: "충남형 예비사회적기업 지정 지역사회공헌형(나)",
+      },
+      {
+        date: "2023-02",
+        text: "CTO 영입 및 F&B사업 확장",
+      },
+    ]);
+
+    const animated = ref(false);
+    const target = useIntersectionObserver((entry) => {
       if (entry.isIntersecting) {
-        fixed.value = !fixed.value;
+        if (!animated.value) {
+          animated.value = true;
+        }
       }
     });
-    const end = useIntersectionObserver((entry) => {
-      if (entry.isIntersecting) {
-        fixed.value = !fixed.value;
-      }
-    });
-    return { fixed, start, end };
+
+    return {
+      target,
+      animated,
+      items,
+    };
   },
 };
 </script>
 
 <style lang="scss" scoped>
-.section-wrapper {
-  min-height: 300vh;
-  .section-history {
-    padding-top: 4rem;
-    background-color: black;
-    .logo-rotate {
-      width: 100%;
-      height: calc(100vh - 200px);
+.section-history {
+  background-color: $gray-1;
+  color: white;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: all 0.5s $default-ease;
+  transform: translateY(0);
+  transition-delay: 0.3s;
+  opacity: 1;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+  transform: translateY(24px);
+}
+
+.list-item {
+  position: relative;
+  .dot-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    .dot {
+      margin: auto;
+      content: "";
+      display: block;
+      width: 24px;
+      height: 24px;
       @media (min-width: $breakpoint-md) {
-        height: calc(100vh - 140px);
+        width: 40px;
+        height: 40px;
+      }
+      border-radius: 50%;
+      background-color: white;
+      &:before,
+      &:after {
+        position: absolute;
+        z-index: 2;
+        content: "";
+        display: block;
+        background-color: white;
+        width: 3px;
+        height: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+      &:before {
+        top: -50%;
+      }
+      &:after {
+        top: 50%;
       }
     }
-    &.fixed {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      min-height: 100vh;
-      z-index: 100;
-    }
-    .interaction-start {
-      min-height: 100vh;
-    }
+  }
+  &:first-child .dot::before {
+    display: none;
+  }
+  // &:last-child .dot::after {
+  //   display: none3
+  // }
+  .date {
+    opacity: 0.3;
+    position: absolute;
+    top: 1rem;
   }
 }
 </style>
