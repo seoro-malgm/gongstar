@@ -28,7 +28,7 @@
                   <h3 class="date text-32 text-md-48">
                     {{ item.date }}
                   </h3>
-                  <h2 class="content text-28 text-md-32">
+                  <h2 class="content text-20 text-md-32">
                     {{ item.text }}
                   </h2>
                 </div>
@@ -158,7 +158,16 @@ export default {
   .date {
     opacity: 0.3;
     position: absolute;
-    top: 1rem;
+    top: -0.5rem;
+    @media (min-width: $breakpoint-lg) {
+      top: 1rem;
+    }
+  }
+  .content {
+    line-height: 1 !important;
+    @media (min-width: $breakpoint-lg) {
+      line-height: 1.6 !important;
+    }
   }
 }
 </style>

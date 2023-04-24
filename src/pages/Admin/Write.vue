@@ -3,25 +3,17 @@
     <header class="pb-4 border-bottom">
       <h4>{{ typeKor }} {{ id ? "수정하기" : "새로 올리기" }}</h4>
     </header>
-    <template v-if="type === 'project'">
-      <FormProject
-        :id="id"
-        @submit="($event) => submit('project', $event)"
-        @update="($event) => update('project', { id, ...$event })"
-      />
-    </template>
-    <template v-if="type === 'blog'">
-      <FormBlog
-        :id="id"
-        @submit="($event) => submit('blog', $event)"
-        @update="($event) => update('blog', { id, ...$event })"
-      />
-    </template>
-
+    <div v-for="item in forms" :key="item.id">
+      <template v-if="type === item.key">
+        <component
+          :id="id"
+          :is="item.form"
+          @submit="($event) => submit(item.key, $event)"
+          @update="($event) => update(item.key, { id, ...$event })"
+        ></component>
+      </template>
+    </div>
     <!-- 미리보기 -->
-    <!-- <pre>
-      form:: {{ form }}
-    </pre> -->
   </div>
 </template>
 
@@ -29,11 +21,13 @@
 import { computed, inject, onMounted, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import FormProject from "@/components/Form/Project.vue";
-import FormBlog from "@/components/Form/Blog.vue";
+import FormInsights from "@/components/Form/Insights.vue";
+import FormContact from "@/components/Form/Contact.vue";
 export default {
   components: {
     FormProject,
-    FormBlog,
+    FormInsights,
+    FormContact,
   },
   setup() {
     const route = useRoute();
@@ -43,6 +37,21 @@ export default {
     const pending = ref({
       init: false,
     });
+
+    const forms = ref([
+      {
+        key: "project",
+        form: FormProject,
+      },
+      {
+        key: "insights",
+        form: FormInsights,
+      },
+      {
+        key: "contact",
+        form: FormContact,
+      },
+    ]);
 
     // 수정 불러오기
     const id = computed(() => {
@@ -54,8 +63,8 @@ export default {
     const typeKor = computed(() => {
       const types = {
         project: "프로젝트",
-        member: "멤버",
-        blog: "블로그",
+        insights: "인사이트",
+        contact: "견적",
       };
       return types[type.value] || "";
     });
@@ -90,6 +99,7 @@ export default {
     };
 
     return {
+      forms,
       type,
       typeKor,
       id,

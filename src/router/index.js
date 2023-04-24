@@ -30,17 +30,17 @@ const routes = [
         ],
       },
       {
-        path: "insight",
+        path: "insights",
         children: [
           {
             path: "",
-            name: "InsightList",
-            component: () => import("@/pages/Insight/Index.vue"),
+            name: "InsightsList",
+            component: () => import("@/pages/Insights/Index.vue"),
           },
           {
             path: ":id",
-            name: "InsightDetail",
-            component: () => import("@/pages/Insight/Detail.vue"),
+            name: "InsightsDetail",
+            component: () => import("@/pages/Insights/Detail.vue"),
           },
         ],
       },
@@ -58,7 +58,7 @@ const routes = [
           {
             path: "",
             name: "Admin",
-            redirect: "/admin/insights",
+            redirect: "/admin/project",
           },
           {
             path: "login",
@@ -82,6 +82,30 @@ const routes = [
             component: () => import("@/pages/Admin/Project.vue"),
             meta: {
               title: "프로젝트 관리",
+            },
+          },
+          {
+            path: "history",
+            name: "AdminHistory",
+            component: () => import("@/pages/Admin/History.vue"),
+            meta: {
+              title: "히스토리 관리",
+            },
+          },
+          {
+            path: "client",
+            name: "AdminClient",
+            component: () => import("@/pages/Admin/Client.vue"),
+            meta: {
+              title: "클라이언트 관리",
+            },
+          },
+          {
+            path: "contact",
+            name: "AdminContact",
+            component: () => import("@/pages/Admin/Contact.vue"),
+            meta: {
+              title: "견적 관리",
             },
           },
           {

@@ -2,6 +2,36 @@
   <div>
     <section class="py-3">
       <div class="row">
+        <div class="col-12 mb-3">
+          <div class="row align-items-md-end">
+            <div class="col-12 col-md-3">
+              <div class="form-group my-3">
+                <label for="no">순서번호</label>
+                <small class="d-block">(이 순서번호의 역순으로 정리됩니다)</small>
+                <input type="number" class="form-control" id="no" v-model="form.no" />
+              </div>
+            </div>
+            <div class="col-12 col-md-3 mb-3">
+              <label for="date">작업일</label>
+              <div class="form-group">
+                <input type="date" class="form-control" id="date" v-model="form.date" />
+              </div>
+            </div>
+            <div class="col-12 col-md-6 mb-3">
+              <label for="client">클라이언트</label>
+              <div class="form-group">
+                <input type="text" class="form-control" id="client" v-model="form.client" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 mb-3">
+          <div class="form-group mb-3">
+            <label for="title">제목</label>
+            <input type="text" class="form-control" id="title" v-model="form.title" />
+          </div>
+        </div>
         <div class="col-12 col-md-6 mb-3">
           <div class="form-group">
             <h6>썸네일</h6>
@@ -31,130 +61,82 @@
             />
           </div>
         </div>
+
         <div class="col-12 col-md-6 mb-3">
-          <div class="form-group my-3">
-            <label for="no">순서번호(이 순서번호의 역순으로 정리됩니다)</label>
-            <input type="number" class="form-control" id="no" v-model="form.no" />
-          </div>
-          <div class="form-group mb-3">
-            <label for="title">제목</label>
-            <input type="text" class="form-control" id="title" v-model="form.title" />
-          </div>
-          <div class="form-group">
-            <label for="subtitle">부제목</label>
-            <input type="text" class="form-control" id="subtitle" v-model="form.subtitle" />
-          </div>
-        </div>
-        <div class="col-12 col-md-6 mb-3">
-          <div class="form-group">
-            <label for="subject">과업</label>
-            <input type="text" class="form-control" id="subject" v-model="form.subject" />
-          </div>
-        </div>
-        <div class="col-12 col-md-6 mb-3">
-          <div class="form-group">
-            <label for="client">지원기관</label>
-            <input type="text" class="form-control" id="client" v-model="form.client" />
-          </div>
-        </div>
-        <div class="col-12 col-md-6 mb-3">
-          <label for="start">작업 시작</label>
-          <div class="form-group">
-            <input type="date" class="form-control" id="start" v-model="form.date.start" />
-          </div>
-        </div>
-        <div class="col-12 col-md-6 mb-3">
-          <label for="end">작업 시작일</label>
-          <div class="form-group">
-            <input type="date" class="form-control" id="end" v-model="form.date.end" />
-          </div>
-        </div>
-        <div class="col-12 col-md-6 mb-3">
-          <label for="keyword">키워드(#제외)</label>
+          <label for="party">참여자</label>
           <div class="input-group">
             <input
               type="text"
               class="form-control"
-              id="keyword"
-              v-model="keyword"
-              @keypress.enter="addKeyword(keyword)"
+              id="party"
+              v-model="newParty"
+              @keypress.enter="addParty(newParty)"
             />
-            <button class="btn btn-primary" @click="addKeyword(keyword)">추가</button>
+            <button class="btn btn-primary" @click="addParty(newParty)">추가</button>
           </div>
           <ul class="list-unstyled d-inline-flex flex-wrap mt-2">
             <li
-              v-for="(item, i) in form.keyword"
+              v-for="(item, i) in form.party"
               :key="i"
               class="me-1 mb-2 text-white d-flex align-items-center bg-primary px-3 py-1 rounded-pill"
             >
-              <span class="text-14 fw-700"> #{{ item }} </span>
+              <span class="text-14 fw-700"> {{ item }} </span>
               <button
-                class="btn btn-text p-0 ms-2 text-white text-13"
-                @click="form.keyword.splice(i, 1)"
+                class="btn btn-text p-0 ms-2 text-white text-20"
+                @click="form.party.splice(i, 1)"
               >
-                X
+                <i class="icon icon-cancel-circled" />
               </button>
             </li>
           </ul>
         </div>
         <div class="col-12 col-md-6 mb-3">
           <label for="category">카테고리</label>
-          <div class="form-group">
-            <input
-              type="text"
-              class="form-control"
-              id="category"
-              placeholder="카테고리 예시) 3D"
-              v-model="form.category"
-            />
-          </div>
-        </div>
-        <div class="col-12 mb-3">
-          <label for="summary">요약</label>
-          <textarea class="form-control" id="summary" v-model="form.summary" rows="5" />
+          <select class="form-select" v-model="form.category">
+            <option v-for="(item, i) in categories" :key="i" :value="item.value">
+              {{ item.text }}, {{ item.value }}
+            </option>
+          </select>
         </div>
       </div>
       <div class="">
         <label for="desc">내용</label>
+        <!-- <form-editor></form-editor> -->
         <BaseEditor @update="($event) => (form.desc = $event)" :content="form.desc" />
       </div>
     </section>
     <section class="row justify-content-end">
-      <!-- <div class="col-3"></div> -->
+      <div class="col-3">
+        <button class="btn btn-gray-2 w-100 py-2 text-20" @click="showPreview = true">
+          미리보기
+        </button>
+      </div>
       <div class="col-3">
         <button
-          class="btn btn-outline-primary w-100 py-2 text-20"
+          class="btn btn-primary w-100 py-2 text-20"
           @click="$emit(id ? 'update' : 'submit', form)"
         >
           {{ id ? "수정" : "업로드" }}
         </button>
       </div>
     </section>
-    <!-- <pre
-      style="
-        position: fixed;
-        bottom: 0;
-        right: 0;
-        z-index: 3000;
-        background-color: #ededed;
-        padding: 0.5rem;
-        width: 300px;
-        height: 500px;
-        overflow-y: scroll;
-        font-size: 14px;
-        line-height: 17px;
-        color: #000;
-        text-align: left;
-      "
-    >
-    form: {{ form }}
-    </pre> -->
+    <div id="preview-wrapper" v-show="showPreview">
+      <project-detail
+        :isPreview="true"
+        :showPreview="showPreview"
+        :previewItem="form"
+        @close-preview="showPreview = false"
+      />
+    </div>
   </div>
 </template>
 
 <script>
 import { ref, computed, inject, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
+import { useStore } from "vuex";
+import FormEditor from "@/components/FormEditor.vue";
+import ProjectDetail from "@/pages/Project/Detail.vue";
 
 export default {
   props: {
@@ -164,39 +146,48 @@ export default {
     },
   },
   components: {
-    // QuillEditor,
+    FormEditor,
+    ProjectDetail,
   },
   setup() {
     const { boardAPI, storageAPI } = inject("firebase");
     const router = useRouter();
     const route = useRoute();
+    const store = useStore();
+    const showPreview = ref(false);
 
+    // 폼
     const form = ref({
       no: null,
       title: null,
       thumbnail: null,
-      subtitle: null,
       subject: null,
       client: null,
-      date: {
-        start: null,
-        end: null,
-      },
-      summary: null,
-      keyword: [],
+      category: null,
+      date: null,
+      party: [],
       desc: "",
     });
 
+    // 대기
     const pending = ref({
       thumbnail: false,
+      backgroundImage: false,
       submit: false,
     });
 
-    const keyword = ref(null);
-    const addKeyword = (word) => {
-      form.value.keyword.push(word);
-      keyword.value = null;
+    // 참여자
+    const newParty = ref(null);
+    const addParty = (word) => {
+      if (!word || word === "") return;
+      form.value.party.push(word);
+      newParty.value = null;
     };
+
+    // 카테고리
+    const categories = computed(() => {
+      return store.getters["categories/getCategoryProject"];
+    });
 
     const resize = inject("resize");
     // 이미지 업로드 후 url 불러오기
@@ -231,9 +222,8 @@ export default {
       else {
         // pending 시작
         pending.value.thumbnail = true;
-        console.log("1:", pending.value.thumbnail);
         // 가로 1000으로 리사이징하여 url 적용함
-        resize.photo("w", file, 1000, "object", async (result) => {
+        resize.photo("w", file, 960, "object", async (result) => {
           try {
             const { name, url } = await storageAPI.getImageURL(
               result.blob,
@@ -284,13 +274,27 @@ export default {
 
     return {
       form,
-      keyword,
-      addKeyword,
+      newParty,
+      addParty,
+      categories,
       uploadThumbnail,
+      showPreview,
       pending,
     };
   },
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+#preview-wrapper {
+  width: 100vw;
+  position: fixed;
+  height: 100vh;
+  overflow-x: hidden;
+  overflow-y: auto;
+  top: 0;
+  left: 0;
+  background-color: white;
+  z-index: 2000;
+}
+</style>

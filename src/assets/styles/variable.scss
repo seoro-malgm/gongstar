@@ -1,5 +1,6 @@
 $primary: #ffe618;
 $secondary: #232335;
+$third: #0202c6;
 $dummy: #999999;
 $gray-1: #171717;
 $gray-2: #555555;
@@ -22,12 +23,14 @@ $breakpoint-sm: 575.55px;
 $breakpoint-md: 767.55px;
 $breakpoint-lg: 1023.55px;
 $breakpoint-xl: 1439.55px;
+$breakpoint-xxl: 2559.55px;
 
 // container
 $container-sm: 360px;
 $container-md: 732px;
 $container-lg: 1320px;
 $container-xl: 1440px;
+$container-xxl: 1920px;
 
 // gnb
 // $gnb-height-sm: 58px;
@@ -54,6 +57,7 @@ $theme-colors: (
   // colors
   "primary": $primary,
   "secondary": $secondary,
+  "third": $third,
   "gray-1": $gray-1,
   "gray-2": $gray-2,
   "gray-3": $gray-3,

@@ -11,7 +11,7 @@ import {
   deleteDoc,
   collection,
   query,
-  // where,
+  where,
   orderBy,
 } from "firebase/firestore";
 
@@ -24,13 +24,21 @@ class blogAPI {
     orderOptions = {
       text: "no",
       value: "desc",
+      category: null,
+      page: 0,
+      count: null,
     }
   ) => {
     try {
       const col = collection(db, documentName);
+      const queryConstraints = [];
+      if (orderOptions?.category)
+        queryConstraints.push(where("category", "==", orderOptions?.category));
+      if (orderOptions?.count) queryConstraints.push(limit(orderOptions.count));
+      // queryConstraints.push(orderBy("createdAt", "desc"));
 
       // const q = query(col, category ? where('category', '==', category) : null)
-      const q = query(col, orderBy(orderOptions.text, orderOptions.value));
+      const q = query(col, ...queryConstraints);
       const snapshot = await getDocs(q);
       if (snapshot) {
         const boards = snapshot.docs.map((doc) => {
@@ -86,25 +94,27 @@ class blogAPI {
     return true;
   };
 
-  setHistory = async (collectionName = "history", sections) => {
-    const response = new Promise(async (resolve, reject) => {
-      for (let index = 0; index <= sections.length; index++) {
-        const sec = sections[index];
-        if (sec?.isNew) {
-          this.addBoard(collectionName, {
-            ...sec,
-            isNew: false,
-          });
-        } else {
-          if (sec?.id) {
-            this.updateBoard(collectionName, sec.id, sec);
-          }
-        }
-      }
-      return resolve(true);
-    });
-    return response;
-  };
+  // setHistory = async (collectionName = "history", sections) => {
+  //   const response = new Promise(async (resolve, reject) => {
+  //     for (let index = 0; index <= sections.length; index++) {
+  //       const sec = sections[index];
+  //       if (sec?.isNew) {
+  //         this.addBoard(collectionName, {
+  //           ...sec,
+  //           isNew: false,
+  //         });
+  //       } else {
+  //         if (sec?.id) {
+  //           this.updateBoard(collectionName, sec.id, sec);
+  //         }
+  //       }
+  //     }
+  //     return resolve(true);
+  //   });
+  //   return response;
+  // };
+
+  
 }
 
 export default new blogAPI();

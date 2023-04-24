@@ -26,8 +26,8 @@ export default {
       },
 
       {
-        name: "insight",
-        url: "/insight",
+        name: "insights",
+        url: "/insights",
         description: "인사이트",
       },
 

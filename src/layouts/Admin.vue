@@ -45,12 +45,20 @@ export default {
         url: "/admin/project",
       },
       {
-        name: "멤버 관리",
+        name: "인사이트 관리",
         url: "/admin/insights",
       },
+      // {
+      //   name: "연혁 관리",
+      //   url: "/admin/history",
+      // },
+      // {
+      //   name: "클라인트 관리",
+      //   url: "/admin/client",
+      // },
       {
-        name: "연혁 관리",
-        url: "/admin/history",
+        name: "견적 관리",
+        url: "/admin/contact",
       },
       {
         name: "로그아웃",

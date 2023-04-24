@@ -49,7 +49,7 @@
             <div class="col-12 col-md-2">
               <div class="d-flex flex-column">
                 <button
-                  class="btn btn-outline-primary mb-2"
+                  class="btn btn-outline-gray-1 mb-2"
                   @click="
                     $router.push({
                       path: '/admin/write',

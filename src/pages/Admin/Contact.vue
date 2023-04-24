@@ -8,55 +8,74 @@
           $router.push({
             path: '/admin/write',
             query: {
-              type: 'insights',
-              no: items?.length ? +items[0].no + 1 : null,
+              type: 'contact',
             },
           })
         "
       >
-        새로 올리기
+        새로 견적 작성
       </button>
     </header>
     <section>
       <!-- {{ items }} -->
-      <ul class="list-unstyled my-4 py-2 row">
-        <template v-if="items?.length">
-          <li class="col-6 col-md-3 border-bottom py-2" v-for="(item, i) in items" :key="i">
-            <div>
-              {{ item.no }}
+      <ul class="list-unstyled my-4 py-2">
+        <template v-if="items !== null && items?.length">
+          <li class="row mb-2 bg-gray-2 text-white py-2 d-none d-md-flex">
+            <div class="col-1">날짜</div>
+            <div class="col-4">제목</div>
+            <div class="col-5">정보</div>
+            <div class="col-2 text-right">관리</div>
+          </li>
+          <li class="row border-bottom py-2" v-for="(item, i) in items" :key="i">
+            <div class="col-1 col-md-1">
+              {{ item?.date }}
             </div>
-            <div>
-              <div
-                class="bg-img ratio-53"
-                :style="{
-                  background: item?.thumbnail ? `url(${item.thumbnail})` : '#999999',
-                }"
-              ></div>
+            <div class="col-11 col-md-4">
+              <h6>
+                {{ item.title }}
+              </h6>
             </div>
-            <div>
-              <p class="text-truncate line-2 mb-2 pt-1">
-                <div v-html="item.desc" class="desc"></div>
-              </p>
+            <div class="col-12 col-md-5">
+              <ul class="p-0 m-0 text-gray-2 text-13 text-truncate">
+                <li>
+                  담당자/회사명:
+                  <strong>{{ item.name }}</strong>
+                </li>
+                <li>
+                  유형:
+                  <strong>{{ item.type }}</strong>
+                </li>
+                <li>
+                  내용 :
+                  <strong>{{ item.desc }}</strong>
+                </li>
+                <li>
+                  연락처:
+                  <strong>{{ item.phone }}</strong>
+                </li>
+                <li>
+                  예산 규모:
+                  <strong>{{ item.price }}</strong>
+                </li>
+              </ul>
             </div>
-            <div>
+            <div class="col-12 col-md-2">
               <div class="d-flex flex-column">
                 <button
-                  class="btn btn-primary mb-2 w-100"
+                  class="btn btn-outline-gray-1 mb-2"
                   @click="
                     $router.push({
                       path: '/admin/write',
                       query: {
-                        type: 'insights',
+                        type: 'contact',
                         id: item.id,
                       },
                     })
                   "
                 >
-                  수정
+                  관리
                 </button>
-                <button class="btn btn-error w-100" @click="removeItem('insights', item.id)">
-                  삭제
-                </button>
+                <button class="btn btn-error" @click="removeItem('project', item.id)">삭제</button>
               </div>
             </div>
           </li>
@@ -66,7 +85,7 @@
             <template v-if="!items">
               <div class="spinner-border" role="status" />
             </template>
-            <template v-else> 업로드된 인사이트 데이터가 없습니다. </template>
+            <template v-else> 업로드된 프로젝트 데이터가 없습니다. </template>
           </li>
         </template>
       </ul>
@@ -83,7 +102,8 @@ export default {
 
     const items = ref(null);
     const getItems = async () => {
-      const data = await boardAPI.getAllBoards("insights");
+      const data = await boardAPI.getAllBoards("contact");
+      console.log(data);
       items.value = data;
     };
     onMounted(() => {
@@ -110,12 +130,4 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-
-.desc::v-deep * {
-    font-size: 14px;
-    margin-top: 2px;
-    font-weight: 400;
-    color: #222 !important;
-  }
-</style>
+<style lang="scss" scoped></style>

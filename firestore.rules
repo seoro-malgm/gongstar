@@ -4,7 +4,7 @@ service cloud.firestore {
       allow get, read: if true;
     }
     match /{path}/{item} {
-      // allow create: if path == 'subscribers';
+      allow create: if path == 'contact';
       allow create, update, delete: if request.auth != null;
     }
   }

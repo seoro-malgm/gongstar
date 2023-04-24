@@ -3,8 +3,8 @@ const state = {
   infos: {
     home: "공스타",
     email: "gongstar2021@gmail.com",
-    tel: "010-3314-4124",
-    phone: "010-3314-4124",
+    tel: "010-7191-4270",
+    phone: "010-7191-4270",
     address: "(32588) 충청남도 공주시 공주대학로 56 국립공주대학교 산학연구관 222호",
     addressSummary: "국립공주대학교 산학연구관 222호",
     // facebook: "https://www.facebook.com/profile.php?id=100085628826902",

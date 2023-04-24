@@ -73,7 +73,7 @@
                   <label class="text-14 fw-700 mb-1" for="name">제작 예산</label>
                   <select class="form-select" v-model="form.price">
                     <option value="null" selected disabled>예산을 선택하세요</option>
-                    <optgroup label="영상">
+                    <optgroup label="예산 규모">
                       <option value="10만원 ~ 100만원 이하">10만원 ~ 100만원 이하</option>
                       <option value="100만원 ~ 300만원 이하">100만원 ~ 300만원 이하</option>
                       <option value="300만원 ~ 500만원 이하">300만원 ~ 500만원 이하</option>
@@ -200,6 +200,7 @@ export default {
       title: null,
       url: "",
       desc: null,
+      date: null,
 
       file: {
         name: null,
@@ -225,7 +226,7 @@ export default {
       return store.getters["auth/getInfos"];
     });
 
-    const { storageAPI } = inject("firebase");
+    const { boardAPI, storageAPI } = inject("firebase");
     const fileAttached = async (e) => {
       pending.value.file = true;
       const file = e.target.files[0];
@@ -264,8 +265,20 @@ export default {
       return values.includes(null) || values.includes(false);
     });
 
-    const submit = async (data) => {
-      // console.log("data:", data);
+    // 견적에 추가
+    const addContact = async (data) => {
+      try {
+        const response = await boardAPI.addBoard("contact", data);
+        if (response) {
+          return response;
+        }
+      } catch (error) {
+        console.error("error:", error);
+      }
+    };
+
+    // 이메일 전송
+    const sendMail = async (data) => {
       try {
         const response = await emailjs.send(
           import.meta.env.VITE_EMAIL_SERVICE_ID,
@@ -274,8 +287,24 @@ export default {
           import.meta.env.VITE_EMAIL_API_KEY
         );
         if (response) {
-          // console.log("response:", response);
-          window.toast("이메일 전송에 성공했습니다.");
+          return response;
+        }
+      } catch (error) {
+        console.error("error:", error);
+      }
+    };
+
+    // 제출
+    const submit = async (f) => {
+      const data = {
+        ...f,
+        date: new Date()
+      }
+      try {
+        // 견적에 추가하고, 메일전송
+        const [added, sended] = await Promise.all([addContact(data), sendMail(data)]);
+        if (added && sended) {
+          window.toast("프로젝트 문의가 완료됐습니다! 곧 확인하여 답변드리겠습니다.");
           form.value = {
             name: null,
             phone: null,
@@ -293,12 +322,9 @@ export default {
             },
             agree: false,
           };
-
-          // todo: 견적에 추가함
         }
       } catch (error) {
-        console.error("error:", error);
-        window.toast("이메일 전송에 실패했습니다.");
+        window.toast("문의에 실패했습니다. 다음에 다시 시도해주세요.");
       }
     };
 
