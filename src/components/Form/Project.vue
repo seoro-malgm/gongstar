@@ -8,7 +8,7 @@
               <div class="form-group my-3">
                 <label for="no">순서번호</label>
                 <small class="d-block">(이 순서번호의 역순으로 정리됩니다)</small>
-                <input type="number" class="form-control" id="no" v-model="form.no" />
+                <input type="text" class="form-control" id="no" v-model="form.no" />
               </div>
             </div>
             <div class="col-12 col-md-3 mb-3">
@@ -94,7 +94,7 @@
           <label for="category">카테고리</label>
           <select class="form-select" v-model="form.category">
             <option v-for="(item, i) in categories" :key="i" :value="item.value">
-              {{ item.text }}, {{ item.value }}
+              {{ item.text }}
             </option>
           </select>
         </div>
@@ -167,6 +167,7 @@ export default {
       date: null,
       party: [],
       desc: "",
+      items: [],
     });
 
     // 대기
@@ -251,7 +252,7 @@ export default {
     const init = async (documentName, id) => {
       pending.value.init = true;
       try {
-        const data = await boardAPI.getBoard(documentName, id);
+        const data = await boardAPI.getBoardById(documentName, id);
         if (data) {
           // ref를 찾은 뒤에 form에 적용함
           form.value = {

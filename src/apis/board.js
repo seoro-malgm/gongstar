@@ -55,7 +55,27 @@ class blogAPI {
   };
 
   // board 디테일 불러오기
-  getBoard = async (documentName, id) => {
+  getBoard = async (documentName, no) => {
+    try {
+      const q = query(collection(db, documentName), where("no", "==", no));
+      const snapshot = await getDocs(q);
+      if (snapshot) {
+        const docs = snapshot.docs.map((doc) => {
+          return {
+            id: doc.id,
+            ...doc.data(),
+          };
+        });
+        // console.log("obj:", obj);
+        return docs[0];
+      }
+    } catch (error) {
+      console.error("error::", error);
+    }
+  };
+
+   // board 디테일 불러오기
+   getBoardById = async (documentName, id) => {
     try {
       const col = doc(db, documentName, id);
       const snapshot = await getDoc(col);
@@ -65,7 +85,7 @@ class blogAPI {
     } catch (error) {
       console.error("error::", error);
     }
-  };
+  }
 
   // board 추가
   addBoard = async (documentName, data) => {
@@ -113,8 +133,6 @@ class blogAPI {
   //   });
   //   return response;
   // };
-
-  
 }
 
 export default new blogAPI();

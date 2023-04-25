@@ -11,7 +11,7 @@
             :class="{ active: !categorySelected }"
             @click="
               $router.push({
-                path: '/insights',
+               name: 'InsightsList',
               })
             "
           >
@@ -24,7 +24,7 @@
             :class="{ active: categorySelected === category.value }"
             @click="
               $router.push({
-                path: '/insights',
+               name: 'InsightsList',
                 query: {
                   category: category.value,
                 },
@@ -44,9 +44,9 @@
               <router-link
                 class="text-18 text-md-28 text-lg-36 btn btn-text btn-text-gray-1"
                 :to="{
-                  path: '/insights',
+                  name: 'InsightsDetail',
                   params: {
-                    id: item.id,
+                    id: item.no,
                   },
                 }"
               >

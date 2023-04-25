@@ -24,7 +24,11 @@ export default {
     size: {
       type: Number,
       default: 2,
-    }
+    },
+    color: {
+      type: String,
+      default: null,
+    },
   },
   setup(props, context) {
     const symbol = `<?xml version="1.0" encoding="UTF-8"?>
@@ -65,7 +69,7 @@ export default {
       scene.add(group);
 
       const material = new THREE.MeshBasicMaterial({
-        color: props.mode === "white" ? 0x232323 : 0xffffff,
+        color: props.color ? props.color : props.mode === "white" ? 0x232323 : 0xffffff,
         side: THREE.DoubleSide,
       });
       const extrudeSettings = {

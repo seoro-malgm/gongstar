@@ -8,7 +8,7 @@
               <div class="form-group my-3">
                 <label for="no">순서번호</label>
                 <small class="d-block">(이 순서번호의 역순으로 정리됩니다)</small>
-                <input type="number" class="form-control" id="no" v-model="form.no" />
+                <input type="text" class="form-control" id="no" v-model="form.no" />
               </div>
             </div>
           </div>
@@ -53,7 +53,7 @@
         <div class="col-12 col-md-6 mb-3">
           <label for="category">카테고리</label>
           <select class="form-select" v-model="form.category">
-            <option value="" v-for="(item, i) in categories" :key="i" :value="item.value">
+            <option v-for="(item, i) in categories" :key="i" :value="item.value">
               {{ item.text }}
             </option>
           </select>
@@ -74,7 +74,12 @@
       <div class="col-3">
         <button
           class="btn btn-primary w-100 py-2 text-20"
-          @click="$emit(id ? 'update' : 'submit', form)"
+          @click="
+            $emit(id ? 'update' : 'submit', {
+              ...form,
+              date: new Date().toLocaleString(),
+            })
+          "
         >
           {{ id ? "수정" : "업로드" }}
         </button>
@@ -88,11 +93,31 @@
         @close-preview="showPreview = false"
       />
     </div>
+    <pre
+      style="
+        position: fixed;
+        bottom: 0;
+        right: 0;
+        z-index: 3000;
+        background-color: #ededed;
+        padding: 0.5rem;
+        width: 300px;
+        height: 500px;
+        overflow-y: scroll;
+        font-size: 14px;
+        line-height: 17px;
+        color: #000;
+        text-align: left;
+      "
+    >
+    form: {{ form }}
+    </pre>
   </div>
 </template>
 
 <script>
 import { ref, computed, inject, onMounted } from "vue";
+import { useStore } from "vuex";
 import { useRoute, useRouter } from "vue-router";
 import FormEditor from "@/components/FormEditor.vue";
 import InsightsDetail from "@/pages/Insights/Detail.vue";
@@ -112,6 +137,7 @@ export default {
     const { boardAPI, storageAPI } = inject("firebase");
     const router = useRouter();
     const route = useRoute();
+    const store = useStore();
     const showPreview = ref(false);
 
     // 폼
@@ -119,6 +145,7 @@ export default {
       no: null,
       title: null,
       thumbnail: null,
+      category: null,
       date: null,
       desc: "",
     });
@@ -130,48 +157,9 @@ export default {
     });
 
     // 카테고리
-    const categories = ref([
-      {
-        text: "카테고리를 선택하세요",
-        value: null,
-      },
-      {
-        text: "Design",
-        value: "Design",
-      },
-      {
-        text: "Brand Experience",
-        value: "Brand Experience",
-      },
-      {
-        text: "F&B",
-        value: "F&B",
-      },
-      {
-        text: "Catering",
-        value: "Catering",
-      },
-      {
-        text: "Food Consulting",
-        value: "Food Consulting",
-      },
-      {
-        text: "Media branding",
-        value: "Media branding",
-      },
-      {
-        text: "Web Development",
-        value: "Web Development",
-      },
-      {
-        text: "Consulting",
-        value: "Consulting",
-      },
-      {
-        text: "Education",
-        value: "Education",
-      },
-    ]);
+    const categories = computed(() => {
+      return store.getters["categories/getCategoryInsights"];
+    });
 
     const resize = inject("resize");
     // 이미지 업로드 후 url 불러오기
@@ -235,7 +223,7 @@ export default {
     const init = async (documentName, id) => {
       pending.value.init = true;
       try {
-        const data = await boardAPI.getBoard(documentName, id);
+        const data = await boardAPI.getBoardById(documentName, id);
         if (data) {
           // ref를 찾은 뒤에 form에 적용함
           form.value = {

@@ -77,7 +77,7 @@
         <div class="col-12 col-md-6">
           <div class="form-group mb-3">
             <label for="no">순서번호(이 순서번호의 순서대로 정리됩니다)</label>
-            <input type="number" class="form-control" id="no" v-model="form.no" />
+            <input type="text" class="form-control" id="no" v-model="form.no" />
           </div>
           <div class="form-group mb-3">
             <label for="name">이름</label>

@@ -1,6 +1,6 @@
 <template>
-  <div class="row">
-    <div class="col-12 col-md-6">
+  <div class="row py-5 my-5">
+    <div class="col-12 col-md-6 mb-5 pb-5">
       <div class="input-group mb-3">
         <span class="input-group-text">email</span>
         <input type="email" class="form-control" placeholder="이메일" v-model="form.email" />

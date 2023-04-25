@@ -11,7 +11,7 @@
             :class="{ active: !categorySelected }"
             @click="
               $router.push({
-                path: '/project',
+                name: 'ProjectList',
               })
             "
           >
@@ -24,7 +24,7 @@
             :class="{ active: categorySelected === category.value }"
             @click="
               $router.push({
-                path: '/project',
+                name: 'ProjectList',
                 query: {
                   category: category.value,
                 },
@@ -39,9 +39,23 @@
     <section v-if="items?.length">
       <div class="row">
         <div v-for="item in items" :key="item.id" class="col-6 col-md-4 col-lg-3">
-          <figure class="bg-img ratio-67">
-            <img :src="getURL(item.thumbnail)" :alt="`${item.title}`" />
-          </figure>
+          <router-link
+            :to="{
+              name: 'ProjectDetail',
+              params: {
+                id: item.no,
+              },
+            }"
+            class="item-project"
+          >
+            <figure class="bg-img ratio-100">
+              <img :src="getURL(item.thumbnail)" :alt="`${item.title} 썸네일 이미지`" />
+            </figure>
+            <figcaption class="caption">
+              <h6 class="text-18 text-md-20 fw-700">{{ item.title }}</h6>
+              <span>{{ getCategory(item.category) }}</span>
+            </figcaption>
+          </router-link>
         </div>
       </div>
     </section>
@@ -96,6 +110,10 @@ export default {
       const list = store.getters["categories/getCategoryProject"];
       return list?.length ? list.filter((i) => i.value !== null) : [];
     });
+    // 카테고리 value에서 text 구하기
+    const getCategory = (value) => {
+      return categories.value.find((c) => c.value === value)?.text;
+    };
 
     onMounted(() => {
       getItems(categorySelected.value);
@@ -109,7 +127,7 @@ export default {
       }
     );
 
-    return { getURL, items, categorySelected, categories };
+    return { getURL, items, categorySelected, categories, getCategory };
   },
 };
 </script>
@@ -134,6 +152,42 @@ export default {
           border-color: $gray-1;
         }
       }
+    }
+  }
+}
+
+.item-project {
+  position: relative;
+  figure {
+    transition: transform 0.3s;
+    overflow: hidden;
+    img {
+      transition: transform 0.3s;
+    }
+  }
+  figcaption {
+    position: absolute;
+    top: 0.5rem;
+    left: 0.5rem;
+    background-color: white;
+    padding: 0.25rem 1rem;
+    z-index: 10;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.3s;
+    color: $gray-1;
+  }
+  &:hover {
+    cursor: pointer;
+    figure {
+      transform: scale(0.94);
+      img {
+        transform: scale(1.2);
+      }
+    }
+    figcaption {
+      opacity: 1;
+      transform: translateY(0);
     }
   }
 }

@@ -16,7 +16,7 @@
             <li>
               <button
                 class="btn btn-text p-0 text-secondary"
-                @click="copyText(infos.email, '전화번호가')"
+                @click="copyText(infos.phone, '전화번호가')"
               >
                 <i class="icon icon-phone-outline text-16" />
                 <span class="ms-2 text-14">

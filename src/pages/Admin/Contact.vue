@@ -6,7 +6,7 @@
         class="btn btn-primary px-5"
         @click="
           $router.push({
-            path: '/admin/write',
+            name: 'AdminWrite',
             query: {
               type: 'contact',
             },
@@ -31,7 +31,7 @@
               {{ item?.date }}
             </div>
             <div class="col-11 col-md-4">
-              <h6>
+              <h6 v-if="item.title">
                 {{ item.title }}
               </h6>
             </div>
@@ -39,23 +39,23 @@
               <ul class="p-0 m-0 text-gray-2 text-13 text-truncate">
                 <li>
                   담당자/회사명:
-                  <strong>{{ item.name }}</strong>
+                  <strong v-if="item?.name">{{ item.name }}</strong>
                 </li>
                 <li>
                   유형:
-                  <strong>{{ item.type }}</strong>
+                  <strong v-if="item?.type?.length">{{ item.type.join(',') }}</strong>
                 </li>
                 <li>
                   내용 :
-                  <strong>{{ item.desc }}</strong>
+                  <strong v-if="item?.desc">{{ item.desc }}</strong>
                 </li>
                 <li>
                   연락처:
-                  <strong>{{ item.phone }}</strong>
+                  <strong v-if="item?.phone">{{ item.phone }}</strong>
                 </li>
                 <li>
                   예산 규모:
-                  <strong>{{ item.price }}</strong>
+                  <strong v-if="item?.price">{{ item.price }}</strong>
                 </li>
               </ul>
             </div>
@@ -65,7 +65,7 @@
                   class="btn btn-outline-gray-1 mb-2"
                   @click="
                     $router.push({
-                      path: '/admin/write',
+                      name: 'AdminWrite',
                       query: {
                         type: 'contact',
                         id: item.id,
@@ -75,7 +75,7 @@
                 >
                   관리
                 </button>
-                <button class="btn btn-error" @click="removeItem('project', item.id)">삭제</button>
+                <button class="btn btn-error" @click="removeItem('contact', item.id)">삭제</button>
               </div>
             </div>
           </li>

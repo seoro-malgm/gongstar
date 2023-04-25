@@ -6,7 +6,7 @@
         class="btn btn-primary px-5"
         @click="
           $router.push({
-            path: '/admin/write',
+            name: 'AdminWrite',
             query: {
               type: 'project',
               no: items?.length ? +items[0].no + 1 : null,
@@ -36,6 +36,8 @@
                 class="bg-img ratio-53"
                 :style="{
                   background: item?.thumbnail ? `url(${item.thumbnail})` : '#999999',
+                  backgroundSize: 'contain',
+                  backgroundRepeat: 'no-repeat',
                 }"
               ></div>
             </div>
@@ -52,7 +54,7 @@
                   class="btn btn-outline-gray-1 mb-2"
                   @click="
                     $router.push({
-                      path: '/admin/write',
+                      name: 'AdminWrite',
                       query: {
                         type: 'project',
                         id: item.id,

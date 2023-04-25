@@ -1,124 +1,151 @@
 <template>
   <section class="section-gap mt-5">
     <div class="container">
-      <template v-if="!item">
-        <div class="spinner-border" />
+      <template v-if="(!isPreview && !item) || (isPreview && !previewItem)">
+        <div class="p-5 text-center">
+          <div class="spinner-border" />
+        </div>
       </template>
       <template v-else>
-        <header class="mb-3 pb-3 border-bottom">
-          <h1 class="text-20 text-lg-40 fw-900 mb-0">{{ item.title }}</h1>
-          <strong class="text-18 text-lg-24"> {{ item.subtitle }}</strong>
-        </header>
-        <section class="mb-4">
-          <ul class="p-0">
-            <li>과업명: {{ item.subject }}</li>
-            <li>지원기관: {{ item.client }}</li>
-            <li>
-              수행기간: {{ item.date.start }}
-              <template v-if="item.date?.end">~ {{ item.date.end }}</template>
-            </li>
-          </ul>
-        </section>
-        <section class="mb-4">
-          <div class="row">
-            <div class="col-12 col-md-6 col-lg-5">
-              <p class="text-14 lh-180">
-                {{ item.summary }}
-              </p>
-            </div>
-          </div>
-        </section>
-        <section>
-          <ul class="d-inline-flex flex-wrap p-0">
-            <li v-for="(word, i) in item.keyword" class="me-2">
-              <a href="#" class="btn btn-link p-0 text-gray-2 text-13"> #{{ word }} </a>
-            </li>
-          </ul>
-        </section>
-        <section class="desc my-lg-5 py-5">
-          <p v-html="item.desc" />
-          <!-- <template v-if="item?.images?.length">
-            <figure v-for="(image, i) in item.images" class="mb-5">
-              <img :src="getURL(`/aseets/project/${id}/${image.src}`)" :alt="image?.caption" />
-              <figcaption v-if="image.caption" class="text-13 text-md-14">
-                {{ image.caption }}
-              </figcaption>
-            </figure>
-          </template> -->
-        </section>
+        <div class="content-wrapper">
+          <article class="content-container">
+            <header class="mb-3 pb-3 pb-lg-0 text-center">
+              <h1 class="text-20 text-lg-40 fw-900 mb-0 lh-0">{{ item?.title }}</h1>
+              <ul class="my-1 p-0 d-flex align-items-center justify-content-center">
+                <li class="me-1" v-if="item?.category">
+                  <span class="text-13 text-md-14 text-gray-2">
+                    {{ getCategory(item.category) }}</span
+                  >
+                </li>
+                <li class="me-1" v-if="item?.date">
+                  <span class="text-13 text-md-14 text-gray-2">{{ item.date }}</span>
+                </li>
+              </ul>
+            </header>
+            <hr class="my-0" />
+            <section class="desc mb-lg-5 py-4" v-if="item?.desc">
+              <description-content :content="item?.desc" />
+            </section>
+          </article>
+        </div>
+        <div class="floating-btns">
+          <button v-if="isPreview" class="btn btn-primary" @click="$emit('close-preview')">
+            <i class="icon icon-cancel" />
+            <span>미리보기 닫기</span>
+          </button>
+          <button class="btn btn-outline-gray-1" @click="goTo(0, 0)" v-if="!isPreview">
+            <i class="icon icon-up-big" />
+            <span>맨 위로</span>
+          </button>
+        </div>
       </template>
-
-      <!-- <pre
-        style="
-          position: fixed;
-          bottom: 0;
-          right: 0;
-          z-index: 3000;
-          background-color: #ededed;
-          padding: 0.5rem;
-          width: 300px;
-          height: 500px;
-          overflow-y: scroll;
-          font-size: 14px;
-          line-height: 17px;
-          color: #000;
-          text-align: left;
-        "
-      >
-      id: {{ id }}
-      item: {{ item }}
-      </pre> -->
     </div>
   </section>
 </template>
 
 <script>
-import { ref, computed, onMounted, inject } from "vue";
+import { ref, computed, onMounted, inject, watch } from "vue";
+import { useStore } from "vuex";
 import { useRoute, useRouter } from "vue-router";
-// import allProject from "@/database/project.json";
 
+import DescriptionContent from "@/components/DescriptionContent.vue";
 export default {
-  name: "InsightDetail",
-  setup() {
-    // const items = allProject;
+  props: {
+    isPreview: {
+      type: Boolean,
+      default: false,
+    },
+    showPreview: {
+      type: Boolean,
+      default: false,
+    },
+    previewItem: {
+      type: Object,
+      default: null,
+    },
+  },
+  components: {
+    DescriptionContent,
+  },
+  setup(props, context) {
     const getURL = inject("getImageURL");
     const route = useRoute();
+    const router = useRouter();
+    const store = useStore();
+
     const id = computed(() => {
       return route?.params?.id;
     });
 
-    const { boardAPI } = inject("firebase");
-    const item = ref(null);
-    const getItem = async () => {
-      const data = await boardAPI.getBoard("project", id.value);
-      item.value = data;
-    };
-    onMounted(() => {
-      getItem();
+    const query = computed(() => {
+      return route?.query;
     });
 
-    // const item = computed(() => {
-    //   return items?.find((el) => el.id === id.value);
-    // });
+    // 카테고리 목록
+    const categories = computed(() => {
+      const list = store.getters["categories/getCategoryInsights"];
+      return list?.length ? list.filter((i) => i.value !== null) : [];
+    });
+    // 카테고리 value에서 text 구하기
+    const getCategory = (value) => {
+      return categories.value.find((c) => c.value === value)?.text || "";
+    };
 
-    return { getURL, id, item };
+    const { boardAPI } = inject("firebase");
+    const item = ref(null);
+    const getItem = async (preview) => {
+      if (preview) {
+        item.value = props.previewItem;
+      } else {
+        const data = await boardAPI.getBoard("insights", id.value);
+        item.value = data;
+        console.log("item.value:", item.value);
+      }
+    };
+    onMounted(() => {
+      if (props.isPreview) {
+        getItem(true);
+      } else if (!props.isPreview && id.value) {
+        getItem();
+      } else {
+        window.alert("잘못된 접근입니다");
+        router.replace("/insights");
+      }
+    });
+    watch(
+      () => props.showPreview,
+      (n) => {
+        getItem(true);
+      }
+    );
+
+    const goTo = (x, y) => {
+      window.scrollTo(x, y);
+    };
+
+    return { getURL, id, item, getCategory, goTo };
   },
 };
 </script>
 
 <style lang="scss" scoped>
-.desc {
+.list-dot {
+  list-style-type: disc;
+}
+
+$ratio: 67vh;
+$ratio-md: 45%;
+.content-wrapper {
+}
+
+.floating-btns {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  figure {
-    img {
-      width: inherit;
-    }
-    figcaption {
-      padding-top: 8px;
-      color: #777;
-    }
+  button {
+    margin-bottom: 12px;
   }
 }
 </style>

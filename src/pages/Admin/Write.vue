@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import { computed, inject, onMounted, ref } from "vue";
+import { computed, inject, onMounted, ref, shallowRef } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import FormProject from "@/components/Form/Project.vue";
 import FormInsights from "@/components/Form/Insights.vue";
@@ -38,7 +38,7 @@ export default {
       init: false,
     });
 
-    const forms = ref([
+    const forms = shallowRef([
       {
         key: "project",
         form: FormProject,

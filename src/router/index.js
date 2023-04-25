@@ -34,7 +34,7 @@ const routes = [
         children: [
           {
             path: "",
-            name: "InsightsList",
+            name: 'InsightsList',
             component: () => import("@/pages/Insights/Index.vue"),
           },
           {

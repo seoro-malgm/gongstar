@@ -215,7 +215,7 @@ export default {
       "미디어 브랜딩",
       "각종 시각 디자인",
       "컨설팅",
-      "교욱 관련 콘텐츠",
+      "교육 관련 콘텐츠",
     ]);
     const pending = ref({
       file: false,
@@ -298,8 +298,8 @@ export default {
     const submit = async (f) => {
       const data = {
         ...f,
-        date: new Date()
-      }
+        date: new Date(),
+      };
       try {
         // 견적에 추가하고, 메일전송
         const [added, sended] = await Promise.all([addContact(data), sendMail(data)]);
