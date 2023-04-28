@@ -82,7 +82,7 @@ export default {
       if (entry.isIntersecting) {
         if (!animated.value) {
           animated.value = true;
-          console.log(animated.value);
+          // console.log(animated.value);
         }
       }
     });

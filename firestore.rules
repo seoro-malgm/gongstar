@@ -3,8 +3,11 @@ service cloud.firestore {
     match /{path}/{item} {
       allow get, read: if true;
     }
+    match /contact/{item} {
+      allow create;
+      allow update, delete: if request.auth != null;
+    }
     match /{path}/{item} {
-      allow create: if path == 'contact';
       allow create, update, delete: if request.auth != null;
     }
   }

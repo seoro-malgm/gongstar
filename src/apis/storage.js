@@ -20,7 +20,6 @@ class storageAPI {
         if (standard === "h") {
           this.resize.resizeWidth(readerEvent.target.result, maxSize, outputType, callback);
         } else if (standard === "w") {
-          console.log("this.resize:", this);
           this.resize.resizeHeight(readerEvent.target.result, maxSize, outputType, callback);
         }
       };

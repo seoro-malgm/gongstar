@@ -21,6 +21,26 @@
               </div>
             </div>
             <div class="mb-3">
+              <label for="period">프로젝트 수행 기간</label>
+              <div class="row mb-2">
+                <div class="col-7">
+                  <input
+                    type="number"
+                    class="form-control"
+                    v-model="form.period"
+                    placeholder="기간 숫자"
+                  />
+                </div>
+                <div class="col-5">
+                  <select class="form-select" v-model="form.periodType">
+                    <option value="m">개월</option>
+                    <option value="w">주</option>
+                    <option value="d">일</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="mb-3">
               <span>견적 항목</span>
               <ul>
                 <template v-if="form?.items?.length">
@@ -123,6 +143,21 @@
               <h6 class="fw-700">추가 정보(견적문의를 받은 경우)</h6>
             </header>
             <div class="mb-3">
+              <h6 class="fw-700">유형</h6>
+              <span v-if="form?.type?.length">{{ form.type.join(",") }}</span>
+              <template v-else>
+                <span class="text-13 gray-3">설명 없음</span>
+              </template>
+            </div>
+            <div class="mb-3">
+              <h6 class="fw-700">설명</h6>
+              <span v-if="form?.desc">{{ form.desc }}</span>
+              <template v-else>
+                <span class="text-13 gray-3">설명 없음</span>
+              </template>
+            </div>
+
+            <div class="mb-3">
               <h6 class="fw-700">예산</h6>
               <span v-if="form?.price">{{ form.price }}</span>
               <template v-else>
@@ -138,8 +173,7 @@
             </div>
             <div class="mb-3">
               <h6 class="fw-700">참고파일</h6>
-              <template v-if="form?.file">
-                <span>{{ form.file.name }}</span>
+              <template v-if="form?.file?.url">
                 <a :href="form.file.url" target="_blank">링크</a>
               </template>
               <template v-else>
@@ -154,7 +188,7 @@
         <div class="print-wrapper">
           <!-- 로고 회전 -->
           <div class="logo-rotate">
-            <logo-rotate class="logo" :size="3" :color="'#d7d7d7'" />
+            <logo-rotate class="logo" :size="2.5" :color="'#d7d7d7'" />
           </div>
           <!-- 프린트영역 -->
           <div class="print-container">
@@ -206,22 +240,24 @@
                         <tr>
                           <td>합계</td>
                           <td></td>
-                          <td>총 기간 예상</td>
+                          <td>{{ form.period }} {{ getPeriodType(form.periodType) }}</td>
+                          <td class="text-end">
+                            <span v-if="form?.items?.length">
+                              {{ sum(form.items, "price") }}
+                            </span>
+                            ₩
+                          </td>
                         </tr>
                       </tfoot>
                     </table>
                     <caption>
-                      <div class="d-flex align-items-center justify-content-between">
-                        <div class="text-13">합계</div>
-                        <div>
-                          {{ sum(form.items, "price") }}
-                        </div>
-                      </div>
+                      (VAT 별도)
                     </caption>
                   </div>
                 </section>
               </section>
               <div class="form-footer">
+                <div class="text-13 mb-1">공스타는 여성기업인증, 충남 예비사회적기업입니다.</div>
                 <img class="logo" :src="getURL('/assets/logo.svg')" alt="공스타 로고" />
                 <ul class="list-infos">
                   <li>
@@ -247,8 +283,18 @@
         <!-- 유틸 영역 -->
         <div class="my-3">
           <div class="d-flex justify-content-end">
-            <button class="btn btn-outline-gray-1 me-2">인쇄</button>
-            <button class="btn btn-primary px-3">견적서저장</button>
+            <button class="btn btn-outline-gray-1 me-2" @click="print()">인쇄</button>
+            <button
+              class="btn btn-primary px-3"
+              @click="
+                $emit(id ? 'update' : 'submit', {
+                  ...form,
+                  lastUpdated: new Date().toLocaleString(),
+                })
+              "
+            >
+              견적서 저장
+            </button>
           </div>
         </div>
       </div>
@@ -288,10 +334,11 @@ export default {
     // 폼
     const form = ref({
       agree: true,
+      period: null,
       desc: "",
+      periodType: "m",
       email: "",
       file: null,
-      id: null,
       name: null,
       phone: null,
       price: null,
@@ -313,9 +360,9 @@ export default {
 
     const getPeriodType = (value) => {
       const types = {
-        m: "개월",
-        w: "주",
         d: "일",
+        w: "주",
+        m: "개월",
       };
       return types[value] || "";
     };
@@ -331,6 +378,19 @@ export default {
         if (data) {
           // ref를 찾은 뒤에 form에 적용함
           form.value = {
+            agree: true,
+            period: null,
+            desc: "",
+            periodType: "m",
+            email: "",
+            file: null,
+            name: null,
+            phone: null,
+            price: null,
+            title: null,
+            items: [],
+            type: [],
+            url: null,
             ...data,
           };
         }
@@ -342,7 +402,6 @@ export default {
       pending.value.init = false;
     };
     onMounted(() => {
-      form.value.no = route?.query?.no;
       if (id.value) {
         init("contact", id.value);
       }
@@ -358,6 +417,10 @@ export default {
       return toLocaleFormat({ text: result });
     };
 
+    const print = () => {
+      window.print();
+    };
+
     return {
       getURL,
       infos,
@@ -367,6 +430,7 @@ export default {
       pending,
       toLocaleFormat,
       sum,
+      print,
     };
   },
 };
@@ -411,15 +475,30 @@ export default {
       .form-content {
         .table-wrapper {
           max-width: 100%;
-          margin: 3rem 0;
+          margin: 3rem 0 0;
           .table {
             width: 100%;
+            margin-bottom: 0;
             thead {
               th {
                 padding: 0.25rem 0.75rem;
                 background-color: $gray-3;
                 border-bottom: 1px solid $gray-2;
               }
+            }
+            tbody {
+            }
+            tfoot {
+              background-color: $gray-1;
+              color: white;
+              td {
+                font-weight: 700;
+              }
+            }
+            + caption {
+              display: flex;
+              width: 100%;
+              justify-content: end;
             }
           }
         }

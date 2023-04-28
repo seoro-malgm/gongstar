@@ -235,7 +235,7 @@ export default {
         return;
       }
       if (file.size >= 500000) {
-        console.log("file.size:", file.size);
+        // console.log("file.size:", file.size);
         window.toast("파일 용량이 너무 큽니다");
         pending.value.file = false;
         form.file = null;

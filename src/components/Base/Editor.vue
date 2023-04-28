@@ -54,7 +54,7 @@ export default {
                   fileName
                 );
                 if (name && url) {
-                  console.log("url:", url);
+                  // console.log("url:", url);
                   return resolve(url);
                 } else {
                   reject("Upload failed");
@@ -74,7 +74,7 @@ export default {
                     fileName
                   );
                   if (name && url) {
-                    console.log("url:", url);
+                    // console.log("url:", url);
 
                     return resolve(url);
                   } else {

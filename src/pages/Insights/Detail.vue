@@ -23,9 +23,13 @@
               </ul>
             </header>
             <hr class="my-0" />
-            <section class="desc mb-lg-5 py-4" v-if="item?.desc">
-              <description-content :content="item?.desc" />
-            </section>
+            <div class="row">
+              <div class="col-10 col-md-8 col-lg-7">
+                <section class="desc mb-lg-5 py-4" v-if="item?.desc">
+                  <description-content :content="item?.desc" />
+                </section>
+              </div>
+            </div>
           </article>
         </div>
         <div class="floating-btns">
@@ -99,7 +103,7 @@ export default {
       } else {
         const data = await boardAPI.getBoard("insights", id.value);
         item.value = data;
-        console.log("item.value:", item.value);
+        // console.log("item.value:", item.value);
       }
     };
     onMounted(() => {

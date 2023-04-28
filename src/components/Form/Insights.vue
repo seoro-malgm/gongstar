@@ -206,7 +206,7 @@ export default {
             if (name && url) {
               form.value.thumbnail = url;
               pending.value.thumbnail = false;
-              console.log("2:", pending.value.thumbnail);
+              // console.log("2:", pending.value.thumbnail);
             }
           } catch (error) {
             window.toast("파일업로드 실패");

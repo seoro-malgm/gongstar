@@ -74,8 +74,8 @@ class blogAPI {
     }
   };
 
-   // board 디테일 불러오기
-   getBoardById = async (documentName, id) => {
+  // board 디테일 불러오기
+  getBoardById = async (documentName, id) => {
     try {
       const col = doc(db, documentName, id);
       const snapshot = await getDoc(col);
@@ -85,12 +85,11 @@ class blogAPI {
     } catch (error) {
       console.error("error::", error);
     }
-  }
+  };
 
   // board 추가
   addBoard = async (documentName, data) => {
     const docRef = await addDoc(collection(db, documentName), data);
-    console.log("docRef:", docRef);
     if (docRef?.id) {
       return docRef.id;
     }
@@ -105,11 +104,6 @@ class blogAPI {
 
   // board 수정
   updateBoard = async (documentName, id, data) => {
-    console.log("{data}:", {
-      documentName: documentName,
-      id: id,
-      data: data,
-    });
     await setDoc(doc(db, documentName, id), data);
     return true;
   };

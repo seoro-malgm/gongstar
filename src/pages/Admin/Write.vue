@@ -72,6 +72,7 @@ export default {
     const submit = async (documentName, form) => {
       pending.value.init = true;
       try {
+        // console.log("%c Hello ", "background: #333399; color: #ededed");
         const data = await boardAPI.addBoard(documentName, form);
         if (data) {
           window.toast("업로드되었습니다.");

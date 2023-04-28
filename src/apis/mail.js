@@ -35,7 +35,6 @@ class authAPI {
         `,
       },
     });
-    console.log("docRef:", docRef);
     if (docRef?.id) {
       return docRef.id;
     }

@@ -21,21 +21,21 @@
       <ul class="list-unstyled my-4 py-2">
         <template v-if="items !== null && items?.length">
           <li class="row mb-2 bg-gray-2 text-white py-2 d-none d-md-flex">
-            <div class="col-1">날짜</div>
+            <div class="col-2">날짜</div>
             <div class="col-4">제목</div>
-            <div class="col-5">정보</div>
+            <div class="col-4">정보</div>
             <div class="col-2 text-right">관리</div>
           </li>
           <li class="row border-bottom py-2" v-for="(item, i) in items" :key="i">
-            <div class="col-1 col-md-1">
-              {{ item?.date }}
+            <div class="col-2 col-md-2" v-if="item?.lastUpdated">
+              {{ item?.lastUpdated }}
             </div>
             <div class="col-11 col-md-4">
               <h6 v-if="item.title">
                 {{ item.title }}
               </h6>
             </div>
-            <div class="col-12 col-md-5">
+            <div class="col-12 col-md-4">
               <ul class="p-0 m-0 text-gray-2 text-13 text-truncate">
                 <li>
                   담당자/회사명:
@@ -43,7 +43,7 @@
                 </li>
                 <li>
                   유형:
-                  <strong v-if="item?.type?.length">{{ item.type.join(',') }}</strong>
+                  <strong v-if="item?.type?.length">{{ item.type.join(",") }}</strong>
                 </li>
                 <li>
                   내용 :
@@ -103,7 +103,7 @@ export default {
     const items = ref(null);
     const getItems = async () => {
       const data = await boardAPI.getAllBoards("contact");
-      console.log(data);
+      // console.log(data);
       items.value = data;
     };
     onMounted(() => {
