@@ -7,30 +7,30 @@
         </div>
       </template>
       <template v-else>
-        <div class="content-wrapper">
-          <article class="content-container">
-            <header class="mb-3 pb-3 pb-lg-0 text-center">
-              <h1 class="text-20 text-lg-40 fw-900 mb-0 lh-0">{{ item?.title }}</h1>
-              <ul class="my-1 p-0 d-flex align-items-center justify-content-center">
-                <li class="me-1" v-if="item?.category">
-                  <span class="text-13 text-md-14 text-gray-2">
-                    {{ getCategory(item.category) }}</span
-                  >
-                </li>
-                <li class="me-1" v-if="item?.date">
-                  <span class="text-13 text-md-14 text-gray-2">{{ item.date }}</span>
-                </li>
-              </ul>
-            </header>
-            <hr class="my-0" />
-            <div class="row">
-              <div class="col-10 col-md-8 col-lg-7">
+        <div class="row justify-content-center">
+          <div class="col-10 col-md-8 col-lg-7">
+            <div class="content-wrapper">
+              <article class="content-container">
+                <header class="mb-3 pb-3 pb-lg-0 text-center">
+                  <h1 class="text-20 text-lg-40 fw-900 mb-0 lh-0">{{ item?.title }}</h1>
+                  <ul class="my-1 p-0 d-flex align-items-center justify-content-center">
+                    <li class="me-1" v-if="item?.category">
+                      <span class="text-13 text-md-14 text-gray-2">
+                        {{ getCategory(item.category) }}</span
+                      >
+                    </li>
+                    <li class="me-1" v-if="item?.date">
+                      <span class="text-13 text-md-14 text-gray-2">{{ item.date }}</span>
+                    </li>
+                  </ul>
+                </header>
+                <hr class="my-0" />
                 <section class="desc mb-lg-5 py-4" v-if="item?.desc">
                   <description-content :content="item?.desc" />
                 </section>
-              </div>
+              </article>
             </div>
-          </article>
+          </div>
         </div>
         <div class="floating-btns">
           <button v-if="isPreview" class="btn btn-primary" @click="$emit('close-preview')">
