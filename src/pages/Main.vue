@@ -16,6 +16,16 @@
       <div class="section-main">
         <section-logo-rotate />
       </div>
+      <!-- 플로팅 버튼:회사소개서 다운로드 -->
+      <div class="floating-btn" v-if="infos?.infoDocument">
+        <a
+          :href="infos.infoDocument"
+          target="_blank"
+          class="btn btn-outline-gray-1 rounded-pill px-3 py-2 fw-700 text-12 text-md-14"
+        >
+          공스타 회사소개서 다운로드
+        </a>
+      </div>
     </div>
     <!-- 비전 -->
     <!-- <section-vision /> -->
@@ -33,7 +43,8 @@
 </template>
 
 <script>
-import { inject, ref } from "vue";
+import { inject, computed, ref } from "vue";
+import { useStore } from "vuex";
 
 import SectionLogoRotate from "@/components/Sections/LogoRotate.vue";
 import SectionVision from "@/components/Sections/Vision.vue";
@@ -54,9 +65,14 @@ export default {
     SectionContact,
   },
   setup() {
+    const store = useStore();
     const getURL = inject("getImageURL");
 
-    return { getURL };
+    const infos = computed(() => {
+      return store.getters["auth/getInfos"];
+    });
+
+    return { store, getURL, infos };
   },
 };
 </script>
@@ -140,5 +156,11 @@ export default {
   animation-fill-mode: forwards;
   animation-direction: alternate;
   animation-iteration-count: infinite;
+}
+
+.floating-btn {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
 }
 </style>

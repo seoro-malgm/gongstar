@@ -10,6 +10,9 @@ const state = {
     addressSummary: "공주시 신관동 흑수골길 41, 2층",
     // facebook: "https://www.facebook.com/profile.php?id=100085628826902",
     instagram: "https://www.instagram.com/gong__star2021/?hl=ko",
+    // 회사소개서
+    infoDocument:
+      "https://firebasestorage.googleapis.com/v0/b/community-newwaves.appspot.com/o/documents%2F%E1%84%80%E1%85%A9%E1%86%BC%E1%84%89%E1%85%B3%E1%84%90%E1%85%A1%20%E1%84%92%E1%85%AC%E1%84%89%E1%85%A1%E1%84%89%E1%85%A9%E1%84%80%E1%85%A2%E1%84%89%E1%85%A5(2023ver).pdf?alt=media&token=ddecc40d-a777-4276-a495-e39c572af3f9",
   },
 };
 
