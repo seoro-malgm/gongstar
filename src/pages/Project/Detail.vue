@@ -51,8 +51,9 @@
 import { ref, computed, onMounted, inject, watch } from "vue";
 import { useStore } from "vuex";
 import { useRoute, useRouter } from "vue-router";
-// import allProject from "@/database/project.json";
-
+// meta
+// import { useMeta } from "vue-meta";
+// components
 import DescriptionContent from "@/components/DescriptionContent.vue";
 export default {
   props: {
@@ -105,14 +106,46 @@ export default {
         // console.log("item.value:", item.value);
       } else {
         const data = await boardAPI.getBoard("project", id.value);
-        item.value = data;
+
+        if (data) {
+          item.value = data;
+        }
       }
     };
+
+    // const setMeta = (data) => {
+    //   useMeta(
+    //     // meta값 생성
+    //     {
+    //       title: `공스타 | ${data?.title || ""}`,
+    //       titleTemplate: `공스타 | ${data?.title || ""}`,
+    //       meta: [
+    //         {
+    //           name: "title",
+    //           content: `공스타 | ${data?.title || ""}`,
+    //         },
+    //         {
+    //           name: "og:title",
+    //           content: `공스타 | ${data?.title || ""}`,
+    //         },
+    //         {
+    //           name: "description",
+    //           content: `${data?.desc || ""}`,
+    //         },
+    //         {
+    //           name: "og:description",
+    //           content: `${data?.desc || ""}`,
+    //         },
+    //       ],
+    //     }
+    //   );
+    // };
     onMounted(() => {
       if (props.isPreview) {
         getItem(true);
       } else if (!props.isPreview && id.value) {
         getItem();
+        // setMeta(item.value);
       } else {
         window.alert("잘못된 접근입니다");
         router.replace("/project");

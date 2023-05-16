@@ -11,7 +11,7 @@
             :class="{ active: !categorySelected }"
             @click="
               $router.push({
-               name: 'InsightsList',
+                name: 'InsightsList',
               })
             "
           >
@@ -24,7 +24,7 @@
             :class="{ active: categorySelected === category.value }"
             @click="
               $router.push({
-               name: 'InsightsList',
+                name: 'InsightsList',
                 query: {
                   category: category.value,
                 },
@@ -55,9 +55,15 @@
             </header>
             <div
               class="item-thumbnail"
-              :style="{
-                background: item?.thumbnail ? `url(${item.thumbnail})` : '#ededed',
-              }"
+              :style="
+                item?.thumbnail
+                  ? {
+                      backgroundImage: `url(${item.thumbnail})`,
+                    }
+                  : {
+                      backgroundColor: '#ededed',
+                    }
+              "
             ></div>
           </article>
         </li>
@@ -70,7 +76,7 @@
         </template>
         <template v-if="items !== null && !items?.length">
           <div class="p-3 text-center">
-            <span class="text-14 text-gray-2"> 표시할 프로젝트가 현재 없습니다. </span>
+            <span class="text-14 text-gray-2"> 표시할 인사이트 현재 없습니다. </span>
           </div>
         </template>
       </section>
@@ -94,6 +100,7 @@ export default {
       try {
         const data = await boardAPI.getAllBoards("insights", {
           category,
+          visible: true,
         });
         if (data?.length) {
           items.value = data;
@@ -171,7 +178,7 @@ export default {
           width: 100%;
           padding-bottom: 100%;
           background-position: center center;
-          background-size: cover;
+          background-size: contain;
           background-repeat: no-repeat;
         }
         .header-insights {
@@ -200,6 +207,9 @@ export default {
           transform: translateY(-50%) scale(0.2);
           transition: transform 0.4s $default-ease;
           user-select: none;
+          background-position: center center;
+          background-repeat: no-repeat;
+          background-size: contain;
         }
 
         &:hover {
@@ -222,9 +232,6 @@ export default {
               right: 3vw;
             }
             transform: translateY(-50%) scale(1);
-            background-position: center center;
-            background-repeat: no-repeat;
-            background-size: contain;
           }
         }
       }

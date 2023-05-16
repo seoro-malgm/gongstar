@@ -24,7 +24,8 @@
           <li class="row mb-2 bg-gray-2 text-white py-2 d-none d-md-flex">
             <div class="col-1">번호</div>
             <div class="col-2">이미지</div>
-            <div class="col-7">정보</div>
+            <div class="col-6">정보</div>
+            <div class="col-1">글 공개 여부</div>
             <div class="col-2 text-right">관리</div>
           </li>
           <li class="row border-bottom py-2" v-for="(item, i) in items" :key="i">
@@ -41,12 +42,15 @@
                 }"
               ></div>
             </div>
-            <div class="col-12 col-md-7">
+            <div class="col-12 col-md-6">
               <h6 class="text-truncate">{{ item.title }}</h6>
               <ul class="p-0 m-0 text-gray-2 text-13 text-truncate">
                 <li>{{ item.subtitle }}</li>
                 <li>{{ item.client }}</li>
               </ul>
+            </div>
+            <div class="col-12 col-md-1 text-center">
+              {{ item?.visible ? "공개됨" : "비공개" }}
             </div>
             <div class="col-12 col-md-2">
               <div class="d-flex flex-column">

@@ -13,7 +13,25 @@ const state = {
     // 회사소개서
     infoDocument:
       "https://firebasestorage.googleapis.com/v0/b/community-newwaves.appspot.com/o/documents%2F%E1%84%80%E1%85%A9%E1%86%BC%E1%84%89%E1%85%B3%E1%84%90%E1%85%A1%20%E1%84%92%E1%85%AC%E1%84%89%E1%85%A1%E1%84%89%E1%85%A9%E1%84%80%E1%85%A2%E1%84%89%E1%85%A5(2023ver).pdf?alt=media&token=ddecc40d-a777-4276-a495-e39c572af3f9",
-    accountNumber: "000-000-000",
+    accountNumber: "농협 301-5656-7722-21, 예금주: 주식회사 공스타",
+    services: [
+      {
+        type: "서비스업",
+        item: "온라인 광고 대행업",
+      },
+      {
+        type: "정보통신업",
+        item: "온라인 플랫폼 제작 및 데이터베이스 제공업",
+      },
+      {
+        type: "서비스업",
+        item: "경영 컨설턴팅업",
+      },
+      {
+        type: "정보통신업",
+        item: "디지털 콘텐츠 제작업",
+      },
+    ],
   },
 };
 

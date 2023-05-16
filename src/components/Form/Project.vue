@@ -106,12 +106,23 @@
       </div>
     </section>
     <section class="row justify-content-end">
-      <div class="col-3">
+      <div class="col-12 col-lg-3">
         <button class="btn btn-gray-2 w-100 py-2 text-20" @click="showPreview = true">
           미리보기
         </button>
       </div>
-      <div class="col-3">
+      <div class="col-12 col-lg-3 ms-auto">
+        <div class="d-flex align-items-center pt-3 justify-content-end">
+          <div class="form-check form-switch">
+            <label class="form-check-label" for="visible"
+              >글
+              {{ form?.visible ? "공개" : "비공개" }}
+            </label>
+            <input class="form-check-input" type="checkbox" id="visible" v-model="form.visible" />
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-lg-3">
         <button
           class="btn btn-primary w-100 py-2 text-20"
           @click="$emit(id ? 'update' : 'submit', form)"
@@ -168,6 +179,7 @@ export default {
       party: [],
       desc: "",
       items: [],
+      visible: false,
     });
 
     // 대기

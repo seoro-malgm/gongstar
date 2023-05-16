@@ -2,6 +2,7 @@ import { createRouter, createWebHistory, RouterView } from "vue-router";
 import beforeEach from "./beforeEach.js";
 import LayoutDefault from "@/layouts/Default.vue";
 import LayoutAdmin from "@/layouts/Admin.vue";
+import NotFound from "@/pages/NotFound.vue";
 const routes = [
   {
     path: "/",
@@ -34,7 +35,7 @@ const routes = [
         children: [
           {
             path: "",
-            name: 'InsightsList',
+            name: "InsightsList",
             component: () => import("@/pages/Insights/Index.vue"),
           },
           {
@@ -119,6 +120,15 @@ const routes = [
             component: () => import("@/pages/Admin/Logout.vue"),
           },
         ],
+      },
+      {
+        path: "/404",
+        name: "NotFound",
+        component: NotFound,
+      },
+      {
+        path: "/:pathMatch(.*)*",
+        redirect: "/404",
       },
     ],
   },

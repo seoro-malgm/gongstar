@@ -66,10 +66,21 @@
       </div>
     </section>
     <section class="row justify-content-end">
-      <div class="col-3">
+      <div class="col-12 col-lg-3">
         <button class="btn btn-gray-2 w-100 py-2 text-20" @click="showPreview = true">
           미리보기
         </button>
+      </div>
+      <div class="col-12 col-lg-3 ms-auto">
+        <div class="d-flex align-items-center pt-3 justify-content-end">
+          <div class="form-check form-switch">
+            <label class="form-check-label" for="visible"
+              >글
+              {{ form?.visible ? "공개" : "비공개" }}
+            </label>
+            <input class="form-check-input" type="checkbox" id="visible" v-model="form.visible" />
+          </div>
+        </div>
       </div>
       <div class="col-3">
         <button
@@ -93,25 +104,6 @@
         @close-preview="showPreview = false"
       />
     </div>
-    <pre
-      style="
-        position: fixed;
-        bottom: 0;
-        right: 0;
-        z-index: 3000;
-        background-color: #ededed;
-        padding: 0.5rem;
-        width: 300px;
-        height: 500px;
-        overflow-y: scroll;
-        font-size: 14px;
-        line-height: 17px;
-        color: #000;
-        text-align: left;
-      "
-    >
-    form: {{ form }}
-    </pre>
   </div>
 </template>
 
@@ -148,6 +140,7 @@ export default {
       category: null,
       date: null,
       desc: "",
+      visible: false,
     });
 
     // 대기

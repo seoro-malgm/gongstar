@@ -43,5 +43,6 @@ export default defineConfig(({ mode }) => {
     watchOptions: {
       poll: true,
     },
+    // transpileDependencies: ["vue-meta"],
   };
 });

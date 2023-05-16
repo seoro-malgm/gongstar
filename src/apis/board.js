@@ -34,6 +34,8 @@ class blogAPI {
       const queryConstraints = [];
       if (orderOptions?.category)
         queryConstraints.push(where("category", "==", orderOptions?.category));
+      if (orderOptions?.visible)
+        queryConstraints.push(where("visible", "==", orderOptions?.visible));
       if (orderOptions?.count) queryConstraints.push(limit(orderOptions.count));
       // queryConstraints.push(orderBy("createdAt", "desc"));
 

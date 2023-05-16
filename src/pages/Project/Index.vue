@@ -91,6 +91,7 @@ export default {
       try {
         const data = await boardAPI.getAllBoards("project", {
           category,
+          visible: true,
         });
         if (data?.length) {
           items.value = data;
