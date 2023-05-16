@@ -92,7 +92,14 @@ export default {
     const items = ref(null);
     const getItems = async () => {
       const data = await boardAPI.getAllBoards("insights");
-      items.value = data;
+      if (data?.length) {
+        function compareNumbers(a, b) {
+          if (b?.no && a?.no) {
+            return +b?.no - +a?.no;
+          } else return 0;
+        }
+        items.value = data.sort(compareNumbers);
+      } else items.value = [];
     };
     onMounted(() => {
       getItems();

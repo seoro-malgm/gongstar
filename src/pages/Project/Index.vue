@@ -38,24 +38,25 @@
     </section>
     <section v-if="items?.length">
       <div class="row">
-        <div v-for="item in items" :key="item.id" class="col-6 col-md-4 col-lg-3">
-          <router-link
-            :to="{
-              name: 'ProjectDetail',
-              params: {
-                id: item.no,
-              },
-            }"
-            class="item-project"
-          >
+        <div v-for="item in items" :key="item.id" class="col-6 col-md-4 col-lg-3 mb-3">
+          <div class="item-project">
             <figure class="bg-img ratio-100">
-              <img :src="getURL(item.thumbnail)" :alt="`${item.title} 썸네일 이미지`" />
+              <router-link
+                :to="{
+                  name: 'ProjectDetail',
+                  params: {
+                    id: item.no,
+                  },
+                }"
+              >
+                <img :src="getURL(item.thumbnail)" :alt="`${item.title} 썸네일 이미지`" />
+              </router-link>
             </figure>
             <figcaption class="caption">
               <h6 class="text-18 text-md-20 fw-700">{{ item.title }}</h6>
               <span>{{ getCategory(item.category) }}</span>
             </figcaption>
-          </router-link>
+          </div>
         </div>
       </div>
     </section>
@@ -94,7 +95,12 @@ export default {
           visible: true,
         });
         if (data?.length) {
-          items.value = data;
+          function compareNumbers(a, b) {
+            if (b?.no && a?.no) {
+              return +b?.no - +a?.no;
+            } else return 0;
+          }
+          items.value = data.sort(compareNumbers);
         } else items.value = [];
       } catch (error) {
         items.value = null;
@@ -179,7 +185,7 @@ export default {
     color: $gray-1;
   }
   &:hover {
-    cursor: pointer;
+    // cursor: pointer;
     figure {
       transform: scale(0.94);
       img {

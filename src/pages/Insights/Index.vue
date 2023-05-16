@@ -103,7 +103,12 @@ export default {
           visible: true,
         });
         if (data?.length) {
-          items.value = data;
+          function compareNumbers(a, b) {
+            if (b?.no && a?.no) {
+              return +b?.no - +a?.no;
+            } else return 0;
+          }
+          items.value = data.sort(compareNumbers);
         } else items.value = [];
       } catch (error) {
         items.value = null;
