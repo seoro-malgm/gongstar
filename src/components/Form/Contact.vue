@@ -71,6 +71,27 @@
               </div>
             </div>
             <div class="mb-3">
+              <label for="address">업태/종목</label>
+              <div class="form-group">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="servicesCategory"
+                  v-model="form.servicesCategory"
+                  placeholder="사업 업태"
+                />
+              </div>
+              <div class="form-group mt-2">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="servicesType"
+                  v-model="form.servicesType"
+                  placeholder="사업 종목"
+                />
+              </div>
+            </div>
+            <div class="mb-3">
               <label for="phone">연락처</label>
               <div class="form-group">
                 <input
@@ -295,6 +316,8 @@ export default {
       companyBoss: null,
       licenseNumber: null,
       address: null,
+      servicesCategory: null,
+      servicesType: null,
       name: null,
       phone: null,
       price: null,
@@ -326,6 +349,12 @@ export default {
             periodType: "m",
             email: "",
             file: null,
+            companyName: null,
+            companyBoss: null,
+            licenseNumber: null,
+            address: null,
+            servicesCategory: null,
+            servicesType: null,
             name: null,
             phone: null,
             price: null,

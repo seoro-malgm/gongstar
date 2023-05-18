@@ -42,7 +42,7 @@
           <article class="item-insights">
             <header class="header-insights text-truncate">
               <router-link
-                class="text-18 text-md-28 text-lg-36 btn btn-text btn-text-gray-1"
+                class="text-24 text-md-28 text-lg-36 btn btn-text btn-text-gray-1"
                 :to="{
                   name: 'InsightsDetail',
                   params: {
@@ -53,8 +53,9 @@
                 {{ item.title }}
               </router-link>
             </header>
+
             <div
-              class="item-thumbnail"
+              class="item-thumbnail d-none d-lg-block"
               :style="
                 item?.thumbnail
                   ? {
@@ -64,7 +65,20 @@
                       backgroundColor: '#ededed',
                     }
               "
-            ></div>
+            />
+            <figure
+              class="d-block d-lg-none"
+              @click="
+                $router.push({
+                  name: 'InsightsDetail',
+                  params: {
+                    id: item.no,
+                  },
+                })
+              "
+            >
+              <img :src="`${item.thumbnail}`" alt="" />
+            </figure>
           </article>
         </li>
       </ul>
@@ -170,9 +184,10 @@ export default {
 .list-insights {
   @media (max-width: $breakpoint-lg) {
     display: flex;
+    flex-direction: column;
     .list-item {
-      flex: 50 0 0;
-      max-width: 50%;
+      flex: 100% 0 0;
+      max-width: 100%;
       padding: 1rem;
       .item-insights {
         display: flex;
@@ -189,6 +204,9 @@ export default {
         .header-insights {
           order: 1;
           max-width: 100%;
+          width: 100%;
+          padding: 8px 0;
+          border-bottom: 1px solid $gray-1;
           .btn {
             padding: 0;
             font-weight: 700;

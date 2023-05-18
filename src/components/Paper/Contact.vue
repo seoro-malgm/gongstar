@@ -67,21 +67,25 @@
                 <tr>
                   <!-- 공급자 -->
                   <th>업태</th>
-                  <td>
-                    <!-- {{ infos.email }} -->
+                  <td class="text-start">
+                    <div class="m-0 p-0 text-start" v-for="(item, i) in infos?.services" :key="i">
+                      {{ item.type }}
+                    </div>
                   </td>
                   <th>종목</th>
-                  <td>
-                    <!-- {{ infos.email }} -->
+                  <td class="text-start">
+                    <div class="m-0 p-0 text-start" v-for="(item, i) in infos?.services" :key="i">
+                      {{ item.item }}
+                    </div>
                   </td>
                   <!-- 공급받는 자 -->
                   <th>업태</th>
                   <td>
-                    <!-- {{ infos.email }} -->
+                    {{ form.servicesCategory }}
                   </td>
                   <th>종목</th>
                   <td>
-                    <!-- {{ infos.email }} -->
+                    {{ form.servicesType }}
                   </td>
                 </tr>
                 <tr>

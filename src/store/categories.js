@@ -10,7 +10,7 @@ const state = {
         value: "design",
       },
       {
-        text: "Brand Experience",
+        text: "Brand eXperience",
         value: "bx",
       },
       {
@@ -26,7 +26,7 @@ const state = {
         value: "food",
       },
       {
-        text: "Media branding",
+        text: "Media Branding",
         value: "media",
       },
       {
@@ -48,8 +48,8 @@ const state = {
         value: null,
       },
       {
-        text: "주제이름",
-        value: "value1",
+        text: "Free",
+        value: "free",
       },
     ],
   },
