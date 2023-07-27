@@ -12,6 +12,10 @@
           <!-- <img class="logo" :src="getURL('/assets/logo.svg')" alt="공스타 로고" /> -->
           <h1>견적서</h1>
           <!-- <span>주식회사 공스타에서 발행한 견적서입니다</span> -->
+          <div class="paper-info">
+            <small> No. {{ form.no }} </small>
+            <small> Date. {{ form.date }} </small>
+          </div>
         </header>
         <section class="form-content">
           <div class="desc">
@@ -106,10 +110,11 @@
               <table class="table">
                 <thead>
                   <th class="text-start"></th>
-                  <th width="50%">항목명</th>
-                  <!-- <th>단가</th> -->
-                  <th>수량 혹은 기간</th>
-                  <th class="text-end">소계</th>
+                  <th width="45%">항목명</th>
+                  <th>단위</th>
+                  <th class="text-end">공급가액</th>
+                  <th class="text-end">세액</th>
+                  <th class="text-end">단가</th>
                 </thead>
                 <tbody>
                   <template v-if="form?.items?.length">
@@ -121,6 +126,24 @@
                       <td>
                         {{ item.period }}
                         {{ getPeriodType(item.periodType) }}
+                      </td>
+                      <td>
+                        {{
+                          toLocaleFormat({
+                            text: formOptions.addVAT ? item.price / 1.1 : item.price,
+                            fixed: 0,
+                          })
+                        }}₩
+                      </td>
+                      <td>
+                        {{
+                          formOptions.addVAT
+                            ? toLocaleFormat({
+                                text: item.price / 1.1 / 10,
+                                fixed: 0,
+                              })
+                            : 0
+                        }}₩
                       </td>
                       <td class="text-end">
                         {{
@@ -139,9 +162,9 @@
                     <td>
                       <!-- {{ form.period }} {{ getPeriodType(form.periodType) }} -->
                     </td>
-                    <td class="text-end">
+                    <td class="text-end" colspan="3">
                       <span v-if="form?.items?.length">
-                        {{ sum(form.items, "price", 10) }}
+                        {{ sum(form.items, "price", 0) }}
                       </span>
                       ₩
                     </td>
@@ -149,8 +172,17 @@
                 </tfoot>
               </table>
               <caption>
-                * VAT 별도, 10%가 가격에 포함된 가격입니다
+                <!-- <template v-if="formOptions.addVAT">
+                  * VAT 별도, 합계에는 VAT 10%가 가격에 포함된 가격입니다
+                </template>
+                <template v-if="!formOptions.addVAT"> * VAT 미포함 </template> -->
               </caption>
+            </div>
+            <div class="pt-3 border-top border-black" v-if="form?.addText">
+              <div class="text-16 fw-700">부가설명</div>
+              <p class="mt-3 pb-3 border-bottom border-black">
+                {{ form?.addText }}
+              </p>
             </div>
           </section>
         </section>
@@ -183,12 +215,16 @@
 <script>
 import { computed, inject } from "vue";
 import { useStore } from "vuex";
-import { toLocaleFormat } from "@/utils/helper";
+import { toLocaleFormat, getPercentNumber } from "@/utils/helper";
 
 import LogoRotate from "@/components/Sections/LogoRotate.vue";
 export default {
   props: {
     form: {
+      type: Object,
+      default: {},
+    },
+    formOptions: {
       type: Object,
       default: {},
     },
@@ -212,6 +248,7 @@ export default {
         m: "개월",
         ea: "부",
         gae: "개",
+        sik: "식",
       };
       return types[value] || "";
     };
@@ -220,8 +257,9 @@ export default {
       let result = 0;
       for (let index = 0; index < arr.length; index++) {
         const item = Number(arr[index][key]);
-        if (!item) return;
-        result += Number(item);
+        if (item >= 0) {
+          result += Number(item);
+        }
       }
       if (vatPercent && vatPercent > 0) {
         const vat = result * (vatPercent / 100);
@@ -235,6 +273,7 @@ export default {
       infos,
       getPeriodType,
       toLocaleFormat,
+      getPercentNumber,
       sum,
     };
   },
@@ -268,6 +307,7 @@ export default {
     padding: 1rem;
     .form-content {
       .form-header {
+        padding-top: 1.5rem;
         // .logo {
         //   width: 100px;
         // }
@@ -275,6 +315,18 @@ export default {
           font-size: 23px;
           text-align: center;
           font-weight: 900;
+        }
+        .paper-info {
+          position: absolute;
+          top: 0.5rem;
+          left: 0.25rem;
+          display: flex;
+          justify-content: end;
+          small {
+            margin: 0 12px;
+            color: #666;
+            font-size: 13px;
+          }
         }
       }
       .form-content {

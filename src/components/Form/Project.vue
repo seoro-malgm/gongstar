@@ -56,7 +56,7 @@
               type="file"
               class="form-control d-none"
               id="thumbnail"
-              accept=".png, .jpg, .jpeg"
+              accept=".png, .jpg, .jpeg, .gif"
               @change="uploadThumbnail"
             />
           </div>

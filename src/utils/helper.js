@@ -57,7 +57,25 @@ export const toLocaleFormat = ({ text = "", fixed = 1, minFixed, maxFixed }) => 
     //minimumFractionDigits: minFixed || fixed,
     maximumFractionDigits: maxFixed || fixed,
   });
-  return result;
+  if (result === NaN) {
+    return "-";
+  } else {
+    return result;
+  }
+};
+
+export const getPercentNumber = (text = "", percent = 1) => {
+  if (!text || text === "") {
+    return "0";
+  }
+  const str = text + "";
+  const toNumbered = Number(str.split(",").join(""));
+  const result = toLocaleFormat({ text: `${toNumbered * percent}`, fixed: 0 });
+  if (result === NaN) {
+    return "-";
+  } else {
+    return result;
+  }
 };
 
 // match해야할 패턴 string을 리턴함

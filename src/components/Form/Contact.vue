@@ -5,6 +5,34 @@
       <div class="col-12 col-lg-5">
         <article class="py-3">
           <div class="my-3">
+            <div class="mb-3">
+              <label for="text">견적번호</label>
+              <div class="form-group">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="no"
+                  v-model="form.no"
+                  placeholder="견적번호"
+                />
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="date">견적일</label>
+              <div class="mb-2">
+                <div class="form-group">
+                  <input
+                    type="date"
+                    class="form-control"
+                    id="date"
+                    v-model="form.date"
+                    placeholder="견적일"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="my-3">
             <header class="mb-2">
               <h6 class="fw-700 text-16 text-md-20">
                 클라이언트 정보 <small>(공급받는 자)</small>
@@ -191,12 +219,13 @@
                             <option value="d">일</option>
                             <option value="ea">부</option>
                             <option value="gae">개</option>
+                            <option value="sik">식</option>
                           </select>
                         </div>
                       </div>
                       <div class="form-group mb-2">
                         <input
-                          type="text"
+                          type="number"
                           class="form-control"
                           v-model="item.price"
                           placeholder="소계 가격"
@@ -212,6 +241,32 @@
                 </ul>
               </div>
             </section>
+          </div>
+          <div class="my-3 py-3 border-top">
+            <header class="mb-2">
+              <h6 class="fw-700 text-16 text-md-20">부가 설명</h6>
+            </header>
+            <textarea v-model="form.addText" class="form-control mt-2" rowspan="5"> </textarea>
+          </div>
+          <div class="my-3 py-3 border-top">
+            <header class="mb-2">
+              <h6 class="fw-700 text-16 text-md-20">견적서 옵션</h6>
+            </header>
+            <ul>
+              <li>
+                <div class="form-check form-switch">
+                  <label class="form-check-label" for="addVAT">
+                    {{ formOptions?.addVAT ? "VAT 추가" : "VAT 추가 안함" }}
+                  </label>
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    id="addVAT"
+                    v-model="formOptions.addVAT"
+                  />
+                </div>
+              </li>
+            </ul>
           </div>
           <div class="mt-3 pt-3 border-top">
             <header class="mb-2">
@@ -259,7 +314,7 @@
         </article>
       </div>
       <div class="col-12 col-lg-7">
-        <paper-contact :form="form" />
+        <paper-contact :form="form" :formOptions="formOptions" />
 
         <!-- 유틸 영역 -->
         <div class="my-3">
@@ -306,6 +361,8 @@ export default {
 
     // 폼
     const form = ref({
+      no: "",
+      date: null,
       agree: true,
       period: null,
       desc: "",
@@ -325,7 +382,10 @@ export default {
       items: [],
       type: [],
       url: null,
+      addText: null,
     });
+
+    const formOptions = ref({ addVAT: true });
 
     // 대기
     const pending = ref({
@@ -345,6 +405,7 @@ export default {
           form.value = {
             agree: true,
             period: null,
+            date: null,
             desc: "",
             periodType: "m",
             email: "",
@@ -387,6 +448,7 @@ export default {
 
     return {
       form,
+      formOptions,
       showPreview,
       pending,
       print,

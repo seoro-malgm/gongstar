@@ -200,7 +200,6 @@ export default {
       title: null,
       url: "",
       desc: null,
-      date: null,
 
       file: {
         name: null,
@@ -298,8 +297,9 @@ export default {
     const submit = async (f) => {
       const data = {
         ...f,
-        date: new Date(),
+        lastUpdated: new Date().toLocaleString(),
       };
+      console.log("data:", data);
       try {
         // 견적에 추가하고, 메일전송
         const [added, sended] = await Promise.all([addContact(data), sendMail(data)]);
