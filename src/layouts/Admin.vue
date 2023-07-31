@@ -1,17 +1,37 @@
 <template>
-  <div>
-    <global-nav :links="links" />
+  <div class="my-5 py-5">
     <div class="row">
       <main id="main" class="col-10 offset-1">
+        <!-- <router-link class="logo" to="/" replace>
+          <default-symbol class="symbol" :style="logoStyle" />
+          <img
+            class="lettertype"
+            :class="{ show: scrolled }"
+            :src="getURL('/assets/lettertype.svg')"
+            alt="공스타 로고"
+          />
+        </router-link> -->
+        <h1>공스타 관리자페이지</h1>
+        <nav class="pb-2 mb-4" v-if="user">
+          <ul class="d-flex align-items-center">
+            <li v-for="(item, i) in links" :key="i">
+              <template v-if="item?.variant">
+                <router-link :to="item.url" :class="`btn btn-${item.variant}`">
+                  {{ item.name }}
+                </router-link>
+              </template>
+              <template v-else>
+                <router-link :to="item.url" class="btn btn-outline-black">
+                  {{ item.name }}
+                </router-link>
+              </template>
+            </li>
+          </ul>
+        </nav>
         <header
           class="pt-5 pb-3 border-bottom mb-5 d-flex flex-column flex-md-row justify-contennt-between"
         >
-          <h1>관리자페이지{{ title ? `:${title}` : "" }}</h1>
-          <!-- <div class="utils ms-md-auto">
-            <button class="btn btn-black" v-if="user" @click="$router.push('/admin/logout')">
-              로그아웃
-            </button>
-          </div> -->
+          <h2>{{ title ? `${title}` : "" }}</h2>
         </header>
         <router-view />
       </main>
@@ -21,7 +41,7 @@
 </template>
 
 <script>
-import GlobalNav from "@/components/Nav/GlobalNav.vue";
+// import GlobalNav from "@/components/Nav/GlobalNav.vue";
 import GlobalFooter from "@/components/Nav/GlobalFooter.vue";
 import { ref, computed, inject, onMounted } from "vue";
 import { useStore } from "vuex";
@@ -29,11 +49,12 @@ import { useRoute, useRouter } from "vue-router";
 
 export default {
   components: {
-    GlobalNav,
+    // GlobalNav,
     GlobalFooter,
   },
   setup(app, context) {
     // const firebase = inject("firebase");
+    const getURL = inject("getImageURL");
     const store = useStore();
     const router = useRouter();
     const route = useRoute();
@@ -62,6 +83,7 @@ export default {
       },
       {
         name: "로그아웃",
+        variant: "text text-error text-13",
         url: "/admin/logout",
       },
     ]);
@@ -81,6 +103,7 @@ export default {
     });
 
     return {
+      getURL,
       collapsed,
       links,
       title,
@@ -95,5 +118,9 @@ export default {
   display: flex;
   flex-direction: row;
   align-items: stretch;
+}
+.router-link-active {
+  background-color: black;
+  color: white;
 }
 </style>

@@ -102,7 +102,10 @@ export default {
 
     const items = ref(null);
     const getItems = async () => {
-      const data = await boardAPI.getAllBoards("contact");
+      const data = await boardAPI.getAllBoards("contact", {
+        text: "lastUpdated",
+        value: "desc",
+      });
       // console.log(data);
       items.value = data;
     };

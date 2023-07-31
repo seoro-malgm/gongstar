@@ -274,32 +274,80 @@
             </header>
             <div class="mb-3">
               <h6 class="fw-700 text-16 text-md-20">유형</h6>
-              <span v-if="form?.type?.length">{{ form.type.join(",") }}</span>
+              <div class="input-group mb-1">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="add-input-type"
+                  v-model="input.type"
+                  @keypress.enter="addInput('type', input.type)"
+                  placeholder="유형"
+                />
+                <button class="btn btn-outline-black" @click="addInput('type', input.type)">
+                  +
+                </button>
+              </div>
+
+              <ul class="list-unstyled d-inline-flex flex-wrap mt-2" v-if="form?.type?.length">
+                <li
+                  v-for="(item, i) in form.type"
+                  :key="i"
+                  class="me-1 mb-2 d-flex align-items-center bg-primary px-3 py-1 rounded-pill"
+                >
+                  <span class="text-14 fw-700"> {{ item }} </span>
+                  <button class="btn btn-text p-0 ms-2 text-20" @click="form.type.splice(i, 1)">
+                    <i class="icon icon-cancel-circled" />
+                  </button>
+                </li>
+              </ul>
               <template v-else>
                 <span class="text-13 gray-3">설명 없음</span>
               </template>
             </div>
             <div class="mb-3">
               <h6 class="fw-700 text-16 text-md-20">설명</h6>
-              <span v-if="form?.desc">{{ form.desc }}</span>
-              <template v-else>
-                <span class="text-13 gray-3">설명 없음</span>
-              </template>
+              <div class="input-group mb-1">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="add-input-desc"
+                  v-model="input.desc"
+                  placeholder="프로젝트 설명"
+                />
+              </div>
             </div>
 
             <div class="mb-3">
               <h6 class="fw-700 text-16 text-md-20">예산</h6>
-              <span v-if="form?.price">{{ form.price }}</span>
-              <template v-else>
-                <span class="text-13 gray-3">예산 설정 없음</span>
-              </template>
+              <select class="form-select" v-model="form.price">
+                <option value="null" selected disabled>예산 선택되어있지 않음</option>
+                <optgroup label="예산 규모">
+                  <option value="10만원 ~ 100만원 이하">10만원 ~ 100만원 이하</option>
+                  <option value="100만원 ~ 300만원 이하">100만원 ~ 300만원 이하</option>
+                  <option value="300만원 ~ 500만원 이하">300만원 ~ 500만원 이하</option>
+                  <option value="500만원 ~ 1000만원 이하">500만원 ~ 1000만원 이하</option>
+                  <option value="500만원 ~ 1000만원 이하">500만원 ~ 1000만원 이하</option>
+                  <option value="1000만원 ~ 2000만원 이하">1000만원 ~ 2000만원 이하</option>
+                  <option value="1000만원 ~ 2000만원 이하">1000만원 ~ 2000만원 이하</option>
+                  <option value="2000만원 ~ 3000만원 이하">2000만원 ~ 3000만원 이하</option>
+                  <option value="3000만원 ~ 5000만원 이하">3000만원 ~ 5000만원 이하</option>
+                </optgroup>
+                <optgroup label="기타">
+                  <option value="협의 후 결정">협의 후 결정</option>
+                </optgroup>
+              </select>
             </div>
             <div class="mb-3">
               <h6 class="fw-700 text-16 text-md-20">레퍼런스 url</h6>
-              <span v-if="form?.url">{{ form.url }}</span>
-              <template v-else>
-                <span class="text-13 gray-3">url 없음</span>
-              </template>
+              <div class="input-group mb-1">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="add-input-url"
+                  v-model="input.url"
+                  placeholder="프로젝트 설명"
+                />
+              </div>
             </div>
             <div class="mb-3">
               <h6 class="fw-700 text-16 text-md-20">참고파일</h6>
@@ -385,6 +433,21 @@ export default {
       addText: null,
     });
 
+    const input = ref({
+      type: null,
+    });
+    const addInput = (type, value, isArray) => {
+      if (value && value !== "") {
+        // if (isArray) {
+        console.log("type.value:", type.value);
+        form.value[type].push(value);
+        input.value[type] = null;
+        // } else {
+        // ...
+        // }
+      }
+    };
+
     const formOptions = ref({ addVAT: true });
 
     // 대기
@@ -448,6 +511,8 @@ export default {
 
     return {
       form,
+      input,
+      addInput,
       formOptions,
       showPreview,
       pending,

@@ -51,86 +51,86 @@ const routes = [
         name: "Contact",
         component: () => import("@/pages/Contact.vue"),
       },
-      // 어드민
+    ],
+  },
+  // 어드민
+  {
+    path: "/admin",
+    component: LayoutAdmin,
+    children: [
       {
-        path: "admin",
-        component: LayoutAdmin,
-        children: [
-          {
-            path: "",
-            name: "Admin",
-            redirect: "/admin/project",
-          },
-          {
-            path: "login",
-            name: "AdminLogin",
-            component: () => import("@/pages/Admin/Login.vue"),
-            meta: {
-              title: "로그인",
-            },
-          },
-          {
-            path: "insights",
-            name: "AdminInsights",
-            component: () => import("@/pages/Admin/Insights.vue"),
-            meta: {
-              title: "인사이트 관리",
-            },
-          },
-          {
-            path: "project",
-            name: "AdminProject",
-            component: () => import("@/pages/Admin/Project.vue"),
-            meta: {
-              title: "프로젝트 관리",
-            },
-          },
-          {
-            path: "history",
-            name: "AdminHistory",
-            component: () => import("@/pages/Admin/History.vue"),
-            meta: {
-              title: "히스토리 관리",
-            },
-          },
-          {
-            path: "client",
-            name: "AdminClient",
-            component: () => import("@/pages/Admin/Client.vue"),
-            meta: {
-              title: "클라이언트 관리",
-            },
-          },
-          {
-            path: "contact",
-            name: "AdminContact",
-            component: () => import("@/pages/Admin/Contact.vue"),
-            meta: {
-              title: "견적 관리",
-            },
-          },
-          {
-            path: "write",
-            name: "AdminWrite",
-            component: () => import("@/pages/Admin/Write.vue"),
-          },
-          {
-            path: "logout",
-            name: "Logout",
-            component: () => import("@/pages/Admin/Logout.vue"),
-          },
-        ],
+        path: "",
+        name: "Admin",
+        redirect: "/admin/project",
       },
       {
-        path: "/404",
-        name: "NotFound",
-        component: NotFound,
+        path: "login",
+        name: "AdminLogin",
+        component: () => import("@/pages/Admin/Login.vue"),
+        meta: {
+          title: "로그인",
+        },
       },
       {
-        path: "/:pathMatch(.*)*",
-        redirect: "/404",
+        path: "insights",
+        name: "AdminInsights",
+        component: () => import("@/pages/Admin/Insights.vue"),
+        meta: {
+          title: "인사이트 관리",
+        },
+      },
+      {
+        path: "project",
+        name: "AdminProject",
+        component: () => import("@/pages/Admin/Project.vue"),
+        meta: {
+          title: "프로젝트 관리",
+        },
+      },
+      {
+        path: "history",
+        name: "AdminHistory",
+        component: () => import("@/pages/Admin/History.vue"),
+        meta: {
+          title: "히스토리 관리",
+        },
+      },
+      {
+        path: "client",
+        name: "AdminClient",
+        component: () => import("@/pages/Admin/Client.vue"),
+        meta: {
+          title: "클라이언트 관리",
+        },
+      },
+      {
+        path: "contact",
+        name: "AdminContact",
+        component: () => import("@/pages/Admin/Contact.vue"),
+        meta: {
+          title: "견적 관리",
+        },
+      },
+      {
+        path: "write",
+        name: "AdminWrite",
+        component: () => import("@/pages/Admin/Write.vue"),
+      },
+      {
+        path: "logout",
+        name: "Logout",
+        component: () => import("@/pages/Admin/Logout.vue"),
       },
     ],
+  },
+  {
+    path: "/404",
+    name: "NotFound",
+    component: NotFound,
+  },
+  {
+    path: "/:pathMatch(.*)*",
+    redirect: "/404",
   },
 ];
 

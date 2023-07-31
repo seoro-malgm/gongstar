@@ -78,13 +78,10 @@
             <li
               v-for="(item, i) in form.party"
               :key="i"
-              class="me-1 mb-2 text-white d-flex align-items-center bg-primary px-3 py-1 rounded-pill"
+              class="me-1 mb-2 d-flex align-items-center bg-primary px-3 py-1 rounded-pill"
             >
               <span class="text-14 fw-700"> {{ item }} </span>
-              <button
-                class="btn btn-text p-0 ms-2 text-white text-20"
-                @click="form.party.splice(i, 1)"
-              >
+              <button class="btn btn-text p-0 ms-2 text-20" @click="form.party.splice(i, 1)">
                 <i class="icon icon-cancel-circled" />
               </button>
             </li>
