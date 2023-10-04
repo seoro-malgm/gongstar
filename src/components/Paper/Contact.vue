@@ -180,9 +180,9 @@
             </div>
             <div class="pt-3 border-top border-black" v-if="form?.addText">
               <div class="text-16 fw-700">부가설명</div>
-              <p class="mt-3 pb-3 border-bottom border-black">
-                {{ form?.addText }}
-              </p>
+              <pre class="pre-add-text mt-3 pb-3 border-bottom border-black">{{
+                form.addText
+              }}</pre>
             </div>
           </section>
         </section>
@@ -499,5 +499,12 @@ export default {
       width: 1.5cm;
     }
   }
+}
+pre.pre-add-text {
+  font-family: "Pretendard-Light", "Noto Sans KR", sans-serif;
+  font-weight: 400;
+  overflow-wrap: normal;
+  overflow: visible;
+  font-size: 16px;
 }
 </style>

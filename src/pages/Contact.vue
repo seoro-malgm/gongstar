@@ -249,7 +249,10 @@ export default {
           //   name: file.name,
           //   url: data,
           // };
-          form.value.file = data.url;
+          form.value.file = {
+            name: fileName,
+            url: data.url,
+          };
           pending.value.file = false;
         }
       } catch (error) {
