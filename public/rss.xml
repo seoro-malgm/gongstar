@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+    <channel>
+        <title>Main</title>
+        <link>https://gongstar.kr</link>
+        <description>공스타 메인사이트</description>
+    </channel>
+    <channel>
+        <title>Projects</title>
+        <link>https://gongstar.kr/project</link>
+        <description>프로젝트</description>
+    </channel>
+    <channel>
+        <title>Contact</title>
+        <link>https://gongstar.kr/contact</link>
+        <description>문의</description>
+    </channel>
+</rss>
