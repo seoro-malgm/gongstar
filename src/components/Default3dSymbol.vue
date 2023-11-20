@@ -6,7 +6,6 @@
 import { onUnmounted, onMounted, ref } from "vue";
 import * as THREE from "three";
 import { SVGLoader } from "three/examples/jsm/loaders/SVGLoader.js";
-// import { useMouse } from "@vueuse/core";
 
 export default {
   props: {
@@ -38,17 +37,15 @@ export default {
 </svg>
 `;
     const rendererContainer = ref(null);
+    let size = {
+      width: 56,
+      height: 56,
+    };
     let renderer, camera;
 
     onMounted(() => {
       const scene = new THREE.Scene();
-      camera = new THREE.PerspectiveCamera(
-        75,
-        rendererContainer.value.parentElement.clientWidth /
-          rendererContainer.value.parentElement.clientHeight,
-        0.1,
-        1000
-      );
+      camera = new THREE.PerspectiveCamera(75, size.width / size.height, 0.1, 1000);
       renderer = new THREE.WebGLRenderer(
         props.mode === "white"
           ? {
@@ -58,10 +55,7 @@ export default {
               color: "#343434",
             }
       );
-      renderer.setSize(
-        rendererContainer.value.parentElement.clientWidth,
-        rendererContainer.value.parentElement.clientHeight
-      );
+      renderer.setSize(size.width, size.height);
       rendererContainer.value.appendChild(renderer.domElement);
 
       const loader = new SVGLoader();
@@ -107,7 +101,7 @@ export default {
       // 크기설정
       group.scale.set(props.size, props.size, props.size);
 
-      camera.position.z = 100;
+      camera.position.z = 80;
 
       const animate = function () {
         requestAnimationFrame(animate);
@@ -137,14 +131,9 @@ export default {
     });
 
     function onWindowResize() {
-      camera.aspect =
-        rendererContainer.value.parentElement.clientWidth /
-        rendererContainer.value.parentElement.clientHeight;
+      camera.aspect = size.width / size.height;
       camera.updateProjectionMatrix();
-      renderer.setSize(
-        rendererContainer.value.parentElement.clientWidth,
-        rendererContainer.value.parentElement.clientHeight
-      );
+      renderer.setSize(size.width, size.height);
     }
 
     return { rendererContainer };

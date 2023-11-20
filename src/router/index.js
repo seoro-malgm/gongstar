@@ -51,6 +51,12 @@ const routes = [
         name: "Contact",
         component: () => import("@/pages/Contact.vue"),
       },
+      // 채용문의
+      {
+        path: "career",
+        name: "Career",
+        component: () => import("@/pages/Career.vue"),
+      },
     ],
   },
   // 어드민

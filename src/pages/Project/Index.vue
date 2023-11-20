@@ -1,13 +1,13 @@
 <template>
   <div class="container-fluid min-vh-100 section-gap mt-5">
     <header class="my-3 mt-md-5 mb-4">
-      <h1 class="page-title">PROJECT</h1>
+      <h1 class="page-title">Our Solutions</h1>
     </header>
     <section class="section-category" v-if="categories?.length">
       <ul class="list-category">
         <li class="list-item">
           <button
-            class="btn btn-outline-gray-1 btn-category"
+            class="btn btn-outline-gray-1 btn-category text-16 text-md-18"
             :class="{ active: !categorySelected }"
             @click="
               $router.push({
@@ -15,12 +15,12 @@
               })
             "
           >
-            <span>All</span>
+            <span>모두</span>
           </button>
         </li>
         <li class="list-item" v-for="(category, i) in categories" :key="i">
           <button
-            class="btn btn-outline-gray-1 btn-category"
+            class="btn btn-outline-gray-1 btn-category text-16 text-md-18"
             :class="{ active: categorySelected === category.value }"
             @click="
               $router.push({
@@ -37,6 +37,13 @@
       </ul>
     </section>
     <section v-if="items?.length">
+      <div class="py-3" v-if="categorySelected">
+        <p class="text-15 text-md-18">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, assumenda officiis nihil
+          eum in, commodi consequuntur asperiores nulla doloremque dolore, fugiat deserunt? Nam
+          doloribus repellendus assumenda laboriosam consectetur atque facilis.
+        </p>
+      </div>
       <div class="row">
         <div v-for="item in items" :key="item.id" class="col-6 col-md-4 col-lg-3 mb-3">
           <div class="item-project">
@@ -144,19 +151,22 @@ export default {
 .section-category {
   margin-bottom: 2rem;
   padding: 1rem 1rem 0.5rem;
-  border-top: 1px solid $gray-2;
-  border-bottom: 1px solid $gray-2;
+  border-top: 2px solid $gray-2;
+  border-bottom: 2px solid $gray-2;
 
   .list-category {
-    display: inline-flex;
+    display: flex;
     flex-wrap: wrap;
     align-items: center;
+    justify-content: center;
     .list-item {
       margin: 0 12px 12px 0;
       .btn-category {
+        transition: all 0.2s;
         &.active {
           background-color: $gray-1;
           border-color: $gray-1;
+          border-radius: 7px;
         }
       }
     }

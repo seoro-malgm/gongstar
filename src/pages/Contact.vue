@@ -1,5 +1,5 @@
 <template>
-  <div class="container section-gap">
+  <div id="contact" class="container section-gap">
     <header class="my-3 mt-md-5 mb-4 text-center">
       <h1 class="page-title">CONTACT US</h1>
       <p>공스타에 프로젝트를 문의하세요. 확인 후 견적을 도와드리겠습니다.</p>

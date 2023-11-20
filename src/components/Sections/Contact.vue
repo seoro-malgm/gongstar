@@ -1,5 +1,5 @@
 <template>
-  <section class="section container">
+  <section id="contact" class="section container" ref="target">
     <header class="mb-3">
       <h1 class="section-title">프로젝트 문의</h1>
       <p class="mt-3">
@@ -21,23 +21,37 @@
   </section>
 </template>
 
-<script>
-export default {
-  setup() {
-    return {};
-  },
-};
+<script setup>
+import { ref, defineEmits, watch } from "vue";
+// import { useIntersectionObserver } from "@vueuse/core";
+
+// const target = ref(null);
+// const targetIsVisible = ref(false);
+// const emit = defineEmits(["sectionChange"]);
+
+// const { stop } = useIntersectionObserver(target, ([{ isIntersecting }], observerElement) => {
+//   targetIsVisible.value = isIntersecting;
+// });
+// watch(
+//   () => targetIsVisible.value,
+//   (n) => {
+//     if (n) {
+//       emit("sectionChange");
+//     }
+//   }
+// );
 </script>
 
 <style lang="scss" scoped>
 section.section {
   width: 100%;
-  padding-bottom: 200px;
-  @media (min-width: $breakpoint-md) {
-    margin-top: 100px;
-    padding-bottom: 200px;
+  padding-top: 120px;
+  margin-bottom: 120px;
+  @supports (-webkit-touch-callout: none) {
+    min-height: -webkit-fill-available;
   }
 }
+
 @keyframes leftRight {
   0% {
     transform: translateX(0);

@@ -6,40 +6,20 @@ const state = {
         value: null,
       },
       {
-        text: "Design",
-        value: "design",
-      },
-      {
-        text: "Brand eXperience",
+        text: "브랜드 크래프팅",
         value: "bx",
       },
       {
-        text: "F&B",
-        value: "fnb",
+        text: "테크놀리지 솔루션",
+        value: "it",
       },
       {
-        text: "Catering",
-        value: "catering",
+        text: "로컬 큐레이팅",
+        value: "local",
       },
       {
-        text: "Food Consulting",
+        text: "푸드 솔루션",
         value: "food",
-      },
-      {
-        text: "Media Branding",
-        value: "media",
-      },
-      {
-        text: "Web Development",
-        value: "web",
-      },
-      {
-        text: "Consulting",
-        value: "consulting",
-      },
-      {
-        text: "Education",
-        value: "edu",
       },
     ],
     insight: [

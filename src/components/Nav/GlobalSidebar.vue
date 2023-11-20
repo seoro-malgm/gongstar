@@ -1,63 +1,71 @@
 <template>
-  <aside id="sidebar" :class="{ active: active }">
-    <div class="container-fluid h-100">
-      <div class="utils">
-        <ul class="list-links">
-          <li v-for="(item, i) in links" :key="i">
+  <aside id="sidebar" class="container" :class="{ active: active }">
+    <!-- <div class="container-fluid h-100"> -->
+    <div class="utils">
+      <ul class="list-links">
+        <li v-for="(item, i) in links" :key="i">
+          <template v-if="item?.href">
+            <a :href="item.href" class="link-item btn btn-link text-secondary" target="_blank">
+              {{ item.name }}
+            </a>
+            <small v-if="item.description"> {{ item.description }} </small>
+          </template>
+          <template v-else>
             <router-link :to="item.url" class="link-item btn btn-link text-secondary">
               {{ item.name }}</router-link
             >
             <small v-if="item.description"> {{ item.description }} </small>
+          </template>
+        </li>
+      </ul>
+      <!-- <div class="sidebar-footer">
+        <ul class="links">
+          <li>
+            <button
+              class="btn btn-text px-2 py-1 text-secondary"
+              @click="copyText(infos.email, '전화번호가')"
+            >
+              <i class="icon icon-phone-outline text-24" />
+              <span class="ms-2">
+                {{ infos.phone }}
+              </span>
+            </button>
+          </li>
+          <li>
+            <button
+              class="btn btn-text px-2 py-1 text-secondary"
+              @click="copyText(infos.email, '이메일 주소가')"
+            >
+              <i class="icon icon-mail-2 text-24" />
+              <span class="ms-2">
+                {{ infos.email }}
+              </span>
+            </button>
+          </li>
+          <li>
+            <button
+              class="btn btn-text px-2 py-1 text-secondary"
+              @click="copyText(infos.addressSummary, '주소가')"
+            >
+              <i class="icon icon-compass text-24" />
+              <span class="ms-2">
+                {{ infos.address }}
+              </span>
+            </button>
+          </li>
+          <li>
+            <a
+              class="btn btn-text px-2 py-1 text-secondary"
+              :href="infos.instagram"
+              target="_blank"
+            >
+              <i class="icon icon-instagram text-24" />
+            </a>
           </li>
         </ul>
-        <div class="sidebar-footer">
-          <ul class="links">
-            <li>
-              <button
-                class="btn btn-text px-2 py-1 text-secondary"
-                @click="copyText(infos.email, '전화번호가')"
-              >
-                <i class="icon icon-phone-outline text-24" />
-                <span class="ms-2">
-                  {{ infos.phone }}
-                </span>
-              </button>
-            </li>
-            <li>
-              <button
-                class="btn btn-text px-2 py-1 text-secondary"
-                @click="copyText(infos.email, '이메일 주소가')"
-              >
-                <i class="icon icon-mail-2 text-24" />
-                <span class="ms-2">
-                  {{ infos.email }}
-                </span>
-              </button>
-            </li>
-            <li>
-              <button
-                class="btn btn-text px-2 py-1 text-secondary"
-                @click="copyText(infos.addressSummary, '주소가')"
-              >
-                <i class="icon icon-compass text-24" />
-                <span class="ms-2">
-                  {{ infos.address }}
-                </span>
-              </button>
-            </li>
-            <li>
-              <a
-                class="btn btn-text px-2 py-1 text-secondary"
-                :href="infos.instagram"
-                target="_blank"
-              >
-                <i class="icon icon-instagram text-24" />
-              </a>
-            </li>
-          </ul>
-        </div>
-      </div>
+      </div> -->
     </div>
+    <!-- </div> -->
   </aside>
 </template>
 
@@ -106,25 +114,29 @@ export default {
 
 <style lang="scss" scoped>
 // gnb 높이
-$gnb-height: 72px;
+$gnb-height: 120px;
 
 // 사이드바
 #sidebar {
   opacity: 0;
-  transform: translateY(100%);
+  transform: translate(-50%, 100%);
   transition: all 0.3s;
   position: fixed;
   top: $gnb-height;
-  left: 0;
-  background-color: $primary;
+  left: 50%;
+  background-color: white;
   width: 100%;
-  height: calc(100% - $gnb-height);
-  padding: 2rem 1rem;
   z-index: 2020;
+  box-shadow: 0 0 12px rgba($color: #000000, $alpha: 0.3);
+  border-radius: 2rem;
+  padding: 1rem 1.5rem;
+  @media (max-width: $breakpoint-xl) {
+    max-width: 92vw;
+  }
   // 열렸을 때
   &.active {
     opacity: 1;
-    transform: translateY(0);
+    transform: translate(-50%, 0);
   }
 
   // 유틸 목록
@@ -171,8 +183,8 @@ $gnb-height: 72px;
           color: #666;
         }
         @media (max-width: $breakpoint-md) {
-          flex-direction: column;
-          align-items: start;
+          // flex-direction: column;
+          // align-items: start;
           margin-bottom: 20px;
           .link-item {
             font-size: 1.4rem;

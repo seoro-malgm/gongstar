@@ -6,18 +6,8 @@
       </header>
       <div ref="target"></div>
       <section class="mt-4">
-        <transition-group name="fade" tag="ul" class="list-history">
-          <li
-            v-for="(item, i) in items"
-            :key="item.date"
-            v-show="animated"
-            :data-index="i"
-            :style="{
-              transition: `all ${i * 0.5}s ease-in-out`,
-              transitionDelay: `${i * 0.4}s`,
-            }"
-            class="list-item"
-          >
+        <ul class="list-history">
+          <li v-for="(item, i) in items" :key="item.date" class="list-item">
             <div class="row mx-n1">
               <div class="col-1 dot-wrap px-1">
                 <div class="dot" />
@@ -35,72 +25,61 @@
               </div>
             </div>
           </li>
-        </transition-group>
+        </ul>
       </section>
     </div>
   </section>
 </template>
 
-<script>
-import { ref, onMounted } from "vue";
-import { useIntersectionObserver } from "@/plugins/useIntersectionObserver";
-export default {
-  components: {},
+<script setup>
+import { ref, onMounted, defineEmits, watch } from "vue";
+import { useIntersectionObserver } from "@vueuse/core";
 
-  setup(props, context) {
-    const items = ref([
-      {
-        date: "2021-11",
-        text: "법인 설립",
-      },
-      {
-        date: "2022-03",
-        text: "사회적 기업 육성지원사업 선정, 농촌 신활력 플러스 지원사업 선정",
-      },
-      {
-        date: "2022-07",
-        text: "충남지방중소기업벤처 여성 기업 지정",
-      },
-      {
-        date: "2022-11",
-        text: "충남형 예비사회적기업 지정 지역사회공헌형(나)",
-      },
-      {
-        date: "2023-02",
-        text: "CTO 영입 및 F&B사업 확장",
-      },
-    ]);
+const target = ref(null);
+const targetIsVisible = ref(false);
+const emit = defineEmits(["sectionChange"]);
 
-    const animated = ref(false);
-    const target = useIntersectionObserver((entry) => {
-      if (entry.isIntersecting) {
-        if (!animated.value) {
-          animated.value = true;
-        }
-      }
-    });
+const { stop } = useIntersectionObserver(target, ([{ isIntersecting }], observerElement) => {
+  targetIsVisible.value = isIntersecting;
+});
+watch(
+  () => targetIsVisible.value,
+  (n) => {
+    if (n) {
+      emit("sectionChange");
+    }
+  }
+);
 
-    return {
-      target,
-      animated,
-      items,
-    };
+const items = ref([
+  {
+    date: "2021-11",
+    text: "법인 설립",
   },
-};
+  {
+    date: "2022-03",
+    text: "사회적 기업 육성지원사업 선정, 농촌 신활력 플러스 지원사업 선정",
+  },
+  {
+    date: "2022-07",
+    text: "충남지방중소기업벤처 여성 기업 지정",
+  },
+  {
+    date: "2022-11",
+    text: "충남형 예비사회적기업 지정 지역사회공헌형(나)",
+  },
+  {
+    date: "2023-02",
+    text: "CTO 영입 및 F&B사업 확장",
+  },
+]);
 </script>
 
 <style lang="scss" scoped>
 .section-history {
   background-color: $gray-1;
   color: white;
-}
-
-.fade-enter-active,
-.fade-leave-active {
-  transition: all 0.5s $default-ease;
-  transform: translateY(0);
-  transition-delay: 0.3s;
-  opacity: 1;
+  min-height: 100vh;
 }
 
 .fade-enter-from,

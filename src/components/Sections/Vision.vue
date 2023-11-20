@@ -1,5 +1,5 @@
 <template>
-  <section class="section section-gap mt-5">
+  <section class="section section-gap mt-5" ref="target">
     <header class="container-fluid py-4">
       <h1 class="section-title text-center">공스타의 비전</h1>
     </header>
@@ -25,7 +25,7 @@
                 'text-end': i % 2,
               },
               {
-                show: animated,
+                show: targetIsVisible,
               },
             ]"
             :style="{
@@ -53,13 +53,13 @@
         <ul class="list-stair" ref="target">
           <li
             class="list-item"
-            :class="{ animated: animated }"
+            :class="{ targetIsVisible: targetIsVisible }"
             v-for="item in items"
             :key="item.id"
             :style="{
-              width: `${animated ? item.width : 0}%`,
+              width: `${targetIsVisible ? item.width : 0}%`,
               backgroundColor: item.background,
-              opacity: animated ? 1 : 0,
+              opacity: targetIsVisible ? 1 : 0,
               color: item?.color ? item.color : '#23235',
             }"
           >
@@ -72,19 +72,18 @@
 </template>
 
 <script>
-import { ref, onMounted } from "vue";
-import { useIntersectionObserver } from "@/plugins/useIntersectionObserver";
-
+import { ref, onMounted, defineEmits } from "vue";
+// import { useIntersectionObserver } from "@/plugins/useIntersectionObserver";
+import { useIntersectionObserver } from "@vueuse/core";
 export default {
   setup() {
-    const animated = ref(false);
-    const target = useIntersectionObserver((entry) => {
-      if (entry.isIntersecting) {
-        if (!animated.value) {
-          animated.value = true;
-          // console.log(animated.value);
-        }
-      }
+    const target = ref(null);
+    const targetIsVisible = ref(false);
+    const emit = defineEmits({});
+
+    const { stop } = useIntersectionObserver(target, ([{ isIntersecting }], observerElement) => {
+      targetIsVisible.value = isIntersecting;
+      emit("sectionChange");
     });
 
     const items = ref([
@@ -150,7 +149,6 @@ export default {
 
     return {
       target,
-      animated,
       items,
       visions,
     };
@@ -161,6 +159,9 @@ export default {
 <style lang="scss" scoped>
 .section {
   min-height: 100vh;
+  @supports (-webkit-touch-callout: none) {
+    min-height: -webkit-fill-available;
+  }
 }
 .stairs {
   .list-stair {

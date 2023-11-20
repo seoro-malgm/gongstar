@@ -4,11 +4,10 @@ const state = {
     home: "공스타",
     licenseNumber: "821-86-02205", // 사업자등록번호
     email: "gongstar2021@gmail.com",
-    tel: "010-7191-4270",
-    phone: "010-7191-4270",
-    address: "충청남도 공주시 신관동 흑수골길 41, 2층",
-    addressSummary: "공주시 신관동 흑수골길 41, 2층",
-    // facebook: "https://www.facebook.com/profile.php?id=100085628826902",
+    tel: "010-5120-6024",
+    phone: "010-5120-6024",
+    address: "충청남도 공주시 공주대학로 56, 산학협력단 510호",
+    addressSummary: "공주시 공주대학로 56, 산학협력단 510호",
     instagram: "https://www.instagram.com/gong__star2021/?hl=ko",
     // 회사소개서
     infoDocument:
