@@ -32,121 +32,124 @@
 </template>
 
 <script setup>
-import { ref, onMounted, defineEmits, watch } from "vue";
-import { useIntersectionObserver } from "@vueuse/core";
+  import {ref, watch} from 'vue';
+  import {useIntersectionObserver} from '@vueuse/core';
 
-const target = ref(null);
-const targetIsVisible = ref(false);
-const emit = defineEmits(["sectionChange"]);
+  const target = ref(null);
+  const targetIsVisible = ref(false);
+  const emit = defineEmits(['sectionChange']);
 
-const { stop } = useIntersectionObserver(target, ([{ isIntersecting }], observerElement) => {
-  targetIsVisible.value = isIntersecting;
-});
-watch(
-  () => targetIsVisible.value,
-  (n) => {
-    if (n) {
-      emit("sectionChange");
-    }
-  }
-);
+  const {stop} = useIntersectionObserver(
+    target,
+    ([{isIntersecting}], observerElement) => {
+      targetIsVisible.value = isIntersecting;
+    },
+  );
+  watch(
+    () => targetIsVisible.value,
+    n => {
+      if (n) {
+        emit('sectionChange');
+      }
+    },
+  );
 
-const items = ref([
-  {
-    date: "2021-11",
-    text: "법인 설립",
-  },
-  {
-    date: "2022-03",
-    text: "사회적 기업 육성지원사업 선정, 농촌 신활력 플러스 지원사업 선정",
-  },
-  {
-    date: "2022-07",
-    text: "충남지방중소기업벤처 여성 기업 지정",
-  },
-  {
-    date: "2022-11",
-    text: "충남형 예비사회적기업 지정 지역사회공헌형(나)",
-  },
-  {
-    date: "2023-02",
-    text: "CTO 영입 및 F&B사업 확장",
-  },
-]);
+  const items = ref([
+    {
+      date: '2021-11',
+      text: '법인 설립',
+    },
+    {
+      date: '2022-03',
+      text: '사회적 기업 육성지원사업 선정, 농촌 신활력 플러스 지원사업 선정',
+    },
+    {
+      date: '2022-07',
+      text: '충남지방중소기업벤처 여성 기업 지정',
+    },
+    {
+      date: '2022-11',
+      text: '충남형 예비사회적기업 지정 지역사회공헌형(나)',
+    },
+    {
+      date: '2023-02',
+      text: 'CTO 영입 및 F&B사업 확장',
+    },
+  ]);
 </script>
 
 <style lang="scss" scoped>
-.section-history {
-  background-color: $gray-1;
-  color: white;
-  min-height: 100vh;
-}
+  .section-history {
+    background-color: $gray-1;
+    color: white;
+    min-height: 100vh;
+  }
 
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-  transform: translateY(24px);
-}
+  .fade-enter-from,
+  .fade-leave-to {
+    opacity: 0;
+    transform: translateY(24px);
+  }
 
-.list-item {
-  position: relative;
-  .dot-wrap {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+  .list-item {
     position: relative;
-    .dot {
-      margin: auto;
-      content: "";
-      display: block;
-      width: 24px;
-      height: 24px;
-      @media (min-width: $breakpoint-md) {
-        width: 40px;
-        height: 40px;
-      }
-      border-radius: 50%;
-      background-color: white;
-      &:before,
-      &:after {
-        position: absolute;
-        z-index: 2;
-        content: "";
+    .dot-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      .dot {
+        margin: auto;
+        content: '';
         display: block;
+        width: 24px;
+        height: 24px;
+        @media (min-width: $breakpoint-md) {
+          width: 40px;
+          height: 40px;
+        }
+        border-radius: 50%;
         background-color: white;
-        width: 3px;
-        height: 100%;
-        left: 50%;
-        transform: translateX(-50%);
+        &:before,
+        &:after {
+          position: absolute;
+          z-index: 2;
+          content: '';
+          display: block;
+          background-color: white;
+          width: 3px;
+          height: 100%;
+          left: 50%;
+          transform: translateX(-50%);
+        }
+        &:before {
+          top: -50%;
+        }
+        &:after {
+          top: 50%;
+        }
       }
-      &:before {
-        top: -50%;
+    }
+    &:first-child .dot::before {
+      display: none;
+    }
+    // &:last-child .dot::after {
+    //   display: none3
+    // }
+    .date {
+      opacity: 0.3;
+      position: absolute;
+      top: -0.5rem;
+      @media (min-width: $breakpoint-lg) {
+        top: 1rem;
       }
-      &:after {
-        top: 50%;
+    }
+    .content {
+      line-height: 1 !important;
+      @media (min-width: $breakpoint-lg) {
+        line-height: 1.6 !important;
       }
     }
   }
-  &:first-child .dot::before {
-    display: none;
-  }
-  // &:last-child .dot::after {
-  //   display: none3
-  // }
-  .date {
-    opacity: 0.3;
-    position: absolute;
-    top: -0.5rem;
-    @media (min-width: $breakpoint-lg) {
-      top: 1rem;
-    }
-  }
-  .content {
-    line-height: 1 !important;
-    @media (min-width: $breakpoint-lg) {
-      line-height: 1.6 !important;
-    }
-  }
-}
 </style>

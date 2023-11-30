@@ -51,14 +51,14 @@
 </template>
 
 <script>
-export default {};
+  export default {};
 </script>
 
 <style lang="scss" scoped>
-#lettertype {
-  mix-blend-mode: difference;
-}
-.st0 {
-  fill: #232323;
-}
+  #lettertype {
+    mix-blend-mode: difference;
+  }
+  .st0 {
+    fill: #232323;
+  }
 </style>

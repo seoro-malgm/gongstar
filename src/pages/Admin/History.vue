@@ -1,19 +1,13 @@
 <template>
-  <div>
-    연혁관리
-  </div>
+  <div>연혁관리</div>
 </template>
 
 <script>
-export default {
-  setup () {
-    
-
-    return {}
-  }
-}
+  export default {
+    setup() {
+      return {};
+    },
+  };
 </script>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>

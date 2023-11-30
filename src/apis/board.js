@@ -1,4 +1,4 @@
-import { app } from "@/plugins/appConfig";
+import {app} from '@/plugins/appConfig';
 
 // firestore
 import {
@@ -13,7 +13,7 @@ import {
   query,
   where,
   orderBy,
-} from "firebase/firestore";
+} from 'firebase/firestore';
 
 const db = getFirestore(app);
 
@@ -22,12 +22,12 @@ class blogAPI {
   getAllBoards = async (
     documentName,
     orderOptions = {
-      text: "no",
-      value: "desc",
+      text: 'no',
+      value: 'desc',
       category: null,
       page: 0,
       count: null,
-    }
+    },
   ) => {
     try {
       const col = collection(db, documentName);
@@ -36,9 +36,9 @@ class blogAPI {
         queryConstraints.push(orderBy(orderOptions?.text, orderOptions?.value));
       }
       if (orderOptions?.category)
-        queryConstraints.push(where("category", "==", orderOptions?.category));
+        queryConstraints.push(where('category', '==', orderOptions?.category));
       if (orderOptions?.visible)
-        queryConstraints.push(where("visible", "==", orderOptions?.visible));
+        queryConstraints.push(where('visible', '==', orderOptions?.visible));
       if (orderOptions?.count) queryConstraints.push(limit(orderOptions.count));
 
       // queryConstraints.push(orderBy("createdAt", "desc"));
@@ -47,7 +47,7 @@ class blogAPI {
       const q = query(col, ...queryConstraints);
       const snapshot = await getDocs(q);
       if (snapshot) {
-        const boards = snapshot.docs.map((doc) => {
+        const boards = snapshot.docs.map(doc => {
           return {
             id: doc.id,
             ...doc.data(),
@@ -56,17 +56,17 @@ class blogAPI {
         return boards;
       }
     } catch (error) {
-      console.error("error::", error);
+      console.error('error::', error);
     }
   };
 
   // board 디테일 불러오기
   getBoard = async (documentName, no) => {
     try {
-      const q = query(collection(db, documentName), where("no", "==", no));
+      const q = query(collection(db, documentName), where('no', '==', no));
       const snapshot = await getDocs(q);
       if (snapshot) {
-        const docs = snapshot.docs.map((doc) => {
+        const docs = snapshot.docs.map(doc => {
           return {
             id: doc.id,
             ...doc.data(),
@@ -76,7 +76,7 @@ class blogAPI {
         return docs[0];
       }
     } catch (error) {
-      console.error("error::", error);
+      console.error('error::', error);
     }
   };
 
@@ -89,7 +89,7 @@ class blogAPI {
         return snapshot.data();
       }
     } catch (error) {
-      console.error("error::", error);
+      console.error('error::', error);
     }
   };
 
@@ -103,7 +103,7 @@ class blogAPI {
 
   // board 삭제
   removeBoard = async (documentName, id) => {
-    if (!id) throw new Error("id가 없습니다");
+    if (!id) throw new Error('id가 없습니다');
     await deleteDoc(doc(db, documentName, id));
     return true;
   };

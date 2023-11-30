@@ -1,4 +1,4 @@
-$primary: rgb(198, 116, 2);
+$primary: rgb(255, 150, 2);
 $secondary: #232335;
 $third: #0202c6;
 $dummy: #999999;
@@ -55,16 +55,16 @@ $container-xxl: 1920px;
 
 $theme-colors: (
   // colors
-  "primary": $primary,
-  "secondary": $secondary,
-  "third": $third,
-  "gray-1": $gray-1,
-  "gray-2": $gray-2,
-  "gray-3": $gray-3,
-  "white": $white,
-  "black": #000000,
-  "dummy": $dummy,
-  "error": $error
+  'primary': $primary,
+  'secondary': $secondary,
+  'third': $third,
+  'gray-1': $gray-1,
+  'gray-2': $gray-2,
+  'gray-3': $gray-3,
+  'white': $white,
+  'black': #000000,
+  'dummy': $dummy,
+  'error': $error
 );
 // Create your own map
 $custom-colors: ();

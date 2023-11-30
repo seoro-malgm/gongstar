@@ -9,20 +9,20 @@ $ratios: (13, 16, 27, 36, 40, 45, 53, 56, 67, 73, 87, 100, 138, 150);
   background-size: cover;
   @each $var in $ratios {
     &.ratio-#{$var} {
-      padding-bottom: #{$var}#{"%"};
+      padding-bottom: #{$var}#{'%'};
     }
   }
   @media all and (min-width: 768px) {
     @each $var in $ratios {
       &.ratio-md-#{$var} {
-        padding-bottom: #{$var}#{"%"};
+        padding-bottom: #{$var}#{'%'};
       }
     }
   }
   @media all and (min-width: 1024px) {
     @each $var in $ratios {
       &.ratio-lg-#{$var} {
-        padding-bottom: #{$var}#{"%"};
+        padding-bottom: #{$var}#{'%'};
       }
     }
   }
@@ -45,6 +45,6 @@ img {
 }
 
 .bg-pattern {
-  background: url("../images/pattern-short.svg");
+  background: url('../images/pattern-short.svg');
   background-repeat: repeat-y;
 }

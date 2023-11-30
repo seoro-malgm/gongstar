@@ -26,7 +26,11 @@
             <div class="col-4">정보</div>
             <div class="col-2 text-right">관리</div>
           </li>
-          <li class="row border-bottom py-2" v-for="(item, i) in items" :key="i">
+          <li
+            class="row border-bottom py-2"
+            v-for="(item, i) in items"
+            :key="i"
+          >
             <div class="col-2 col-md-2" v-if="item?.lastUpdated">
               {{ item?.lastUpdated }}
             </div>
@@ -43,7 +47,9 @@
                 </li>
                 <li>
                   유형:
-                  <strong v-if="item?.type?.length">{{ item.type.join(",") }}</strong>
+                  <strong v-if="item?.type?.length">{{
+                    item.type.join(',')
+                  }}</strong>
                 </li>
                 <li>
                   내용 :
@@ -75,7 +81,12 @@
                 >
                   관리
                 </button>
-                <button class="btn btn-error" @click="removeItem('contact', item.id)">삭제</button>
+                <button
+                  class="btn btn-error"
+                  @click="removeItem('contact', item.id)"
+                >
+                  삭제
+                </button>
               </div>
             </div>
           </li>
@@ -94,43 +105,43 @@
 </template>
 
 <script>
-import { ref, inject, computed, onMounted } from "vue";
+  import {ref, inject, computed, onMounted} from 'vue';
 
-export default {
-  setup() {
-    const { boardAPI } = inject("firebase");
+  export default {
+    setup() {
+      const {boardAPI} = inject('firebase');
 
-    const items = ref(null);
-    const getItems = async () => {
-      const data = await boardAPI.getAllBoards("contact", {
-        text: "lastUpdated",
-        value: "desc",
+      const items = ref(null);
+      const getItems = async () => {
+        const data = await boardAPI.getAllBoards('contact', {
+          text: 'lastUpdated',
+          value: 'desc',
+        });
+        // console.log(data);
+        items.value = data;
+      };
+      onMounted(() => {
+        getItems();
       });
-      // console.log(data);
-      items.value = data;
-    };
-    onMounted(() => {
-      getItems();
-    });
 
-    const removeItem = async (documentName, id) => {
-      const bool = await window.confirm("삭제하시겠습니까?");
-      if (bool) {
-        try {
-          const data = await boardAPI.removeBoard(documentName, id);
-          if (data) {
-            window.toast("삭제가 완료되었습니다.");
-            getItems();
+      const removeItem = async (documentName, id) => {
+        const bool = await window.confirm('삭제하시겠습니까?');
+        if (bool) {
+          try {
+            const data = await boardAPI.removeBoard(documentName, id);
+            if (data) {
+              window.toast('삭제가 완료되었습니다.');
+              getItems();
+            }
+          } catch (error) {
+            console.error('error:', error);
+            window.toast('삭제에 실패했습니다.');
           }
-        } catch (error) {
-          console.error("error:", error);
-          window.toast("삭제에 실패했습니다.");
         }
-      }
-    };
-    return { items, removeItem };
-  },
-};
+      };
+      return {items, removeItem};
+    },
+  };
 </script>
 
 <style lang="scss" scoped></style>

@@ -1,151 +1,151 @@
-import { createRouter, createWebHistory, RouterView } from "vue-router";
-import beforeEach from "./beforeEach.js";
-import LayoutDefault from "@/layouts/Default.vue";
-import LayoutAdmin from "@/layouts/Admin.vue";
-import NotFound from "@/pages/NotFound.vue";
+import {createRouter, createWebHistory, RouterView} from 'vue-router';
+import beforeEach from './beforeEach.js';
+import LayoutDefault from '@/layouts/Default.vue';
+import LayoutAdmin from '@/layouts/Admin.vue';
+import NotFound from '@/pages/NotFound.vue';
 const routes = [
   {
-    path: "/",
+    path: '/',
     component: LayoutDefault,
     children: [
       {
         // 메인
-        path: "",
-        name: "Main",
-        component: () => import("@/pages/Main.vue"),
+        path: '',
+        name: 'Main',
+        component: () => import('@/pages/Main.vue'),
       },
       // 프로젝트
       {
-        path: "project",
+        path: 'project',
         children: [
           {
-            path: "",
-            name: "ProjectList",
-            component: () => import("@/pages/Project/Index.vue"),
+            path: '',
+            name: 'ProjectList',
+            component: () => import('@/pages/Project/Index.vue'),
           },
           {
-            path: ":id",
-            name: "ProjectDetail",
-            component: () => import("@/pages/Project/Detail.vue"),
+            path: ':id',
+            name: 'ProjectDetail',
+            component: () => import('@/pages/Project/Detail.vue'),
           },
         ],
       },
       {
-        path: "insights",
+        path: 'insights',
         children: [
           {
-            path: "",
-            name: "InsightsList",
-            component: () => import("@/pages/Insights/Index.vue"),
+            path: '',
+            name: 'InsightsList',
+            component: () => import('@/pages/Insights/Index.vue'),
           },
           {
-            path: ":id",
-            name: "InsightsDetail",
-            component: () => import("@/pages/Insights/Detail.vue"),
+            path: ':id',
+            name: 'InsightsDetail',
+            component: () => import('@/pages/Insights/Detail.vue'),
           },
         ],
       },
       // 연락하기
       {
-        path: "contact",
-        name: "Contact",
-        component: () => import("@/pages/Contact.vue"),
+        path: 'contact',
+        name: 'Contact',
+        component: () => import('@/pages/Contact.vue'),
       },
       // 채용문의
       {
-        path: "career",
-        name: "Career",
-        component: () => import("@/pages/Career.vue"),
+        path: 'career',
+        name: 'Career',
+        component: () => import('@/pages/Career.vue'),
       },
     ],
   },
   // 어드민
   {
-    path: "/admin",
+    path: '/admin',
     component: LayoutAdmin,
     children: [
       {
-        path: "",
-        name: "Admin",
-        redirect: "/admin/project",
+        path: '',
+        name: 'Admin',
+        redirect: '/admin/project',
       },
       {
-        path: "login",
-        name: "AdminLogin",
-        component: () => import("@/pages/Admin/Login.vue"),
+        path: 'login',
+        name: 'AdminLogin',
+        component: () => import('@/pages/Admin/Login.vue'),
         meta: {
-          title: "로그인",
+          title: '로그인',
         },
       },
       {
-        path: "insights",
-        name: "AdminInsights",
-        component: () => import("@/pages/Admin/Insights.vue"),
+        path: 'insights',
+        name: 'AdminInsights',
+        component: () => import('@/pages/Admin/Insights.vue'),
         meta: {
-          title: "인사이트 관리",
+          title: '인사이트 관리',
         },
       },
       {
-        path: "project",
-        name: "AdminProject",
-        component: () => import("@/pages/Admin/Project.vue"),
+        path: 'project',
+        name: 'AdminProject',
+        component: () => import('@/pages/Admin/Project.vue'),
         meta: {
-          title: "프로젝트 관리",
+          title: '프로젝트 관리',
         },
       },
       {
-        path: "history",
-        name: "AdminHistory",
-        component: () => import("@/pages/Admin/History.vue"),
+        path: 'history',
+        name: 'AdminHistory',
+        component: () => import('@/pages/Admin/History.vue'),
         meta: {
-          title: "히스토리 관리",
+          title: '히스토리 관리',
         },
       },
       {
-        path: "client",
-        name: "AdminClient",
-        component: () => import("@/pages/Admin/Client.vue"),
+        path: 'client',
+        name: 'AdminClient',
+        component: () => import('@/pages/Admin/Client.vue'),
         meta: {
-          title: "클라이언트 관리",
+          title: '클라이언트 관리',
         },
       },
       {
-        path: "contact",
-        name: "AdminContact",
-        component: () => import("@/pages/Admin/Contact.vue"),
+        path: 'contact',
+        name: 'AdminContact',
+        component: () => import('@/pages/Admin/Contact.vue'),
         meta: {
-          title: "견적 관리",
+          title: '견적 관리',
         },
       },
       {
-        path: "write",
-        name: "AdminWrite",
-        component: () => import("@/pages/Admin/Write.vue"),
+        path: 'write',
+        name: 'AdminWrite',
+        component: () => import('@/pages/Admin/Write.vue'),
       },
       {
-        path: "logout",
-        name: "Logout",
-        component: () => import("@/pages/Admin/Logout.vue"),
+        path: 'logout',
+        name: 'Logout',
+        component: () => import('@/pages/Admin/Logout.vue'),
       },
     ],
   },
   {
-    path: "/404",
-    name: "NotFound",
+    path: '/404',
+    name: 'NotFound',
     component: NotFound,
   },
   {
-    path: "/:pathMatch(.*)*",
-    redirect: "/404",
+    path: '/:pathMatch(.*)*',
+    redirect: '/404',
   },
 ];
 
 const router = createRouter({
   /*  history: createWebHistory(process.env.BASE_URL), */
-  history: createWebHistory(""),
+  history: createWebHistory(''),
   routes,
   scrollBehavior(to, from, savedPosition) {
-    document.getElementById("app").scrollIntoView({ behavior: "smooth" });
+    document.getElementById('app').scrollIntoView({behavior: 'smooth'});
     return savedPosition
       ? savedPosition
       : {

@@ -12,10 +12,14 @@
             <div class="col-4 col-md-2">
               <img class="logo" :src="getURL('/assets/logo.svg')" alt="" />
             </div>
-            <div class="d-flex flex-column flex-md-row align-items-md-end justify-content-between">
+            <div
+              class="d-flex flex-column flex-md-row align-items-md-end justify-content-between"
+            >
               <ul class="links mt-4 px-3">
                 <li>
-                  <h1 class="my-2 text-14 text-md-15 fw-700">주식회사 공스타</h1>
+                  <h1 class="my-2 text-15 text-md-17 fw-700">
+                    주식회사 공스타
+                  </h1>
                 </li>
                 <li>
                   <button
@@ -23,7 +27,7 @@
                     @click="copyText(infos.phone, '전화번호가')"
                   >
                     <i class="icon icon-phone-outline text-16" />
-                    <span class="ms-2 text-14">
+                    <span class="ms-2 text-15 text-md-16">
                       {{ infos.phone }}
                     </span>
                   </button>
@@ -34,7 +38,7 @@
                     @click="copyText(infos.email, '이메일 주소가')"
                   >
                     <i class="icon icon-mail-2 text-16" />
-                    <span class="ms-2 text-14">
+                    <span class="ms-2 text-15 text-md-16">
                       {{ infos.email }}
                     </span>
                   </button>
@@ -45,7 +49,7 @@
                     @click="copyText(infos.addressSummary, '주소가')"
                   >
                     <i class="icon icon-compass text-16" />
-                    <span class="ms-2 text-14">
+                    <span class="ms-2 text-15 text-md-16">
                       {{ infos.addressSummary }}
                     </span>
                   </button>
@@ -78,32 +82,32 @@
 </template>
 
 <script>
-import { ref, inject, computed } from "vue";
-import { useStore } from "vuex";
-export default {
-  setup() {
-    const getURL = inject("getImageURL");
-    const copyText = inject("copyText");
-    // 정보
-    const store = useStore();
-    const infos = computed(() => {
-      return store.getters["auth/getInfos"];
-    });
-    return { getURL, copyText, infos };
-  },
-};
+  import {ref, inject, computed} from 'vue';
+  import {useStore} from 'vuex';
+  export default {
+    setup() {
+      const getURL = inject('getImageURL');
+      const copyText = inject('copyText');
+      // 정보
+      const store = useStore();
+      const infos = computed(() => {
+        return store.getters['auth/getInfos'];
+      });
+      return {getURL, copyText, infos};
+    },
+  };
 </script>
 
 <style lang="scss" scoped>
-#global-footer {
-  font-size: 14px;
-  padding: 2rem 0.5rem;
-  .title {
-    padding: 8px 0;
-    border-bottom: 1px solid $gray-1;
-    h4 {
-      color: $gray-1;
+  #global-footer {
+    font-size: 16px;
+    padding: 2rem 0.5rem;
+    .title {
+      padding: 8px 0;
+      border-bottom: 1px solid $gray-1;
+      h4 {
+        color: $gray-1;
+      }
     }
   }
-}
 </style>

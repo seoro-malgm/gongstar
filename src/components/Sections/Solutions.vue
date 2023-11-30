@@ -1,26 +1,31 @@
 <template>
-  <section id="solutions" class="section container" ref="target">Solutions</section>
+  <section id="solutions" class="section container" ref="target">
+    Solutions
+  </section>
 </template>
 
 <script setup>
-import { ref, defineEmits, watch } from "vue";
-// import { useIntersectionObserver } from "@vueuse/core";
+import { ref, watch } from "vue";
+import { useIntersectionObserver } from "@vueuse/core";
 
-// const target = ref(null);
-// const targetIsVisible = ref(false);
-// const emit = defineEmits(["sectionChange"]);
+const target = ref(null);
+const targetIsVisible = ref(false);
+const emit = defineEmits(["sectionChange"]);
 
-// const { stop } = useIntersectionObserver(target, ([{ isIntersecting }], observerElement) => {
-//   targetIsVisible.value = isIntersecting;
-// });
-// watch(
-//   () => targetIsVisible.value,
-//   (n) => {
-//     if (n) {
-//       emit("sectionChange");
-//     }
-//   }
-// );
+const { stop } = useIntersectionObserver(
+  target,
+  ([{ isIntersecting }], observerElement) => {
+    targetIsVisible.value = isIntersecting;
+  }
+);
+watch(
+  () => targetIsVisible.value,
+  n => {
+    if (n) {
+      emit("sectionChange");
+    }
+  }
+);
 </script>
 
 <style lang="scss" scoped>

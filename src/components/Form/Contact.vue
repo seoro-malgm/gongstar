@@ -185,8 +185,14 @@
                 <span>견적 항목</span>
                 <ul>
                   <template v-if="form?.items?.length">
-                    <li v-for="(item, i) in form.items" :key="i" class="py-2 border-bottom">
-                      <div class="d-flex align-items-center justify-content-between mb-2">
+                    <li
+                      v-for="(item, i) in form.items"
+                      :key="i"
+                      class="py-2 border-bottom"
+                    >
+                      <div
+                        class="d-flex align-items-center justify-content-between mb-2"
+                      >
                         <div class="form-group w-100">
                           <input
                             type="text"
@@ -234,7 +240,10 @@
                     </li>
                   </template>
                   <li class="mt-3">
-                    <button class="btn btn-outline-gray-1 w-100" @click="form.items.push({})">
+                    <button
+                      class="btn btn-outline-gray-1 w-100"
+                      @click="form.items.push({})"
+                    >
                       항목 추가
                     </button>
                   </li>
@@ -246,7 +255,12 @@
             <header class="mb-2">
               <h6 class="fw-700 text-16 text-md-20">부가 설명</h6>
             </header>
-            <textarea v-model="form.addText" class="form-control mt-2" rowspan="5"> </textarea>
+            <textarea
+              v-model="form.addText"
+              class="form-control mt-2"
+              rowspan="5"
+            >
+            </textarea>
           </div>
           <div class="my-3 py-3 border-top">
             <header class="mb-2">
@@ -256,7 +270,7 @@
               <li>
                 <div class="form-check form-switch">
                   <label class="form-check-label" for="addVAT">
-                    {{ formOptions?.addVAT ? "VAT 추가" : "VAT 추가 안함" }}
+                    {{ formOptions?.addVAT ? 'VAT 추가' : 'VAT 추가 안함' }}
                   </label>
                   <input
                     class="form-check-input"
@@ -270,7 +284,9 @@
           </div>
           <div class="mt-3 pt-3 border-top">
             <header class="mb-2">
-              <h6 class="fw-700 text-16 text-md-20">추가 정보(견적문의를 받은 경우)</h6>
+              <h6 class="fw-700 text-16 text-md-20">
+                추가 정보(견적문의를 받은 경우)
+              </h6>
             </header>
             <div class="mb-3">
               <h6 class="fw-700 text-16 text-md-20">유형</h6>
@@ -283,19 +299,28 @@
                   @keypress.enter="addInput('type', input.type)"
                   placeholder="유형"
                 />
-                <button class="btn btn-outline-black" @click="addInput('type', input.type)">
+                <button
+                  class="btn btn-outline-black"
+                  @click="addInput('type', input.type)"
+                >
                   +
                 </button>
               </div>
 
-              <ul class="list-unstyled d-inline-flex flex-wrap mt-2" v-if="form?.type?.length">
+              <ul
+                class="list-unstyled d-inline-flex flex-wrap mt-2"
+                v-if="form?.type?.length"
+              >
                 <li
                   v-for="(item, i) in form.type"
                   :key="i"
                   class="me-1 mb-2 d-flex align-items-center bg-primary px-3 py-1 rounded-pill"
                 >
                   <span class="text-14 fw-700"> {{ item }} </span>
-                  <button class="btn btn-text p-0 ms-2 text-20" @click="form.type.splice(i, 1)">
+                  <button
+                    class="btn btn-text p-0 ms-2 text-20"
+                    @click="form.type.splice(i, 1)"
+                  >
                     <i class="icon icon-cancel-circled" />
                   </button>
                 </li>
@@ -320,17 +345,37 @@
             <div class="mb-3">
               <h6 class="fw-700 text-16 text-md-20">예산</h6>
               <select class="form-select" v-model="form.price">
-                <option value="null" selected disabled>예산 선택되어있지 않음</option>
+                <option value="null" selected disabled>
+                  예산 선택되어있지 않음
+                </option>
                 <optgroup label="예산 규모">
-                  <option value="10만원 ~ 100만원 이하">10만원 ~ 100만원 이하</option>
-                  <option value="100만원 ~ 300만원 이하">100만원 ~ 300만원 이하</option>
-                  <option value="300만원 ~ 500만원 이하">300만원 ~ 500만원 이하</option>
-                  <option value="500만원 ~ 1000만원 이하">500만원 ~ 1000만원 이하</option>
-                  <option value="500만원 ~ 1000만원 이하">500만원 ~ 1000만원 이하</option>
-                  <option value="1000만원 ~ 2000만원 이하">1000만원 ~ 2000만원 이하</option>
-                  <option value="1000만원 ~ 2000만원 이하">1000만원 ~ 2000만원 이하</option>
-                  <option value="2000만원 ~ 3000만원 이하">2000만원 ~ 3000만원 이하</option>
-                  <option value="3000만원 ~ 5000만원 이하">3000만원 ~ 5000만원 이하</option>
+                  <option value="10만원 ~ 100만원 이하">
+                    10만원 ~ 100만원 이하
+                  </option>
+                  <option value="100만원 ~ 300만원 이하">
+                    100만원 ~ 300만원 이하
+                  </option>
+                  <option value="300만원 ~ 500만원 이하">
+                    300만원 ~ 500만원 이하
+                  </option>
+                  <option value="500만원 ~ 1000만원 이하">
+                    500만원 ~ 1000만원 이하
+                  </option>
+                  <option value="500만원 ~ 1000만원 이하">
+                    500만원 ~ 1000만원 이하
+                  </option>
+                  <option value="1000만원 ~ 2000만원 이하">
+                    1000만원 ~ 2000만원 이하
+                  </option>
+                  <option value="1000만원 ~ 2000만원 이하">
+                    1000만원 ~ 2000만원 이하
+                  </option>
+                  <option value="2000만원 ~ 3000만원 이하">
+                    2000만원 ~ 3000만원 이하
+                  </option>
+                  <option value="3000만원 ~ 5000만원 이하">
+                    3000만원 ~ 5000만원 이하
+                  </option>
                 </optgroup>
                 <optgroup label="기타">
                   <option value="협의 후 결정">협의 후 결정</option>
@@ -367,7 +412,9 @@
         <!-- 유틸 영역 -->
         <div class="my-3">
           <div class="d-flex justify-content-end">
-            <button class="btn btn-outline-gray-1 me-2" @click="print()">인쇄</button>
+            <button class="btn btn-outline-gray-1 me-2" @click="print()">
+              인쇄
+            </button>
             <button
               class="btn btn-primary px-3"
               @click="
@@ -387,139 +434,139 @@
 </template>
 
 <script>
-import { ref, computed, inject, onMounted } from "vue";
-import { useRoute, useRouter } from "vue-router";
-import PaperContact from "@/components/Paper/Contact.vue";
+  import {ref, computed, inject, onMounted} from 'vue';
+  import {useRoute, useRouter} from 'vue-router';
+  import PaperContact from '@/components/Paper/Contact.vue';
 
-export default {
-  props: {
-    id: {
-      type: String,
-      default: null,
+  export default {
+    props: {
+      id: {
+        type: String,
+        default: null,
+      },
     },
-  },
-  components: {
-    PaperContact,
-  },
-  setup() {
-    const { boardAPI } = inject("firebase");
-    const router = useRouter();
-    const route = useRoute();
-    const showPreview = ref(false);
+    components: {
+      PaperContact,
+    },
+    setup() {
+      const {boardAPI} = inject('firebase');
+      const router = useRouter();
+      const route = useRoute();
+      const showPreview = ref(false);
 
-    // 폼
-    const form = ref({
-      no: "",
-      date: null,
-      agree: true,
-      period: null,
-      desc: "",
-      periodType: "m",
-      email: "",
-      file: null,
-      companyName: null,
-      companyBoss: null,
-      licenseNumber: null,
-      address: null,
-      servicesCategory: null,
-      servicesType: null,
-      name: null,
-      phone: null,
-      price: null,
-      title: null,
-      items: [],
-      type: [],
-      url: null,
-      addText: null,
-    });
+      // 폼
+      const form = ref({
+        no: '',
+        date: null,
+        agree: true,
+        period: null,
+        desc: '',
+        periodType: 'm',
+        email: '',
+        file: null,
+        companyName: null,
+        companyBoss: null,
+        licenseNumber: null,
+        address: null,
+        servicesCategory: null,
+        servicesType: null,
+        name: null,
+        phone: null,
+        price: null,
+        title: null,
+        items: [],
+        type: [],
+        url: null,
+        addText: null,
+      });
 
-    const input = ref({
-      type: null,
-    });
-    const addInput = (type, value, isArray) => {
-      if (value && value !== "") {
-        // if (isArray) {
-        console.log("type.value:", type.value);
-        form.value[type].push(value);
-        input.value[type] = null;
-        // } else {
-        // ...
-        // }
-      }
-    };
-
-    const formOptions = ref({ addVAT: true });
-
-    // 대기
-    const pending = ref({
-      submit: false,
-    });
-
-    // 수정 불러오기
-    const id = computed(() => {
-      return route?.query?.id;
-    });
-    const init = async (documentName, id) => {
-      pending.value.init = true;
-      try {
-        const data = await boardAPI.getBoardById(documentName, id);
-        if (data) {
-          // ref를 찾은 뒤에 form에 적용함
-          form.value = {
-            agree: true,
-            period: null,
-            date: null,
-            desc: "",
-            periodType: "m",
-            email: "",
-            file: null,
-            companyName: null,
-            companyBoss: null,
-            licenseNumber: null,
-            address: null,
-            servicesCategory: null,
-            servicesType: null,
-            name: null,
-            phone: null,
-            price: null,
-            title: null,
-            items: [],
-            type: [],
-            url: null,
-            ...data,
-          };
+      const input = ref({
+        type: null,
+      });
+      const addInput = (type, value, isArray) => {
+        if (value && value !== '') {
+          // if (isArray) {
+          console.log('type.value:', type.value);
+          form.value[type].push(value);
+          input.value[type] = null;
+          // } else {
+          // ...
+          // }
         }
-      } catch (error) {
-        window.toast("잘못된 접근입니다");
-        console.error("error:", error);
-        router.push("/admin/contact");
-      }
-      pending.value.init = false;
-    };
+      };
 
-    // 아이디가 있는 경우 init
-    onMounted(() => {
-      if (id.value) {
-        init("contact", id.value);
-      }
-    });
+      const formOptions = ref({addVAT: true});
 
-    // 인쇄버튼
-    const print = () => {
-      window.print();
-    };
+      // 대기
+      const pending = ref({
+        submit: false,
+      });
 
-    return {
-      form,
-      input,
-      addInput,
-      formOptions,
-      showPreview,
-      pending,
-      print,
-    };
-  },
-};
+      // 수정 불러오기
+      const id = computed(() => {
+        return route?.query?.id;
+      });
+      const init = async (documentName, id) => {
+        pending.value.init = true;
+        try {
+          const data = await boardAPI.getBoardById(documentName, id);
+          if (data) {
+            // ref를 찾은 뒤에 form에 적용함
+            form.value = {
+              agree: true,
+              period: null,
+              date: null,
+              desc: '',
+              periodType: 'm',
+              email: '',
+              file: null,
+              companyName: null,
+              companyBoss: null,
+              licenseNumber: null,
+              address: null,
+              servicesCategory: null,
+              servicesType: null,
+              name: null,
+              phone: null,
+              price: null,
+              title: null,
+              items: [],
+              type: [],
+              url: null,
+              ...data,
+            };
+          }
+        } catch (error) {
+          window.toast('잘못된 접근입니다');
+          console.error('error:', error);
+          router.push('/admin/contact');
+        }
+        pending.value.init = false;
+      };
+
+      // 아이디가 있는 경우 init
+      onMounted(() => {
+        if (id.value) {
+          init('contact', id.value);
+        }
+      });
+
+      // 인쇄버튼
+      const print = () => {
+        window.print();
+      };
+
+      return {
+        form,
+        input,
+        addInput,
+        formOptions,
+        showPreview,
+        pending,
+        print,
+      };
+    },
+  };
 </script>
 
 <style lang="scss" scoped></style>

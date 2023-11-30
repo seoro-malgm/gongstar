@@ -29,64 +29,64 @@
 </template>
 
 <script>
-import { ref } from "vue";
+  import {ref} from 'vue';
 
-export default {
-  setup(app, context) {
-    const str = ref(null);
-    const search = () => {
-      context.emit("on-search", str.value);
-      str.value = null;
-    };
-    return {
-      str,
-      search,
-    };
-  },
-};
+  export default {
+    setup(app, context) {
+      const str = ref(null);
+      const search = () => {
+        context.emit('on-search', str.value);
+        str.value = null;
+      };
+      return {
+        str,
+        search,
+      };
+    },
+  };
 </script>
 
 <style lang="scss" scoped>
-.search-input {
-  .dim {
-    width: 100vw;
-    height: 100vh;
-    position: fixed;
-    top: 0;
-    left: 0;
-    backdrop-filter: blur(4px);
-  }
-  .input-wrapper {
-    width: 100%;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    .input-group {
-      position: relative;
-      border-radius: 10px;
-      box-shadow: 0px 0px 12px rgba($color: #000000, $alpha: 0.4);
-      background-color: rgba($color: #000000, $alpha: 0.4);
-      z-index: 6;
-      .form-control {
-        padding: 1rem 1.4rem;
-        border: 0;
-        border-radius: 4px;
-        background-color: transparent;
-        color: white;
-        &:focus {
-          z-index: 1;
-        }
-        &::placeholder {
-          color: rgba($color: #ffffff, $alpha: 0.7);
+  .search-input {
+    .dim {
+      width: 100vw;
+      height: 100vh;
+      position: fixed;
+      top: 0;
+      left: 0;
+      backdrop-filter: blur(4px);
+    }
+    .input-wrapper {
+      width: 100%;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      .input-group {
+        position: relative;
+        border-radius: 10px;
+        box-shadow: 0px 0px 12px rgba($color: #000000, $alpha: 0.4);
+        background-color: rgba($color: #000000, $alpha: 0.4);
+        z-index: 6;
+        .form-control {
+          padding: 1rem 1.4rem;
+          border: 0;
+          border-radius: 4px;
+          background-color: transparent;
+          color: white;
+          &:focus {
+            z-index: 1;
+          }
+          &::placeholder {
+            color: rgba($color: #ffffff, $alpha: 0.7);
+          }
         }
       }
     }
   }
-}
-.btn-search {
-  i.icon {
-    mix-blend-mode: difference;
+  .btn-search {
+    i.icon {
+      mix-blend-mode: difference;
+    }
   }
-}
 </style>

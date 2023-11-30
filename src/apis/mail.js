@@ -1,4 +1,4 @@
-import { app } from "@/plugins/appConfig";
+import {app} from '@/plugins/appConfig';
 // firestore
 import {
   getFirestore,
@@ -12,14 +12,14 @@ import {
   // query,
   // where,
   // orderBy,
-} from "firebase/firestore";
+} from 'firebase/firestore';
 
 const db = getFirestore(app);
 
 class authAPI {
-  mailTrigger = async (form) => {
-    const docRef = await addDoc(collection(db, "mail"), {
-      to: "liass00@naver.com",
+  mailTrigger = async form => {
+    const docRef = await addDoc(collection(db, 'mail'), {
+      to: 'liass00@naver.com',
       message: {
         subject: `[CONTACT] ${form.name}으로부터 메일이 왔습니다.`,
         html: `

@@ -7,6 +7,9 @@
         귀사의 브랜드 경험을 이끌어낼 수 있도록 돕고 있습니다.
       </p>
     </header>
+    <!-- <div class="logo-wrap">
+      <section-logo-rotate />
+    </div> -->
     <div class="my-5">
       <div class="">
         <router-link
@@ -22,24 +25,28 @@
 </template>
 
 <script setup>
-import { ref, defineEmits, watch } from "vue";
-// import { useIntersectionObserver } from "@vueuse/core";
+import { ref, watch } from "vue";
+import { useIntersectionObserver } from "@vueuse/core";
+// import SectionLogoRotate from "@/components/Sections/LogoRotate.vue";
 
-// const target = ref(null);
-// const targetIsVisible = ref(false);
-// const emit = defineEmits(["sectionChange"]);
+const target = ref(null);
+const targetIsVisible = ref(false);
+const emit = defineEmits(["sectionChange"]);
 
-// const { stop } = useIntersectionObserver(target, ([{ isIntersecting }], observerElement) => {
-//   targetIsVisible.value = isIntersecting;
-// });
-// watch(
-//   () => targetIsVisible.value,
-//   (n) => {
-//     if (n) {
-//       emit("sectionChange");
-//     }
-//   }
-// );
+const { stop } = useIntersectionObserver(
+  target,
+  ([{ isIntersecting }], observerElement) => {
+    targetIsVisible.value = isIntersecting;
+  }
+);
+watch(
+  () => targetIsVisible.value,
+  n => {
+    if (n) {
+      emit("sectionChange");
+    }
+  }
+);
 </script>
 
 <style lang="scss" scoped>
@@ -50,6 +57,7 @@ section.section {
   @supports (-webkit-touch-callout: none) {
     min-height: -webkit-fill-available;
   }
+  position: relative;
 }
 
 @keyframes leftRight {

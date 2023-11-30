@@ -2,7 +2,10 @@
   <div>
     <!-- sections -->
     <div :ref="item.name" v-for="(item, i) in sections" :key="i">
-      <component :is="item.component" @sectionChange="($event) => (currentSection = item.name)" />
+      <component
+        :is="item.component"
+        @sectionChange="$event => (currentSection = item.name)"
+      />
     </div>
     <!-- btns -->
     <div class="floating-dots">
@@ -11,9 +14,9 @@
           class="dot-item"
           v-for="(item, i) in sections"
           :key="i"
-          :class="{ active: item === currentSection }"
+          :class="{ active: item?.name === currentSection }"
         >
-          <a :href="`#${item}`" class="btn btn-text p-0">
+          <a :href="`#${item.name}`" class="btn btn-text p-0">
             <span class="dot"></span>
             <span class="dot"></span>
           </a>
@@ -25,33 +28,42 @@
 
 <script setup>
 import { ref } from "vue";
-
 import SectionIntro from "@/components/Sections/Intro.vue";
-import SectionMilkyWay from "@/components/Sections/MilkyWay.vue";
-import SectionSolutions from "@/components/Sections/Solutions.vue";
-import SectionStarship from "@/components/Sections/Starship.vue";
+// import SectionMilkyWay from '@/components/Sections/MilkyWay.vue';
+// import SectionSolutions from '@/components/Sections/Solutions.vue';
+// import SectionStarship from '@/components/Sections/Starship.vue';
+// old sections
+import SectionServices from "@/components/Sections/Services.vue";
+import SectionPartners from "@/components/Sections/Partners.vue";
 import SectionContact from "@/components/Sections/Contact.vue";
+import { useIntersectionObserver, useIntervalFn } from "@vueuse/core";
 
 const [intro, milkyWay, solutions, starship, contact] = [
   ref(null),
   ref(null),
   ref(null),
   ref(null),
-  ref(null),
+  ref(null)
 ];
 
-import { useIntersectionObserver, useIntervalFn } from "@vueuse/core";
 const currentSection = ref("intro");
 
 const emit = defineEmits(["sectionChange"]);
-for (let index = 0; index < [intro, milkyWay, solutions, starship, contact].length; index++) {
+for (
+  let index = 0;
+  index < [intro, milkyWay, solutions, starship, contact].length;
+  index++
+) {
   const section = [intro, milkyWay, solutions, starship, contact][index];
-  const { stop } = useIntersectionObserver(section, ([{ isIntersecting }], observerElement) => {
-    if (isIntersecting) {
-      console.log("stop:", stop);
+  const { stop } = useIntersectionObserver(
+    section,
+    ([{ isIntersecting }], observerElement) => {
+      if (isIntersecting) {
+        // console.log("stop:", stop);
+      }
+      // targetIsVisible.value = isIntersecting;
     }
-    // targetIsVisible.value = isIntersecting;
-  });
+  );
 }
 
 // watch(
@@ -65,24 +77,32 @@ for (let index = 0; index < [intro, milkyWay, solutions, starship, contact].leng
 const sections = [
   {
     name: "intro",
-    component: SectionIntro,
+    component: SectionIntro
   },
   {
-    name: "milkyWay",
-    component: SectionMilkyWay,
+    name: "services",
+    component: SectionServices
   },
   {
-    name: "solutions",
-    component: SectionSolutions,
+    name: "partners",
+    component: SectionPartners
   },
-  {
-    name: "starship",
-    component: SectionStarship,
-  },
+  // {
+  //   name: "milkyWay",
+  //   component: SectionMilkyWay,
+  // },
+  // {
+  //   name: "solutions",
+  //   component: SectionSolutions,
+  // },
+  // {
+  //   name: "starship",
+  //   component: SectionStarship,
+  // },
   {
     name: "contact",
-    component: SectionContact,
-  },
+    component: SectionContact
+  }
 ];
 </script>
 

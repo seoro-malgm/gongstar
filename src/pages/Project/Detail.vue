@@ -1,5 +1,5 @@
 <template>
-  <section class="section-gap mt-5">
+  <section class="wrap">
     <div class="container">
       <template v-if="(!isPreview && !item) || (isPreview && !previewItem)">
         <div class="p-5 text-center">
@@ -12,15 +12,21 @@
             <div class="content-wrapper">
               <article class="content-container">
                 <header class="mb-3 pb-3 pb-lg-0 text-center">
-                  <h1 class="text-20 text-lg-40 fw-900 mb-0 lh-0">{{ item?.title }}</h1>
-                  <ul class="my-1 p-0 d-flex align-items-center justify-content-center">
+                  <h1 class="text-32 text-lg-40 fw-900 mb-0 lh-0">
+                    {{ item?.title }}
+                  </h1>
+                  <ul
+                    class="my-1 p-0 d-flex align-items-center justify-content-center"
+                  >
                     <li class="me-1" v-if="item?.category">
                       <span class="text-13 text-md-14 text-gray-2">
                         {{ getCategory(item.category) }}</span
                       >
                     </li>
                     <li class="me-1" v-if="item?.date">
-                      <span class="text-13 text-md-14 text-gray-2">{{ item.date }}</span>
+                      <span class="text-13 text-md-14 text-gray-2">{{
+                        item.date
+                      }}</span>
                     </li>
                   </ul>
                 </header>
@@ -33,11 +39,19 @@
           </div>
         </div>
         <div class="floating-btns">
-          <button v-if="isPreview" class="btn btn-primary" @click="$emit('close-preview')">
+          <button
+            v-if="isPreview"
+            class="btn btn-primary"
+            @click="$emit('close-preview')"
+          >
             <i class="icon icon-cancel" />
             <span>미리보기 닫기</span>
           </button>
-          <button class="btn btn-outline-gray-1" @click="goTo(0, 0)" v-if="!isPreview">
+          <button
+            class="btn btn-outline-gray-1"
+            @click="goTo(0, 0)"
+            v-if="!isPreview"
+          >
             <i class="icon icon-up-big" />
             <span>맨 위로</span>
           </button>
@@ -59,19 +73,19 @@ export default {
   props: {
     isPreview: {
       type: Boolean,
-      default: false,
+      default: false
     },
     showPreview: {
       type: Boolean,
-      default: false,
+      default: false
     },
     previewItem: {
       type: Object,
-      default: null,
-    },
+      default: null
+    }
   },
   components: {
-    DescriptionContent,
+    DescriptionContent
   },
   setup(props, context) {
     // const items = allProject;
@@ -91,16 +105,16 @@ export default {
     // 카테고리 목록
     const categories = computed(() => {
       const list = store.getters["categories/getCategoryProject"];
-      return list?.length ? list.filter((i) => i.value !== null) : [];
+      return list?.length ? list.filter(i => i.value !== null) : [];
     });
     // 카테고리 value에서 text 구하기
-    const getCategory = (value) => {
-      return categories.value.find((c) => c.value === value)?.text || "";
+    const getCategory = value => {
+      return categories.value.find(c => c.value === value)?.text || "";
     };
 
     const { boardAPI } = inject("firebase");
     const item = ref(null);
-    const getItem = async (preview) => {
+    const getItem = async preview => {
       if (preview) {
         item.value = props.previewItem;
         // console.log("item.value:", item.value);
@@ -153,7 +167,7 @@ export default {
     });
     watch(
       () => props.showPreview,
-      (n) => {
+      n => {
         getItem(true);
       }
     );
@@ -163,7 +177,7 @@ export default {
     };
 
     return { getURL, id, item, getCategory, goTo };
-  },
+  }
 };
 </script>
 
@@ -177,6 +191,9 @@ $ratio-md: 45%;
 .content-wrapper {
 }
 
+.wrap {
+  margin-top: 120px;
+}
 .floating-btns {
   position: fixed;
   bottom: 1rem;

@@ -31,7 +31,7 @@
         <header
           class="pt-5 pb-3 border-bottom mb-5 d-flex flex-column flex-md-row justify-contennt-between"
         >
-          <h2>{{ title ? `${title}` : "" }}</h2>
+          <h2>{{ title ? `${title}` : '' }}</h2>
         </header>
         <router-view />
       </main>
@@ -41,86 +41,89 @@
 </template>
 
 <script>
-// import GlobalNav from "@/components/Nav/GlobalNav.vue";
-import GlobalFooter from "@/components/Nav/GlobalFooter.vue";
-import { ref, computed, inject, onMounted } from "vue";
-import { useStore } from "vuex";
-import { useRoute, useRouter } from "vue-router";
+  // import GlobalNav from "@/components/Nav/GlobalNav.vue";
+  import GlobalFooter from '@/components/Nav/GlobalFooter.vue';
+  import {ref, computed, inject, onMounted} from 'vue';
+  import {useStore} from 'vuex';
+  import {useRoute, useRouter} from 'vue-router';
 
-export default {
-  components: {
-    // GlobalNav,
-    GlobalFooter,
-  },
-  setup(app, context) {
-    // const firebase = inject("firebase");
-    const getURL = inject("getImageURL");
-    const store = useStore();
-    const router = useRouter();
-    const route = useRoute();
+  export default {
+    components: {
+      // GlobalNav,
+      GlobalFooter,
+    },
+    setup(app, context) {
+      // const firebase = inject("firebase");
+      const getURL = inject('getImageURL');
+      const store = useStore();
+      const router = useRouter();
+      const route = useRoute();
 
-    const collapsed = ref(false);
-    const links = ref([
-      {
-        name: "프로젝트 관리",
-        url: "/admin/project",
-      },
-      {
-        name: "인사이트 관리",
-        url: "/admin/insights",
-      },
-      // {
-      //   name: "연혁 관리",
-      //   url: "/admin/history",
-      // },
-      // {
-      //   name: "클라인트 관리",
-      //   url: "/admin/client",
-      // },
-      {
-        name: "견적 관리",
-        url: "/admin/contact",
-      },
-      {
-        name: "로그아웃",
-        variant: "text text-error text-13",
-        url: "/admin/logout",
-      },
-    ]);
+      const collapsed = ref(false);
+      const links = ref([
+        {
+          name: '프로젝트 관리',
+          url: '/admin/project',
+        },
+        {
+          name: '인사이트 관리',
+          url: '/admin/insights',
+        },
+        // {
+        //   name: "연혁 관리",
+        //   url: "/admin/history",
+        // },
+        // {
+        //   name: "클라인트 관리",
+        //   url: "/admin/client",
+        // },
+        {
+          name: '견적 관리',
+          url: '/admin/contact',
+        },
+        {
+          name: '로그아웃',
+          variant: 'text text-error text-13',
+          url: '/admin/logout',
+        },
+      ]);
 
-    const user = computed(() => {
-      return sessionStorage.getItem("gongstar-token") || store.getters["auth/getUser"];
-    });
+      const user = computed(() => {
+        return (
+          sessionStorage.getItem('gongstar-token') ||
+          store.getters['auth/getUser']
+        );
+      });
 
-    onMounted(() => {
-      if (!user.value) {
-        router.push("/admin/login");
-      }
-    });
+      onMounted(() => {
+        if (!user.value) {
+          router.push('/admin/login');
+        }
+      });
 
-    const title = computed(() => {
-      return route?.meta?.title;
-    });
+      const title = computed(() => {
+        return route?.meta?.title;
+      });
 
-    return {
-      getURL,
-      collapsed,
-      links,
-      title,
-      user,
-    };
-  },
-};
+      return {
+        getURL,
+        collapsed,
+        links,
+        title,
+        user,
+      };
+    },
+  };
 </script>
 
 <style lang="scss" scoped>
-.layout-default {
-  display: flex;
-  flex-direction: row;
-  align-items: stretch;
-}
-.router-link-active {
-  background-color: black;
-  color: white;
-}
+  .layout-default {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+  }
+  .router-link-active {
+    background-color: black;
+    color: white;
+  }
 </style>

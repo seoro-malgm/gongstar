@@ -8,14 +8,14 @@
 </template>
 
 <script>
-import { ref, onMounted } from "vue";
-export default {
-  setup() {},
-};
+  import {ref, onMounted} from 'vue';
+  export default {
+    setup() {},
+  };
 </script>
 
 <style lang="scss" scoped>
-.symbol {
-  fill: #231815;
-}
+  .symbol {
+    fill: #231815;
+  }
 </style>

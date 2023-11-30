@@ -5,13 +5,20 @@
       <ul class="list-links">
         <li v-for="(item, i) in links" :key="i">
           <template v-if="item?.href">
-            <a :href="item.href" class="link-item btn btn-link text-secondary" target="_blank">
+            <a
+              :href="item.href"
+              class="link-item btn btn-link text-secondary"
+              target="_blank"
+            >
               {{ item.name }}
             </a>
             <small v-if="item.description"> {{ item.description }} </small>
           </template>
           <template v-else>
-            <router-link :to="item.url" class="link-item btn btn-link text-secondary">
+            <router-link
+              :to="item.url"
+              class="link-item btn btn-link text-secondary"
+            >
               {{ item.name }}</router-link
             >
             <small v-if="item.description"> {{ item.description }} </small>
@@ -77,12 +84,12 @@ export default {
   props: {
     active: {
       type: Boolean,
-      default: false,
+      default: false
     },
     links: {
       type: Array,
-      default: null,
-    },
+      default: null
+    }
   },
   setup(props, context) {
     const copyText = inject("copyText");
@@ -93,7 +100,7 @@ export default {
     });
     watch(
       () => path.value,
-      (n) => {
+      n => {
         context.emit("close");
         // if (onMenuToggle.value) onMenuToggle.value = false;
       }
@@ -106,9 +113,9 @@ export default {
 
     return {
       infos,
-      copyText,
+      copyText
     };
-  },
+  }
 };
 </script>
 
@@ -171,7 +178,7 @@ $gnb-height: 120px;
           &:hover,
           &.router-link-active,
           &.router-link-exact-active {
-            background-color: $secondary;
+            // background-color: $secondary;
             color: $primary !important;
           }
         }

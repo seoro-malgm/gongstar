@@ -3,7 +3,7 @@ const state = {
 };
 
 const getters = {
-  getMe: (state) => {
+  getMe: state => {
     return state.me;
   },
 };
@@ -24,8 +24,8 @@ const actions = {
    *  store.dispatch('auth/setState', ['marketList', value]);
    *  auth의 setState 실행 => state의 value로 적용
    */
-  setState({ commit }, [key, value]) {
-    commit("setState", [key, value]);
+  setState({commit}, [key, value]) {
+    commit('setState', [key, value]);
   },
 };
 

@@ -1,17 +1,17 @@
-@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&family=Roboto:wght@400;500;700;900&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&family=Roboto:wght@400;500;700;900&display=swap');
 
 @font-face {
-  font-family: "Pretendard-Regular";
-  src: url("https://cdn.jsdelivr.net/gh/project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff")
-    format("woff");
+  font-family: 'Pretendard-Regular';
+  src: url('https://cdn.jsdelivr.net/gh/project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff')
+    format('woff');
   font-weight: 400;
   font-style: normal;
 }
 
 @font-face {
-  font-family: "Pretendard-Bold";
-  src: url("https://cdn.jsdelivr.net/gh/project-Noonnu/noonfonts_2107@1.1/Pretendard-Bold.woff")
-    format("woff");
+  font-family: 'Pretendard-Bold';
+  src: url('https://cdn.jsdelivr.net/gh/project-Noonnu/noonfonts_2107@1.1/Pretendard-Bold.woff')
+    format('woff');
   font-weight: 700;
   font-style: normal;
 }
@@ -19,7 +19,7 @@
 html,
 body,
 pre {
-  font-family: "Pretendard-Light", "Noto Sans KR", sans-serif;
+  font-family: 'Pretendard-Light', 'Noto Sans KR', sans-serif;
   font-weight: 400;
 }
 
@@ -51,7 +51,9 @@ $font-size: (
   56,
   64,
   70,
-  72
+  72,
+  80,
+  96
 );
 
 @media print {
@@ -123,8 +125,8 @@ $line-heights: (90, 100, 120, 135, 160, 165, 170, 180, 200, 225);
 }
 
 @for $var from 2 through 9 {
-  .fw-#{$var}#{"00"} {
-    font-weight: #{$var}#{"00"} !important;
+  .fw-#{$var}#{'00'} {
+    font-weight: #{$var}#{'00'} !important;
   }
 }
 
@@ -194,7 +196,7 @@ h1.section-title {
   &:after {
     position: absolute;
     z-index: 1;
-    content: "";
+    content: '';
     display: block;
     bottom: 0;
     left: 50%;

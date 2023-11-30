@@ -17,7 +17,9 @@
                 <div class="spinner-border absolute-center" role="status" />
               </template>
               <template v-else-if="!form?.profile && !pending.profile">
-                <div class="absoulte-center">여기를 눌러 원경 프로필 추가하세요.</div>
+                <div class="absoulte-center">
+                  여기를 눌러 원경 프로필 추가하세요.
+                </div>
               </template>
               <template v-else-if="form?.profile && !pending.profile">
                 <!-- <div class="position-absolute" :style="{ top: '10px', right: '10px' }">
@@ -27,13 +29,15 @@
                 </div> -->
               </template>
             </label>
-            <small v-if="form?.profile">이미지를 눌러 새 사진을 불러올 수 있습니다.</small>
+            <small v-if="form?.profile"
+              >이미지를 눌러 새 사진을 불러올 수 있습니다.</small
+            >
             <input
               type="file"
               class="form-control d-none"
               id="profile"
               accept=".png, .jpg, .jpeg"
-              @change="($event) => uploadProfile($event)"
+              @change="$event => uploadProfile($event)"
             />
           </div>
         </div>
@@ -44,16 +48,24 @@
               for="profileHovered"
               class="bg-img ratio-138 rounded position-relative img-contain"
               :style="{
-                background: form?.profileHovered ? `url(${form.profileHovered})` : '#999999',
+                background: form?.profileHovered
+                  ? `url(${form.profileHovered})`
+                  : '#999999',
               }"
             >
               <template v-if="pending.profileHovered">
                 <div class="spinner-border absolute-center" role="status" />
               </template>
-              <template v-else-if="!form?.profileHovered && !pending.profileHovered">
-                <div class="absoulte-center">여기를 눌러 근경 프로필 추가하세요.</div>
+              <template
+                v-else-if="!form?.profileHovered && !pending.profileHovered"
+              >
+                <div class="absoulte-center">
+                  여기를 눌러 근경 프로필 추가하세요.
+                </div>
               </template>
-              <template v-else-if="form?.profileHovered && !pending.profileHovered">
+              <template
+                v-else-if="form?.profileHovered && !pending.profileHovered"
+              >
                 <!-- <div class="position-absolute" :style="{ top: '10px', right: '10px' }">
                   <button
                     class="btn btn-black px-2 py-1"
@@ -64,13 +76,15 @@
                 </div> -->
               </template>
             </label>
-            <small v-if="form?.profileHovered">이미지를 눌러 새 사진을 불러올 수 있습니다.</small>
+            <small v-if="form?.profileHovered"
+              >이미지를 눌러 새 사진을 불러올 수 있습니다.</small
+            >
             <input
               type="file"
               class="form-control d-none"
               id="profileHovered"
               accept=".png, .jpg, .jpeg"
-              @change="($event) => uploadProfile($event, 'hover')"
+              @change="$event => uploadProfile($event, 'hover')"
             />
           </div>
         </div>
@@ -111,7 +125,12 @@
 
           <div class="form-group mb-3">
             <label for="employment">소속</label>
-            <input type="text" class="form-control" id="employment" v-model="form.employment" />
+            <input
+              type="text"
+              class="form-control"
+              id="employment"
+              v-model="form.employment"
+            />
           </div>
         </div>
       </div>
@@ -123,7 +142,7 @@
           class="btn btn-outline-primary w-100 py-2 text-20"
           @click="$emit(id ? 'update' : 'submit', form)"
         >
-          {{ id ? "수정" : "업로드" }}
+          {{ id ? '수정' : '업로드' }}
         </button>
       </div>
     </section>
@@ -131,151 +150,156 @@
 </template>
 
 <script>
-import { ref, computed, inject, onMounted } from "vue";
-import { useRoute, useRouter } from "vue-router";
-import allMembers from "@/database/members.json";
+  import {ref, computed, inject, onMounted} from 'vue';
+  import {useRoute, useRouter} from 'vue-router';
+  import allMembers from '@/database/members.json';
 
-export default {
-  props: {
-    id: {
-      type: String,
-      default: null,
+  export default {
+    props: {
+      id: {
+        type: String,
+        default: null,
+      },
     },
-  },
-  components: {
-    // QuillEditor,
-  },
-  setup(props, context) {
-    const { boardAPI, storageAPI } = inject("firebase");
-    const router = useRouter();
-    const route = useRoute();
+    components: {
+      // QuillEditor,
+    },
+    setup(props, context) {
+      const {boardAPI, storageAPI} = inject('firebase');
+      const router = useRouter();
+      const route = useRoute();
 
-    const pending = ref({
-      init: false,
-      profile: false,
-      profileHovered: false,
-      submit: false,
-    });
+      const pending = ref({
+        init: false,
+        profile: false,
+        profileHovered: false,
+        submit: false,
+      });
 
-    const form = ref({
-      no: null,
-      profile: null,
-      profileHovered: null,
-      name: null,
-      type: null,
-      employment: "국립공주대학교 디지털보존솔루션랩",
-    });
+      const form = ref({
+        no: null,
+        profile: null,
+        profileHovered: null,
+        name: null,
+        type: null,
+        employment: '국립공주대학교 디지털보존솔루션랩',
+      });
 
-    const keyword = ref(null);
-    const addKeyword = (word) => {
-      form.value.keyword.push(word);
-      keyword.value = null;
-    };
+      const keyword = ref(null);
+      const addKeyword = word => {
+        form.value.keyword.push(word);
+        keyword.value = null;
+      };
 
-    const resize = inject("resize");
-    // 이미지 업로드 후 url 불러오기
-    const uploadProfile = async (e, path) => {
-      const file = e.target.files[0];
-      if (!file) return;
-      // 초기화
-      // const oldURL = path ? form.value.profileHovered : form.value.profile;
-      // if (oldURL) {
-      //   storageAPI.deleteImage(`profile/${oldURL}`);
-      // }
-      // pending 시작
-      if (path) {
-        form.value.profileHovered = null;
-        pending.value.profileHovered = true;
-      } else {
-        form.value.profile = null;
-        pending.value.profile = true;
-      }
+      const resize = inject('resize');
+      // 이미지 업로드 후 url 불러오기
+      const uploadProfile = async (e, path) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        // 초기화
+        // const oldURL = path ? form.value.profileHovered : form.value.profile;
+        // if (oldURL) {
+        //   storageAPI.deleteImage(`profile/${oldURL}`);
+        // }
+        // pending 시작
+        if (path) {
+          form.value.profileHovered = null;
+          pending.value.profileHovered = true;
+        } else {
+          form.value.profile = null;
+          pending.value.profile = true;
+        }
 
-      const type = file?.type.split("/").at(-1);
-      const fileName = `profile_${new Date().valueOf()}.${type}`;
-      // gif 이미지 업로드
-      if (type === "gif") {
-        try {
-          const { name, url } = await storageAPI.getImageURL(file, "gif", "profile/gif/", fileName);
-          if (name && url) {
-            if (path) {
-              form.value.profileHovered = url;
-              pending.value.profileHovered = false;
-            } else {
-              form.value.profile = url;
-              pending.value.profile = false;
+        const type = file?.type.split('/').at(-1);
+        const fileName = `profile_${new Date().valueOf()}.${type}`;
+        // gif 이미지 업로드
+        if (type === 'gif') {
+          try {
+            const {name, url} = await storageAPI.getImageURL(
+              file,
+              'gif',
+              'profile/gif/',
+              fileName,
+            );
+            if (name && url) {
+              if (path) {
+                form.value.profileHovered = url;
+                pending.value.profileHovered = false;
+              } else {
+                form.value.profile = url;
+                pending.value.profile = false;
+              }
             }
+          } catch (error) {
+            window.toast('파일업로드 실패');
+            pending.value.profileHovered = false;
+            pending.value.profile = false;
+          }
+        } else {
+          // gif 이미지가 아닌 경우 파일 업로드
+          // 가로 1000으로 리사이징하여 url 적용함
+          resize.photo('w', file, 1000, 'object', async result => {
+            const {name, url} = await storageAPI.getImageURL(
+              result.blob,
+              result.blob.type,
+              'profile',
+              fileName,
+            );
+            if (name && url) {
+              if (path) {
+                form.value.profileHovered = url;
+                pending.value.profileHovered = false;
+              } else {
+                form.value.profile = url;
+                pending.value.profile = false;
+              }
+            }
+          });
+        }
+      };
+
+      // 수정 불러오기
+      const id = computed(() => {
+        return route?.query?.id;
+      });
+      const init = async (documentName, id) => {
+        pending.value.init = true;
+        try {
+          const data = await boardAPI.getBoard(documentName, id);
+          if (data) {
+            // ref를 찾은 뒤에 form에 적용함
+            form.value = {
+              ...data,
+            };
           }
         } catch (error) {
-          window.toast("파일업로드 실패");
-          pending.value.profileHovered = false;
-          pending.value.profile = false;
+          window.toast('잘못된 접근입니다');
+          console.error('error:', error);
+          router.push('/admin/member');
         }
-      } else {
-        // gif 이미지가 아닌 경우 파일 업로드
-        // 가로 1000으로 리사이징하여 url 적용함
-        resize.photo("w", file, 1000, "object", async (result) => {
-          const { name, url } = await storageAPI.getImageURL(
-            result.blob,
-            result.blob.type,
-            "profile",
-            fileName
-          );
-          if (name && url) {
-            if (path) {
-              form.value.profileHovered = url;
-              pending.value.profileHovered = false;
-            } else {
-              form.value.profile = url;
-              pending.value.profile = false;
-            }
-          }
-        });
-      }
-    };
-
-    // 수정 불러오기
-    const id = computed(() => {
-      return route?.query?.id;
-    });
-    const init = async (documentName, id) => {
-      pending.value.init = true;
-      try {
-        const data = await boardAPI.getBoard(documentName, id);
-        if (data) {
-          // ref를 찾은 뒤에 form에 적용함
-          form.value = {
-            ...data,
-          };
+        pending.value.init = false;
+      };
+      onMounted(() => {
+        form.value.no = route?.query?.no;
+        if (id.value) {
+          init('member', id.value);
         }
-      } catch (error) {
-        window.toast("잘못된 접근입니다");
-        console.error("error:", error);
-        router.push("/admin/member");
-      }
-      pending.value.init = false;
-    };
-    onMounted(() => {
-      form.value.no = route?.query?.no;
-      if (id.value) {
-        init("member", id.value);
-      }
 
-      // for (let index = 0; index < allMembers.length; index++) {
-      //   const element = allMembers[index];
-      //   context.emit("submit", element);
-      // }
-    });
+        // for (let index = 0; index < allMembers.length; index++) {
+        //   const element = allMembers[index];
+        //   context.emit("submit", element);
+        // }
+      });
 
-    return {
-      form,
-      keyword,
-      addKeyword,
-      uploadProfile,
-      pending,
-    };
-  },
-};
+      return {
+        form,
+        keyword,
+        addKeyword,
+        uploadProfile,
+        pending,
+      };
+    },
+  };
 </script>
 
 <style lang="scss" scoped></style>
