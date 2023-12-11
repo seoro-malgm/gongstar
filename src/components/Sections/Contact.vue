@@ -12,20 +12,22 @@
     </div> -->
     <div class="my-5">
       <div class="">
-        <router-link
-          to="/contact"
+        <!-- to="/contact" -->
+        <a
+          :href="infos.notionContact"
+          target="_blank"
           class="btn btn-contact text-20 text-md-24 fw-700 rounded-pill p-0"
         >
-          <span class="btn-text"> 프로젝트 의뢰하기</span>
+          <span class="btn-text"> 프로젝트 의뢰하기 </span>
           <i class="icon icon-arr-right"></i>
-        </router-link>
+        </a>
       </div>
     </div>
   </section>
 </template>
 
 <script setup>
-import { ref, watch } from "vue";
+import { ref, computed, watch } from "vue";
 import { useIntersectionObserver } from "@vueuse/core";
 // import SectionLogoRotate from "@/components/Sections/LogoRotate.vue";
 
@@ -47,6 +49,11 @@ watch(
     }
   }
 );
+import { useStore } from "vuex";
+const store = useStore();
+const infos = computed(() => {
+  return store.getters["auth/getInfos"];
+});
 </script>
 
 <style lang="scss" scoped>

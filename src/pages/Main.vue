@@ -29,13 +29,13 @@
 <script setup>
 import { ref } from "vue";
 import SectionIntro from "@/components/Sections/Intro.vue";
-// import SectionMilkyWay from '@/components/Sections/MilkyWay.vue';
-// import SectionSolutions from '@/components/Sections/Solutions.vue';
-// import SectionStarship from '@/components/Sections/Starship.vue';
-// old sections
-import SectionServices from "@/components/Sections/Services.vue";
-import SectionPartners from "@/components/Sections/Partners.vue";
+import SectionMilkyWay from "@/components/Sections/MilkyWay.vue";
+import SectionSolutions from "@/components/Sections/Solutions.vue";
+import SectionStarship from "@/components/Sections/Starship.vue";
 import SectionContact from "@/components/Sections/Contact.vue";
+// old sections
+// import SectionServices from "@/components/Sections/Services.vue";
+import SectionPartners from "@/components/Sections/Partners.vue";
 import { useIntersectionObserver, useIntervalFn } from "@vueuse/core";
 
 const [intro, milkyWay, solutions, starship, contact] = [
@@ -80,25 +80,21 @@ const sections = [
     component: SectionIntro
   },
   {
-    name: "services",
-    component: SectionServices
+    name: "milkyWay",
+    component: SectionMilkyWay
+  },
+  {
+    name: "solutions",
+    component: SectionSolutions
+  },
+  {
+    name: "starship",
+    component: SectionStarship
   },
   {
     name: "partners",
     component: SectionPartners
   },
-  // {
-  //   name: "milkyWay",
-  //   component: SectionMilkyWay,
-  // },
-  // {
-  //   name: "solutions",
-  //   component: SectionSolutions,
-  // },
-  // {
-  //   name: "starship",
-  //   component: SectionStarship,
-  // },
   {
     name: "contact",
     component: SectionContact

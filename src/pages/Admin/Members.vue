@@ -8,7 +8,7 @@
           $router.push({
             name: 'AdminWrite',
             query: {
-              type: 'insights',
+              type: 'members',
               no: items?.length ? +items[0].no + 1 : null
             }
           })
@@ -23,8 +23,9 @@
         <template v-if="items !== null && items?.length">
           <li class="row mb-2 bg-gray-2 text-white py-2 d-none d-md-flex">
             <div class="col-1">번호</div>
-            <div class="col-2">이미지</div>
-            <div class="col-7">정보</div>
+            <div class="col-2">프로필</div>
+            <div class="col-2">직책</div>
+            <div class="col-5">스킬</div>
             <div class="col-2 text-right">관리</div>
           </li>
           <li
@@ -37,21 +38,28 @@
             </div>
             <div class="col-11 col-md-2">
               <div
-                class="bg-img ratio-53"
+                class="bg-img ratio-100"
                 :style="{
-                  background: item?.thumbnail
-                    ? `url(${item.thumbnail})`
+                  background: item?.profile
+                    ? `url(${item.profile})`
                     : '#999999',
                   backgroundSize: 'contain',
                   backgroundRepeat: 'no-repeat'
                 }"
               ></div>
             </div>
-            <div class="col-12 col-md-7">
-              <h6 class="text-truncate">{{ item.title }}</h6>
-              <ul class="p-0 m-0 text-gray-2 text-13 text-truncate">
-                <li>{{ item.subtitle }}</li>
-                <li>{{ item.client }}</li>
+            <div class="col-12 col-md-2">
+              <h6 class="text-truncate">{{ item.duty }}</h6>
+            </div>
+            <div class="col-12 col-md-5">
+              <ul class="d-inline-flex">
+                <li v-for="(skill, i) in item.skill" class="px-1">
+                  <span
+                    class="d-block border rounded-pill px-3 py-1 border-black text-14"
+                  >
+                    {{ skill }}
+                  </span>
+                </li>
               </ul>
             </div>
             <div class="col-12 col-md-2">
@@ -62,7 +70,7 @@
                     $router.push({
                       name: 'AdminWrite',
                       query: {
-                        type: 'insights',
+                        type: 'members',
                         id: item.id
                       }
                     })
@@ -72,7 +80,7 @@
                 </button>
                 <button
                   class="btn btn-error"
-                  @click="removeItem('insights', item.id)"
+                  @click="removeItem('members', item.id)"
                 >
                   삭제
                 </button>
@@ -85,7 +93,7 @@
             <template v-if="!items">
               <div class="spinner-border" role="status" />
             </template>
-            <template v-else> 업로드된 인사이트 데이터가 없습니다. </template>
+            <template v-else> 업로드된 멤버 데이터가 없습니다. </template>
           </li>
         </template>
       </ul>
@@ -102,7 +110,7 @@ export default {
 
     const items = ref(null);
     const getItems = async () => {
-      const data = await boardAPI.getAllBoards("insights");
+      const data = await boardAPI.getAllBoards("members");
       if (data?.length) {
         function compareNumbers(a, b) {
           if (b?.no && a?.no) {

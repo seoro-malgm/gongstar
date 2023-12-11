@@ -3,14 +3,15 @@
     <div class="container">
       <div class="dummy-section">
         <div class="lettertype">
-          <img :src="getURL('/assets/lettertype.svg')" alt="" />
+          <img :src="getURL('/assets/lettertype-white.svg')" alt="" />
         </div>
         <header class="section-title">
           <h1 class="text-40 text-md-56 text-lg-80 mix-dif fw-800 mt-4 mt-lg-0">
-            로컬의 체인지 메이커
-            <!-- <div class="names">체인지 메이커</div> -->
+            로컬의 [
+            <!-- <div class="names">{{ names }}, {{ index }}</div> -->
+            ]
           </h1>
-          <p class="text-14 text-md-15">
+          <p class="text-14 text-md-18">
             본 회사는 온라인 플랫폼 개발 및 온라인 인프라 구축을 통해 <br />
             도시재생을 장려하고 혁신적인 사회서비스를 제공하여 <br />
             지역사회에 공헌함을 목적으로 합니다.
@@ -39,106 +40,129 @@
 </template>
 
 <script setup>
-  import {inject, computed, ref, watch} from 'vue';
-  import SectionLogoRotate from '@/components/Sections/LogoRotate.vue';
-  import {useIntersectionObserver, useIntervalFn} from '@vueuse/core';
-  import {useStore} from 'vuex';
-  const getURL = inject('getImageURL');
+import { inject, computed, ref, watch, onMounted } from "vue";
+import SectionLogoRotate from "@/components/Sections/LogoRotate.vue";
+import { useIntersectionObserver, useIntervalFn } from "@vueuse/core";
+import { useStore } from "vuex";
+const getURL = inject("getImageURL");
 
-  const store = useStore();
-  const infos = computed(() => {
-    return store.getters['auth/getInfos'];
-  });
+const store = useStore();
+const infos = computed(() => {
+  return store.getters["auth/getInfos"];
+});
 
-  const target = ref(null);
-  const targetIsVisible = ref(false);
-  const emit = defineEmits(['sectionChange']);
-  const {stop} = useIntersectionObserver(
-    target,
-    ([{isIntersecting}], observerElement) => {
-      targetIsVisible.value = isIntersecting;
-    },
-  );
-  watch(
-    () => targetIsVisible.value,
-    n => {
-      if (n) {
-        emit('sectionChange');
-      }
-    },
-  );
+const target = ref(null);
+const targetIsVisible = ref(false);
+const emit = defineEmits(["sectionChange"]);
+const { stop } = useIntersectionObserver(
+  target,
+  ([{ isIntersecting }], observerElement) => {
+    targetIsVisible.value = isIntersecting;
+  }
+);
+
+watch(
+  () => targetIsVisible.value,
+  n => {
+    if (n) {
+      emit("sectionChange");
+    }
+  }
+);
+// todos
+// const names = ref(["체인지에미커", "억", "윽"]);
+// const name = computed(() => {
+//   return names[index];
+// });
+// let index = 0;
+// let nameInterval = null;
+// onMounted(() => {
+//   setInterval(() => {
+//     if (index >= names?.length) {
+//       index = 0;
+//     }
+//     index++;
+//   }, 4000);
+// });
 </script>
 
 <style lang="scss" scoped>
-  #intro {
-    padding-top: 120px;
-  }
-  .dummy-section {
-    width: 100%;
-    height: calc(100vh - 200px);
-    margin-bottom: 132px;
-    z-index: 2;
-    @media (min-width: $breakpoint-md) {
-      margin-bottom: 88px;
-      height: calc(100vh - 88px);
-    }
-    // 대제목
-    .section-title {
-      color: white;
-      // position: absolute;
-      // bottom: 16vh;
-      // left: 50%;
-      // transform: translateX(-50%);
-      text-align: left;
-      // z-index: 10;
-      mix-blend-mode: difference;
-    }
+#intro {
+  // padding-top: 120px;
+}
 
-    .scroll-down {
-      position: absolute;
-      bottom: 1.5rem;
-      left: 50%;
-      transform: translateX(-50%);
-      text-align: center;
-      z-index: 10;
+.dummy-section {
+  width: 100%;
+  height: calc(100vh - 200px);
+  margin-bottom: 132px;
+  z-index: 2;
+  @media (min-width: $breakpoint-md) {
+    margin-bottom: 88px;
+    height: calc(100vh - 88px);
+  }
+  .lettertype {
+    mix-blend-mode: difference;
+  }
+  // 대제목
+  .section-title {
+    color: white;
+    // position: absolute;
+    // bottom: 16vh;
+    // left: 50%;
+    // transform: translateX(-50%);
+    text-align: left;
+    // z-index: 10;
+    mix-blend-mode: difference;
+    h1 {
+      display: inline-flex;
     }
   }
 
-  @keyframes updown {
-    0% {
-      transform: translateY(-8px);
-    }
-    100% {
-      transform: translateY(16px);
-    }
-  }
-
-  .section-main {
-    width: 100%;
-    height: calc(100vh - 200px);
-    top: 96px;
-    left: 0;
-    z-index: -1;
-    @media (min-width: $breakpoint-md) {
-      top: 48px;
-      height: calc(100vh - 140px);
-    }
-    // position: relative;
+  .scroll-down {
     position: absolute;
+    bottom: 1.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    z-index: 10;
   }
+}
 
-  .icon.icon-arr-bottom {
-    animation-name: updown;
-    animation-timing-function: cubic-bezier(0.6, 0, 0.735, 0.045);
-    animation-duration: 0.8s;
-    animation-fill-mode: forwards;
-    animation-direction: alternate;
-    animation-iteration-count: infinite;
+@keyframes updown {
+  0% {
+    transform: translateY(-8px);
   }
+  100% {
+    transform: translateY(16px);
+  }
+}
 
-  .floating-btn {
-    position: absolute;
-    bottom: 1rem;
-    right: 1rem;
+.section-main {
+  width: 100%;
+  height: calc(100vh - 200px);
+  top: 96px;
+  left: 0;
+  z-index: -1;
+  @media (min-width: $breakpoint-md) {
+    top: 48px;
+    height: calc(100vh - 140px);
   }
+  // position: relative;
+  position: absolute;
+}
+
+.icon.icon-arr-bottom {
+  animation-name: updown;
+  animation-timing-function: cubic-bezier(0.6, 0, 0.735, 0.045);
+  animation-duration: 0.8s;
+  animation-fill-mode: forwards;
+  animation-direction: alternate;
+  animation-iteration-count: infinite;
+}
+
+.floating-btn {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+}
 </style>
