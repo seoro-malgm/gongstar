@@ -12,15 +12,13 @@
     </div> -->
     <div class="my-5">
       <div class="">
-        <!-- to="/contact" -->
-        <a
-          :href="infos.notionContact"
-          target="_blank"
+        <router-link
+          to="/contact"
           class="btn btn-contact text-20 text-md-24 fw-700 rounded-pill p-0"
         >
           <span class="btn-text"> 프로젝트 의뢰하기 </span>
           <i class="icon icon-arr-right"></i>
-        </a>
+        </router-link>
       </div>
     </div>
   </section>
