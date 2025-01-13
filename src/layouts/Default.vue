@@ -28,6 +28,11 @@ const links = computed(() => {
       icon: "folder-open-empty"
     },
     {
+      name: "insights",
+      url: "/insights",
+      description: "인사이트"
+    },
+    {
       name: "Contact",
       // href: infos.value.notionContact,
       url: "/contact",
@@ -39,11 +44,7 @@ const links = computed(() => {
     //   url: "/career",
     //   description: "채용 및 영입 문의",
     // },
-    // {
-    //   name: "insights",
-    //   url: "/insights",
-    //   description: "인사이트",
-    // },
+
     // {
     //   name: "contact",
     //   url: "/contact",

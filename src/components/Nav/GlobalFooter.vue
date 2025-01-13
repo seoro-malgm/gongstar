@@ -64,7 +64,7 @@
                   </a>
                 </li>
               </ul>
-              <div class="mt-2 mt-md-0" v-if="infos?.infoDocument">
+              <!-- <div class="mt-2 mt-md-0" v-if="infos?.infoDocument">
                 <a
                   :href="infos.infoDocument"
                   target="_blank"
@@ -72,7 +72,7 @@
                 >
                   공스타 회사소개서 다운로드
                 </a>
-              </div>
+              </div> -->
             </div>
           </div>
         </div>
@@ -82,32 +82,32 @@
 </template>
 
 <script>
-  import {ref, inject, computed} from 'vue';
-  import {useStore} from 'vuex';
-  export default {
-    setup() {
-      const getURL = inject('getImageURL');
-      const copyText = inject('copyText');
-      // 정보
-      const store = useStore();
-      const infos = computed(() => {
-        return store.getters['auth/getInfos'];
-      });
-      return {getURL, copyText, infos};
-    },
-  };
+import { ref, inject, computed } from "vue";
+import { useStore } from "vuex";
+export default {
+  setup() {
+    const getURL = inject("getImageURL");
+    const copyText = inject("copyText");
+    // 정보
+    const store = useStore();
+    const infos = computed(() => {
+      return store.getters["auth/getInfos"];
+    });
+    return { getURL, copyText, infos };
+  }
+};
 </script>
 
 <style lang="scss" scoped>
-  #global-footer {
-    font-size: 16px;
-    padding: 2rem 0.5rem;
-    .title {
-      padding: 8px 0;
-      border-bottom: 1px solid $gray-1;
-      h4 {
-        color: $gray-1;
-      }
+#global-footer {
+  font-size: 16px;
+  padding: 2rem 0.5rem;
+  .title {
+    padding: 8px 0;
+    border-bottom: 1px solid $gray-1;
+    h4 {
+      color: $gray-1;
     }
   }
+}
 </style>

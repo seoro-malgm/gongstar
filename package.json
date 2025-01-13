@@ -13,10 +13,10 @@
     "@popperjs/core": "^2.11.6",
     "@vueup/vue-quill": "^1.1.0",
     "@vueuse/core": "^10.6.1",
-    "bootstrap": "^5.2.3",
+    "bootstrap": "5.3.1",
     "firebase": "^9.17.1",
+    "quill": "^2.0.3",
     "quill-image-uploader": "^1.2.4",
-    "sass": "^1.57.1",
     "three": "^0.151.3",
     "three-svg-loader": "^0.3.1",
     "vue": "^3.2.45",
@@ -32,6 +32,7 @@
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-prettier": "^5.0.1",
     "prettier": "^3.1.0",
+    "sass": "~1.64.2",
     "vite": "^4.0.0"
   }
 }

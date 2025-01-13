@@ -1,5 +1,5 @@
 <template>
-  <section id="services" class="section section-gap mt-5">
+  <section id="solutions" class="section section-gap mt-5">
     <header class="container-fluid py-4">
       <h1 class="section-title text-center">공스타의 서비스</h1>
     </header>

@@ -2,7 +2,7 @@
   <div>
     <div class="row">
       <!-- 정보 영역 -->
-      <div class="col-12 col-lg-5">
+      <div class="col-12 col-lg-5 print-none">
         <article class="py-3">
           <div class="my-3">
             <div class="mb-3">
@@ -270,7 +270,7 @@
               <li>
                 <div class="form-check form-switch">
                   <label class="form-check-label" for="addVAT">
-                    {{ formOptions?.addVAT ? 'VAT 추가' : 'VAT 추가 안함' }}
+                    {{ formOptions?.addVAT ? "VAT 추가" : "VAT 추가 안함" }}
                   </label>
                   <input
                     class="form-check-input"
@@ -410,9 +410,9 @@
         <paper-contact :form="form" :formOptions="formOptions" />
 
         <!-- 유틸 영역 -->
-        <div class="my-3">
+        <div class="my-3 print-none">
           <div class="d-flex justify-content-end">
-            <button class="btn btn-outline-gray-1 me-2" @click="print()">
+            <button class="btn btn-outline-gray-1 me-2" @click="printPage">
               인쇄
             </button>
             <button
@@ -420,7 +420,7 @@
               @click="
                 $emit(id ? 'update' : 'submit', {
                   ...form,
-                  lastUpdated: new Date().toLocaleString(),
+                  lastUpdated: new Date().toLocaleString()
                 })
               "
             >
@@ -434,139 +434,149 @@
 </template>
 
 <script>
-  import {ref, computed, inject, onMounted} from 'vue';
-  import {useRoute, useRouter} from 'vue-router';
-  import PaperContact from '@/components/Paper/Contact.vue';
+import { ref, computed, inject, onMounted } from "vue";
+import { useRoute, useRouter } from "vue-router";
+import PaperContact from "@/components/Paper/Contact.vue";
 
-  export default {
-    props: {
-      id: {
-        type: String,
-        default: null,
-      },
-    },
-    components: {
-      PaperContact,
-    },
-    setup() {
-      const {boardAPI} = inject('firebase');
-      const router = useRouter();
-      const route = useRoute();
-      const showPreview = ref(false);
+export default {
+  props: {
+    id: {
+      type: String,
+      default: null
+    }
+  },
+  components: {
+    PaperContact
+  },
+  setup() {
+    const { boardAPI } = inject("firebase");
+    const router = useRouter();
+    const route = useRoute();
+    const showPreview = ref(false);
 
-      // 폼
-      const form = ref({
-        no: '',
-        date: null,
-        agree: true,
-        period: null,
-        desc: '',
-        periodType: 'm',
-        email: '',
-        file: null,
-        companyName: null,
-        companyBoss: null,
-        licenseNumber: null,
-        address: null,
-        servicesCategory: null,
-        servicesType: null,
-        name: null,
-        phone: null,
-        price: null,
-        title: null,
-        items: [],
-        type: [],
-        url: null,
-        addText: null,
-      });
+    // 폼
+    const form = ref({
+      no: "",
+      date: null,
+      agree: true,
+      period: null,
+      desc: "",
+      periodType: "m",
+      email: "",
+      file: null,
+      companyName: null,
+      companyBoss: null,
+      licenseNumber: null,
+      address: null,
+      servicesCategory: null,
+      servicesType: null,
+      name: null,
+      phone: null,
+      price: null,
+      title: null,
+      items: [],
+      type: [],
+      url: null,
+      addText: null
+    });
 
-      const input = ref({
-        type: null,
-      });
-      const addInput = (type, value, isArray) => {
-        if (value && value !== '') {
-          // if (isArray) {
-          console.log('type.value:', type.value);
-          form.value[type].push(value);
-          input.value[type] = null;
-          // } else {
-          // ...
-          // }
+    const input = ref({
+      type: null
+    });
+    const addInput = (type, value, isArray) => {
+      if (value && value !== "") {
+        // if (isArray) {
+        console.log("type.value:", type.value);
+        form.value[type].push(value);
+        input.value[type] = null;
+        // } else {
+        // ...
+        // }
+      }
+    };
+
+    const formOptions = ref({ addVAT: true });
+
+    // 대기
+    const pending = ref({
+      submit: false
+    });
+
+    // 수정 불러오기
+    const id = computed(() => {
+      return route?.query?.id;
+    });
+    const init = async (documentName, id) => {
+      pending.value.init = true;
+      try {
+        const data = await boardAPI.getBoardById(documentName, id);
+        if (data) {
+          // ref를 찾은 뒤에 form에 적용함
+          form.value = {
+            agree: true,
+            period: null,
+            date: null,
+            desc: "",
+            periodType: "m",
+            email: "",
+            file: null,
+            companyName: null,
+            companyBoss: null,
+            licenseNumber: null,
+            address: null,
+            servicesCategory: null,
+            servicesType: null,
+            name: null,
+            phone: null,
+            price: null,
+            title: null,
+            items: [],
+            type: [],
+            url: null,
+            ...data
+          };
         }
-      };
+      } catch (error) {
+        window.toast("잘못된 접근입니다");
+        console.error("error:", error);
+        router.push("/admin/contact");
+      }
+      pending.value.init = false;
+    };
 
-      const formOptions = ref({addVAT: true});
+    // 아이디가 있는 경우 init
+    onMounted(() => {
+      if (id.value) {
+        init("contact", id.value);
+      }
+    });
 
-      // 대기
-      const pending = ref({
-        submit: false,
-      });
+    // 인쇄버튼
+    const printPage = () => {
+      window.print();
+    };
 
-      // 수정 불러오기
-      const id = computed(() => {
-        return route?.query?.id;
-      });
-      const init = async (documentName, id) => {
-        pending.value.init = true;
-        try {
-          const data = await boardAPI.getBoardById(documentName, id);
-          if (data) {
-            // ref를 찾은 뒤에 form에 적용함
-            form.value = {
-              agree: true,
-              period: null,
-              date: null,
-              desc: '',
-              periodType: 'm',
-              email: '',
-              file: null,
-              companyName: null,
-              companyBoss: null,
-              licenseNumber: null,
-              address: null,
-              servicesCategory: null,
-              servicesType: null,
-              name: null,
-              phone: null,
-              price: null,
-              title: null,
-              items: [],
-              type: [],
-              url: null,
-              ...data,
-            };
-          }
-        } catch (error) {
-          window.toast('잘못된 접근입니다');
-          console.error('error:', error);
-          router.push('/admin/contact');
-        }
-        pending.value.init = false;
-      };
-
-      // 아이디가 있는 경우 init
-      onMounted(() => {
-        if (id.value) {
-          init('contact', id.value);
-        }
-      });
-
-      // 인쇄버튼
-      const print = () => {
-        window.print();
-      };
-
-      return {
-        form,
-        input,
-        addInput,
-        formOptions,
-        showPreview,
-        pending,
-        print,
-      };
-    },
-  };
+    return {
+      form,
+      input,
+      addInput,
+      formOptions,
+      showPreview,
+      pending,
+      printPage
+    };
+  }
+};
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.print-none {
+  @media print {
+    display: none;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+    visibility: hidden;
+  }
+}
+</style>

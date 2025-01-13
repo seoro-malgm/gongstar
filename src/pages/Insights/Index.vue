@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid min-vh-100 section-gap mt-5">
+  <div class="container min-vh-100 section-gap mt-5">
     <header class="my-3 mt-md-5 mb-4">
       <h1 class="page-title text-center">INSIGHTS</h1>
     </header>
@@ -8,10 +8,10 @@
         <li class="list-item">
           <button
             class="btn btn-outline-gray-1 btn-category"
-            :class="{active: !categorySelected}"
+            :class="{ active: !categorySelected }"
             @click="
               $router.push({
-                name: 'InsightsList',
+                name: 'InsightsList'
               })
             "
           >
@@ -21,13 +21,13 @@
         <li class="list-item" v-for="(category, i) in categories" :key="i">
           <button
             class="btn btn-outline-gray-1 btn-category"
-            :class="{active: categorySelected === category.value}"
+            :class="{ active: categorySelected === category.value }"
             @click="
               $router.push({
                 name: 'InsightsList',
                 query: {
-                  category: category.value,
-                },
+                  category: category.value
+                }
               })
             "
           >
@@ -46,8 +46,8 @@
                 :to="{
                   name: 'InsightsDetail',
                   params: {
-                    id: item.no,
-                  },
+                    id: item.no
+                  }
                 }"
               >
                 {{ item.title }}
@@ -59,10 +59,10 @@
               :style="
                 item?.thumbnail
                   ? {
-                      backgroundImage: `url(${item.thumbnail})`,
+                      backgroundImage: `url(${item.thumbnail})`
                     }
                   : {
-                      backgroundColor: '#ededed',
+                      backgroundColor: '#ededed'
                     }
               "
             />
@@ -72,8 +72,8 @@
                 $router.push({
                   name: 'InsightsDetail',
                   params: {
-                    id: item.no,
-                  },
+                    id: item.no
+                  }
                 })
               "
             >
@@ -100,167 +100,167 @@
   </div>
 </template>
 <script>
-  import {ref, inject, computed, onMounted, watch} from 'vue';
-  import {useStore} from 'vuex';
-  import {useRoute} from 'vue-router';
+import { ref, inject, computed, onMounted, watch } from "vue";
+import { useStore } from "vuex";
+import { useRoute } from "vue-router";
 
-  export default {
-    setup() {
-      const getURL = inject('getImageURL');
-      const store = useStore();
-      const {boardAPI} = inject('firebase');
+export default {
+  setup() {
+    const getURL = inject("getImageURL");
+    const store = useStore();
+    const { boardAPI } = inject("firebase");
 
-      // 목록
-      const items = ref(null);
-      const getItems = async category => {
-        try {
-          const data = await boardAPI.getAllBoards('insights', {
-            category,
-            visible: true,
-          });
-          if (data?.length) {
-            function compareNumbers(a, b) {
-              if (b?.no && a?.no) {
-                return +b?.no - +a?.no;
-              } else return 0;
-            }
-            items.value = data.sort(compareNumbers);
-          } else items.value = [];
-        } catch (error) {
-          items.value = null;
-        }
-      };
+    // 목록
+    const items = ref(null);
+    const getItems = async category => {
+      try {
+        const data = await boardAPI.getAllBoards("insights", {
+          category,
+          visible: true
+        });
+        if (data?.length) {
+          function compareNumbers(a, b) {
+            if (b?.no && a?.no) {
+              return +b?.no - +a?.no;
+            } else return 0;
+          }
+          items.value = data.sort(compareNumbers);
+        } else items.value = [];
+      } catch (error) {
+        items.value = null;
+      }
+    };
 
-      const route = useRoute();
-      // 현재 카테고리
-      const categorySelected = computed(() => {
-        return route?.query?.category;
-      });
-      // 카테고리 목록
-      const categories = computed(() => {
-        const list = store.getters['categories/getCategoryInsights'];
-        return list?.length ? list.filter(i => i.value !== null) : [];
-      });
+    const route = useRoute();
+    // 현재 카테고리
+    const categorySelected = computed(() => {
+      return route?.query?.category;
+    });
+    // 카테고리 목록
+    const categories = computed(() => {
+      const list = store.getters["categories/getCategoryInsights"];
+      return list?.length ? list.filter(i => i.value !== null) : [];
+    });
 
-      onMounted(() => {
-        getItems(categorySelected.value);
-      });
+    onMounted(() => {
+      getItems(categorySelected.value);
+    });
 
-      watch(
-        () => categorySelected.value,
-        n => {
-          items.value = [];
-          getItems(n);
-        },
-      );
+    watch(
+      () => categorySelected.value,
+      n => {
+        items.value = [];
+        getItems(n);
+      }
+    );
 
-      return {getURL, items, categorySelected, categories};
-    },
-  };
+    return { getURL, items, categorySelected, categories };
+  }
+};
 </script>
 <style lang="scss" scoped>
-  // 필터링
-  .section-category {
-    margin-bottom: 1rem;
-    padding: 1rem 1rem 0.5rem;
-    border-top: 1px solid $gray-2;
-    border-bottom: 1px solid $gray-2;
+// 필터링
+.section-category {
+  margin-bottom: 1rem;
+  padding: 1rem 1rem 0.5rem;
+  border-top: 1px solid $gray-2;
+  border-bottom: 1px solid $gray-2;
 
-    .list-category {
-      display: inline-flex;
-      flex-wrap: wrap;
-      align-items: center;
-      .list-item {
-        margin: 0 12px 12px 0;
-        .btn-category {
-          &.active {
-            background-color: $gray-1;
-            border-color: $gray-1;
+  .list-category {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: center;
+    .list-item {
+      margin: 0 12px 12px 0;
+      .btn-category {
+        &.active {
+          background-color: $gray-1;
+          border-color: $gray-1;
+        }
+      }
+    }
+  }
+}
+
+// 목록
+.list-insights {
+  @media (max-width: $breakpoint-lg) {
+    display: flex;
+    flex-direction: column;
+    .list-item {
+      flex: 100% 0 0;
+      max-width: 100%;
+      padding: 1rem;
+      .item-insights {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        .item-thumbnail {
+          order: 0;
+          width: 100%;
+          padding-bottom: 100%;
+          background-position: center center;
+          background-size: contain;
+          background-repeat: no-repeat;
+        }
+        .header-insights {
+          order: 1;
+          max-width: 100%;
+          width: 100%;
+          padding: 8px 0;
+          border-bottom: 1px solid $gray-1;
+          .btn {
+            padding: 0;
+            font-weight: 700;
           }
         }
       }
     }
   }
+  @media (min-width: $breakpoint-lg) {
+    padding-bottom: 40px;
+    .list-item {
+      margin-bottom: 24px;
+      padding: 0.75rem 0.5rem;
+      border-bottom: 1px solid $gray-2;
+      position: relative;
+      .item-insights {
+        .header-insights {
+        }
 
-  // 목록
-  .list-insights {
-    @media (max-width: $breakpoint-lg) {
-      display: flex;
-      flex-direction: column;
-      .list-item {
-        flex: 100% 0 0;
-        max-width: 100%;
-        padding: 1rem;
-        .item-insights {
-          display: flex;
-          flex-direction: column;
-          align-items: flex-start;
-          .item-thumbnail {
-            order: 0;
-            width: 100%;
-            padding-bottom: 100%;
-            background-position: center center;
-            background-size: contain;
-            background-repeat: no-repeat;
-          }
+        .item-thumbnail {
+          transform: translateY(-50%) scale(0.2);
+          transition: transform 0.4s $default-ease;
+          user-select: none;
+          background-position: center center;
+          background-repeat: no-repeat;
+          background-size: contain;
+        }
+
+        &:hover {
           .header-insights {
-            order: 1;
-            max-width: 100%;
-            width: 100%;
-            padding: 8px 0;
-            border-bottom: 1px solid $gray-1;
             .btn {
-              padding: 0;
               font-weight: 700;
             }
           }
-        }
-      }
-    }
-    @media (min-width: $breakpoint-lg) {
-      padding-bottom: 40px;
-      .list-item {
-        margin-bottom: 24px;
-        padding: 0.75rem 0.5rem;
-        border-bottom: 1px solid $gray-2;
-        position: relative;
-        .item-insights {
-          .header-insights {
-          }
-
           .item-thumbnail {
-            transform: translateY(-50%) scale(0.2);
-            transition: transform 0.4s $default-ease;
-            user-select: none;
-            background-position: center center;
-            background-repeat: no-repeat;
-            background-size: contain;
-          }
-
-          &:hover {
-            .header-insights {
-              .btn {
-                font-weight: 700;
-              }
+            position: absolute;
+            top: 50%;
+            right: 8vw;
+            width: 420px;
+            padding-bottom: 420px;
+            z-index: -1;
+            @media (max-width: $breakpoint-md) {
+              width: 400px;
+              max-width: 45vw;
+              padding-bottom: 45vw;
+              right: 3vw;
             }
-            .item-thumbnail {
-              position: absolute;
-              top: 50%;
-              right: 8vw;
-              width: 420px;
-              padding-bottom: 420px;
-              z-index: -1;
-              @media (max-width: $breakpoint-md) {
-                width: 400px;
-                max-width: 45vw;
-                padding-bottom: 45vw;
-                right: 3vw;
-              }
-              transform: translateY(-50%) scale(1);
-            }
+            transform: translateY(-50%) scale(1);
           }
         }
       }
     }
   }
+}
 </style>

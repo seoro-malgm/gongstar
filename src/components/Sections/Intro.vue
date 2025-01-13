@@ -6,15 +6,17 @@
           <img :src="getURL('/assets/lettertype-white.svg')" alt="" />
         </div>
         <header class="section-title">
-          <h1 class="text-40 text-md-56 text-lg-80 mix-dif fw-800 mt-4 mt-lg-0">
-            로컬의 [
+          <h1
+            class="text-36 text-md-56 text-lg-80 mix-dif fw-800 mt-4 mt-lg-0 text-nowrap"
+          >
+            로컬의 [ 체인지메이커 ]
             <!-- <div class="names">{{ names }}, {{ index }}</div> -->
-            ]
           </h1>
           <p class="text-14 text-md-18">
-            본 회사는 온라인 플랫폼 개발 및 온라인 인프라 구축을 통해 <br />
-            도시재생을 장려하고 혁신적인 사회서비스를 제공하여 <br />
-            지역사회에 공헌함을 목적으로 합니다.
+            우리는 지역에서 새로운 기준을 만들어갑니다. <br />
+            온·오프라인 인프라를 구축하며, <br />
+            혁신적인 사회 서비스를 통해 <br />
+            지역사회에 특별한 가치를 제공합니다.
           </p>
         </header>
         <div class="scroll-down">
@@ -26,7 +28,7 @@
         <section-logo-rotate />
       </div>
       <!-- 플로팅 버튼:회사소개서 다운로드 -->
-      <div class="floating-btn" v-if="infos?.infoDocument">
+      <!-- <div class="floating-btn" v-if="infos?.infoDocument">
         <a
           :href="infos.infoDocument"
           target="_blank"
@@ -34,7 +36,7 @@
         >
           공스타 회사소개서 다운로드
         </a>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>

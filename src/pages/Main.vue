@@ -79,18 +79,18 @@ const sections = [
     name: "intro",
     component: SectionIntro
   },
-  {
-    name: "milkyWay",
-    component: SectionMilkyWay
-  },
+  // {
+  //   name: "milkyWay",
+  //   component: SectionMilkyWay
+  // },
   {
     name: "solutions",
     component: SectionSolutions
   },
-  {
-    name: "starship",
-    component: SectionStarship
-  },
+  // {
+  //   name: "starship",
+  //   component: SectionStarship
+  // },
   {
     name: "partners",
     component: SectionPartners

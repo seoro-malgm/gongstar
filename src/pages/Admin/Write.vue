@@ -86,7 +86,7 @@ export default {
         const data = await boardAPI.addBoard(documentName, form);
         if (data) {
           window.toast("업로드되었습니다.");
-          router.push(`/admin/${documentName}`);
+          // router.push(`/admin/${documentName}`);
         }
       } catch (error) {
         console.error("error:", error);
@@ -101,12 +101,12 @@ export default {
         const data = await boardAPI.updateBoard(documentName, id.value, form);
         if (data) {
           window.toast("수정이 완료되었습니다.");
-          router.push(`/admin/${documentName}`);
+          // router.push(`/admin/${documentName}`);
         }
       } catch (error) {
         console.error("error:", error);
         window.toast("업로드에 실패했습니다");
-        router.push(`/admin/${documentName}`);
+        // router.push(`/admin/${documentName}`);
       }
       pending.value.init = false;
     };
