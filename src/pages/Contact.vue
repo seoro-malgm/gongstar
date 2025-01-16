@@ -43,7 +43,7 @@
 <script>
 import { ref, inject, computed } from "vue";
 import { useStore } from "vuex";
-import emailjs from "@emailjs/browser";
+// import emailjs from "@emailjs/browser";
 
 export default {
   setup() {
@@ -140,19 +140,19 @@ export default {
 
     // 이메일 전송
     const sendMail = async data => {
-      try {
-        const response = await emailjs.send(
-          import.meta.env.VITE_EMAIL_SERVICE_ID,
-          import.meta.env.VITE_EMAIL_TEMPLATE_ID,
-          data,
-          import.meta.env.VITE_EMAIL_API_KEY
-        );
-        if (response) {
-          return response;
-        }
-      } catch (error) {
-        console.error("error:", error);
-      }
+      // try {
+      //   const response = await emailjs.send(
+      //     import.meta.env.VITE_EMAIL_SERVICE_ID,
+      //     import.meta.env.VITE_EMAIL_TEMPLATE_ID,
+      //     data,
+      //     import.meta.env.VITE_EMAIL_API_KEY
+      //   );
+      //   if (response) {
+      //     return response;
+      //   }
+      // } catch (error) {
+      //   console.error("error:", error);
+      // }
     };
 
     // 제출

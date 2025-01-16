@@ -8,30 +8,21 @@ importers:
 
   .:
     dependencies:
-      '@emailjs/browser':
-        specifier: ^3.10.0
-        version: 3.12.1
       '@popperjs/core':
-        specifier: ^2.11.6
+        specifier: ^2.11.8
         version: 2.11.8
       '@vueup/vue-quill':
-        specifier: ^1.1.0
+        specifier: ^1.2.0
         version: 1.2.0(vue@3.5.13)
       '@vueuse/core':
-        specifier: ^10.6.1
+        specifier: ^10.11.1
         version: 10.11.1(vue@3.5.13)
       bootstrap:
         specifier: 5.3.1
         version: 5.3.1(@popperjs/core@2.11.8)
       firebase:
-        specifier: ^9.17.1
+        specifier: ^9.23.0
         version: 9.23.0
-      quill:
-        specifier: ^2.0.3
-        version: 2.0.3
-      quill-image-uploader:
-        specifier: ^1.2.4
-        version: 1.3.0(quill@2.0.3)
       three:
         specifier: ^0.151.3
         version: 0.151.3
@@ -39,19 +30,19 @@ importers:
         specifier: ^0.3.1
         version: 0.3.1
       vue:
-        specifier: ^3.2.45
+        specifier: ^3.5.13
         version: 3.5.13
       vue-i18n:
-        specifier: '8'
+        specifier: ^8.28.2
         version: 8.28.2(vue@3.5.13)
       vue-meta:
-        specifier: ^3.0.0-alpha.10
+        specifier: 3.0.0-alpha.10
         version: 3.0.0-alpha.10(vue@3.5.13)
       vue-router:
-        specifier: ^4.1.6
+        specifier: ^4.5.0
         version: 4.5.0(vue@3.5.13)
       vue3-carousel:
-        specifier: ^0.2.9
+        specifier: ^0.2.16
         version: 0.2.16(vue@3.5.13)
       vuedraggable:
         specifier: ^4.1.0
@@ -61,23 +52,29 @@ importers:
         version: 4.1.0(vue@3.5.13)
     devDependencies:
       '@vitejs/plugin-vue':
-        specifier: ^4.0.0
-        version: 4.6.2(vite@4.5.5(@types/node@22.10.5)(sass@1.64.2))(vue@3.5.13)
+        specifier: ^4.6.2
+        version: 4.6.2(vite@4.5.5(@types/node@22.10.7)(sass@1.64.2))(vue@3.5.13)
       eslint-config-prettier:
-        specifier: ^9.0.0
+        specifier: ^9.1.0
         version: 9.1.0(eslint@9.18.0)
       eslint-plugin-prettier:
-        specifier: ^5.0.1
-        version: 5.2.1(eslint-config-prettier@9.1.0(eslint@9.18.0))(eslint@9.18.0)(prettier@3.4.2)
+        specifier: ^5.2.2
+        version: 5.2.2(eslint-config-prettier@9.1.0(eslint@9.18.0))(eslint@9.18.0)(prettier@3.4.2)
       prettier:
-        specifier: ^3.1.0
+        specifier: ^3.4.2
         version: 3.4.2
+      quill:
+        specifier: ^1.3.7
+        version: 1.3.7
+      quill-image-uploader:
+        specifier: ^1.3.0
+        version: 1.3.0(quill@1.3.7)
       sass:
         specifier: ~1.64.2
         version: 1.64.2
       vite:
-        specifier: ^4.0.0
-        version: 4.5.5(@types/node@22.10.5)(sass@1.64.2)
+        specifier: ^4.5.5
+        version: 4.5.5(@types/node@22.10.7)(sass@1.64.2)
 
 packages:
 
@@ -97,10 +94,6 @@ packages:
   '@babel/types@7.26.5':
     resolution: {integrity: sha512-L6mZmwFDK6Cjh1nRCLXpa6no13ZIioJDz7mdkzHv399pThrTa/k0nUlNaenOeh2kWu/iaOQYElEpKPUswUa9Vg==}
     engines: {node: '>=6.9.0'}
-
-  '@emailjs/browser@3.12.1':
-    resolution: {integrity: sha512-C5nK07CgSCFx3onsuRt/ZaaMvIi0T3SHHanM7fKozjSvbZu+OjHHP9W608fYpic0OavF7yIlfy4+lRDO33JdbA==}
-    engines: {node: '>=14.0.0'}
 
   '@esbuild/android-arm64@0.18.20':
     resolution: {integrity: sha512-Nz4rJcchGDtENV0eMKUNa6L12zz2zBDXuhj/Vjh18zGqB44Bi7MBMSXjgunJgjRhCmKOjnPuZp4Mb6OKqtMHLQ==}
@@ -529,8 +522,8 @@ packages:
   '@types/long@4.0.2':
     resolution: {integrity: sha512-MqTGEo5bj5t157U6fA/BiDynNkn0YknVdh48CMPkTSpFTVmvao5UQmm7uEF6xBEo7qIMAlY/JSleYaE6VOdpaA==}
 
-  '@types/node@22.10.5':
-    resolution: {integrity: sha512-F8Q+SeGimwOo86fiovQh8qiXfFEh2/ocYv7tU5pJ3EXMSSxk1Joj5wefpFK2fHTf/N6HKGSxIDBT9f3gCxXPkQ==}
+  '@types/node@22.10.7':
+    resolution: {integrity: sha512-V09KvXxFiutGp6B7XkpaDXlNadZxrzajcY50EuoLIpQ6WWYCSvf19lVIazzfIzQvhUN2HjX12spLojTnhuKlGg==}
 
   '@types/web-bluetooth@0.0.20':
     resolution: {integrity: sha512-g9gZnnXVq7gM7v3tJCWV/qw7w+KeOlSHAhgF9RytFyifW6AF61hdT2ucrYhPq9hLs5JIryeupHV3qGk95dH9ow==}
@@ -730,8 +723,8 @@ packages:
     resolution: {integrity: sha512-Zf5H2Kxt2xjTvbJvP2ZWLEICxA6j+hAmMzIlypy4xcBg1vKVnx89Wy0GbS+kf5cwCVFFzdCFh2XSCFNULS6csw==}
     engines: {node: '>= 0.4'}
 
-  es-object-atoms@1.0.0:
-    resolution: {integrity: sha512-MZ4iQ6JwHOBQjahnjwaC1ZtIBH+2ohjamzAO3oaHcXYup7qxjF2fixyH+Q71voWHeOkI2q/TnJao/KfXYIZWbw==}
+  es-object-atoms@1.1.1:
+    resolution: {integrity: sha512-FGgH2h8zKNim9ljj7dankFPcICIK9Cp5bm+c2gQSYePhpaG5+esrLODihIorn+Pe6FGJzWhXQotPv73jTaldXA==}
     engines: {node: '>= 0.4'}
 
   esbuild@0.18.20:
@@ -753,8 +746,8 @@ packages:
     peerDependencies:
       eslint: '>=7.0.0'
 
-  eslint-plugin-prettier@5.2.1:
-    resolution: {integrity: sha512-gH3iR3g4JfF+yYPaJYkN7jEl9QbweL/YfkoRlNnuIEHEz1vHVlCmWOS+eGGiRuzHQXdJFCOTxRgvju9b8VUmrw==}
+  eslint-plugin-prettier@5.2.2:
+    resolution: {integrity: sha512-1yI3/hf35wmlq66C8yOyrujQnel+v5l1Vop5Cl2I6ylyNTT1JbuUUnV3/41PzwTzcyDp/oF0jWE3HXvcH5AQOQ==}
     engines: {node: ^14.18.0 || >=16.0.0}
     peerDependencies:
       '@types/eslint': '>=8.0.0'
@@ -814,9 +807,6 @@ packages:
 
   eventemitter3@2.0.3:
     resolution: {integrity: sha512-jLN68Dx5kyFHaePoXWPsCGW5qdyZQtLYHkxkg02/Mz6g0kYpDx4FyP6XfArhQdlOC4b8Mv+EMxPo/8La7Tzghg==}
-
-  eventemitter3@5.0.1:
-    resolution: {integrity: sha512-GWkBvjiSZK87ELrYOSESUYeVIc9mvLLf/nXalMOS5dYrgZq9o5OVkbZAVM06CVxYsCwH9BDZFPlQTlPA1j4ahA==}
 
   extend@3.0.2:
     resolution: {integrity: sha512-fjquC59cD7CyW6urNXK0FBufkZcoiGG80wTuPujX590cB5Ttln20E2UB4S/WARVqhXffZl2LNgS+gQdPIIim/g==}
@@ -1006,9 +996,6 @@ packages:
     resolution: {integrity: sha512-iPZK6eYjbxRu3uB4/WZ3EsEIMJFMqAoopl3R+zuq0UjcAm/MO6KCweDgPfP3elTztoKP3KtnVHxTn2NHBSDVUw==}
     engines: {node: '>=10'}
 
-  lodash-es@4.17.21:
-    resolution: {integrity: sha512-mKnC+QJ9pWVzv+C4/U3rRsHapFfHvQFoFB92e52xeyGMcX6/OlIl78je1u8vePzYZSkkogMPJ2yjxxsb89cxyw==}
-
   lodash.camelcase@4.3.0:
     resolution: {integrity: sha512-TwuEnCnxbc3rAvhf/LbG7tJUDzhqXyFnv3dtzLOPgCG/hODL7WFnsbwktkD7yUV0RrreP/l1PALq/YSg6VvjlA==}
 
@@ -1084,9 +1071,6 @@ packages:
   parchment@1.1.4:
     resolution: {integrity: sha512-J5FBQt/pM2inLzg4hEWmzQx/8h8D0CiDxaG3vyp9rKrQRSDgBlhjdP5jQGgosEajXPSQouXGHOmVdgo7QmJuOg==}
 
-  parchment@3.0.0:
-    resolution: {integrity: sha512-HUrJFQ/StvgmXRcQ1ftY6VEZUq3jA2t9ncFN4F84J/vN0/FPpQF+8FKXb3l6fLces6q0uOHj6NJn+2xvZnxO6A==}
-
   parent-module@1.0.1:
     resolution: {integrity: sha512-GQ2EWRpQV8/o+Aw8YqtfZZPfNRWZYkbidE9k5rpl/hC3vtHHBfGm2Ifi6qWV+coDGkrUKZAxE3Lot5kcsRlh+g==}
     engines: {node: '>=6'}
@@ -1106,8 +1090,8 @@ packages:
     resolution: {integrity: sha512-JU3teHTNjmE2VCGFzuY8EXzCDVwEqB2a8fsIvwaStHhAWJEeVd1o1QD80CU6+ZdEXXSLbSsuLwJjkCBWqRQUVA==}
     engines: {node: '>=8.6'}
 
-  postcss@8.4.49:
-    resolution: {integrity: sha512-OCVPnIObs4N29kxTjzLfUryOkvZEq+pf8jTF0lg8E7uETuWHA+v7j3c/xJmiqpX450191LlmZfUKkXxkTry7nA==}
+  postcss@8.5.1:
+    resolution: {integrity: sha512-6oz2beyjc5VMn/KV1pPw8fliQkhBXrVn1Z3TVyqZxU8kZpzEKhBdmCFqI6ZbmGtamQvQGuU1sgPTk8ZrXDD7jQ==}
     engines: {node: ^10 || ^12 || >=14}
 
   prelude-ls@1.2.1:
@@ -1142,10 +1126,6 @@ packages:
   quill-delta@4.2.2:
     resolution: {integrity: sha512-qjbn82b/yJzOjstBgkhtBjN2TNK+ZHP/BgUQO+j6bRhWQQdmj2lH6hXG7+nwwLF41Xgn//7/83lxs9n2BkTtTg==}
 
-  quill-delta@5.1.0:
-    resolution: {integrity: sha512-X74oCeRI4/p0ucjb5Ma8adTXd9Scumz367kkMK5V/IatcX6A0vlgLgKbzXWy5nZmCGeNJm2oQX0d2Eqj+ZIlCA==}
-    engines: {node: '>= 12.0.0'}
-
   quill-image-uploader@1.3.0:
     resolution: {integrity: sha512-vO43GEn93rGThje/MlotkQE9OV5nOKBZ4oKhn71L/EjrM/J2P/8iDDVd9GEwlsGsbskeJqPLopsSQ4HlVVIn6A==}
     peerDependencies:
@@ -1153,10 +1133,6 @@ packages:
 
   quill@1.3.7:
     resolution: {integrity: sha512-hG/DVzh/TiknWtE6QmWAF/pxoZKYxfe3J/d/+ShUWkDvvkZQVTPeVmUJVu1uE6DDooC4fWTiCLh84ul89oNz5g==}
-
-  quill@2.0.3:
-    resolution: {integrity: sha512-xEYQBqfYx/sfb33VJiKnSJp8ehloavImQ2A6564GAbqG55PGw1dAWUn1MUbQB62t0azawUS2CZZhWCjO8gRvTw==}
-    engines: {npm: '>=8.2.3'}
 
   readdirp@3.6.0:
     resolution: {integrity: sha512-hOS089on8RduqdbhvQ5Z37A0ESjsqz6qnRcffsMU3495FuTdqSm+7bhJ29JvIOsBDEEnan5DPu9t3To9VRlMzA==}
@@ -1398,8 +1374,6 @@ snapshots:
     dependencies:
       '@babel/helper-string-parser': 7.25.9
       '@babel/helper-validator-identifier': 7.25.9
-
-  '@emailjs/browser@3.12.1': {}
 
   '@esbuild/android-arm64@0.18.20':
     optional: true
@@ -1825,7 +1799,7 @@ snapshots:
   '@grpc/grpc-js@1.7.3':
     dependencies:
       '@grpc/proto-loader': 0.7.13
-      '@types/node': 22.10.5
+      '@types/node': 22.10.7
 
   '@grpc/proto-loader@0.6.13':
     dependencies:
@@ -1890,15 +1864,15 @@ snapshots:
 
   '@types/long@4.0.2': {}
 
-  '@types/node@22.10.5':
+  '@types/node@22.10.7':
     dependencies:
       undici-types: 6.20.0
 
   '@types/web-bluetooth@0.0.20': {}
 
-  '@vitejs/plugin-vue@4.6.2(vite@4.5.5(@types/node@22.10.5)(sass@1.64.2))(vue@3.5.13)':
+  '@vitejs/plugin-vue@4.6.2(vite@4.5.5(@types/node@22.10.7)(sass@1.64.2))(vue@3.5.13)':
     dependencies:
-      vite: 4.5.5(@types/node@22.10.5)(sass@1.64.2)
+      vite: 4.5.5(@types/node@22.10.7)(sass@1.64.2)
       vue: 3.5.13
 
   '@vue/compiler-core@3.5.13':
@@ -1923,7 +1897,7 @@ snapshots:
       '@vue/shared': 3.5.13
       estree-walker: 2.0.2
       magic-string: 0.30.17
-      postcss: 8.4.49
+      postcss: 8.5.1
       source-map-js: 1.2.1
 
   '@vue/compiler-ssr@3.5.13':
@@ -2132,7 +2106,7 @@ snapshots:
 
   es-errors@1.3.0: {}
 
-  es-object-atoms@1.0.0:
+  es-object-atoms@1.1.1:
     dependencies:
       es-errors: 1.3.0
 
@@ -2169,7 +2143,7 @@ snapshots:
     dependencies:
       eslint: 9.18.0
 
-  eslint-plugin-prettier@5.2.1(eslint-config-prettier@9.1.0(eslint@9.18.0))(eslint@9.18.0)(prettier@3.4.2):
+  eslint-plugin-prettier@5.2.2(eslint-config-prettier@9.1.0(eslint@9.18.0))(eslint@9.18.0)(prettier@3.4.2):
     dependencies:
       eslint: 9.18.0
       prettier: 3.4.2
@@ -2247,8 +2221,6 @@ snapshots:
   esutils@2.0.3: {}
 
   eventemitter3@2.0.3: {}
-
-  eventemitter3@5.0.1: {}
 
   extend@3.0.2: {}
 
@@ -2333,7 +2305,7 @@ snapshots:
       call-bind-apply-helpers: 1.0.1
       es-define-property: 1.0.1
       es-errors: 1.3.0
-      es-object-atoms: 1.0.0
+      es-object-atoms: 1.1.1
       function-bind: 1.1.2
       get-proto: 1.0.1
       gopd: 1.2.0
@@ -2344,7 +2316,7 @@ snapshots:
   get-proto@1.0.1:
     dependencies:
       dunder-proto: 1.0.1
-      es-object-atoms: 1.0.0
+      es-object-atoms: 1.1.1
 
   glob-parent@5.1.2:
     dependencies:
@@ -2447,8 +2419,6 @@ snapshots:
     dependencies:
       p-locate: 5.0.0
 
-  lodash-es@4.17.21: {}
-
   lodash.camelcase@4.3.0: {}
 
   lodash.clonedeep@4.5.0: {}
@@ -2509,8 +2479,6 @@ snapshots:
 
   parchment@1.1.4: {}
 
-  parchment@3.0.0: {}
-
   parent-module@1.0.1:
     dependencies:
       callsites: 3.1.0
@@ -2523,7 +2491,7 @@ snapshots:
 
   picomatch@2.3.1: {}
 
-  postcss@8.4.49:
+  postcss@8.5.1:
     dependencies:
       nanoid: 3.3.8
       picocolors: 1.1.1
@@ -2550,7 +2518,7 @@ snapshots:
       '@protobufjs/pool': 1.1.0
       '@protobufjs/utf8': 1.1.0
       '@types/long': 4.0.2
-      '@types/node': 22.10.5
+      '@types/node': 22.10.7
       long: 4.0.0
 
   protobufjs@7.4.0:
@@ -2565,7 +2533,7 @@ snapshots:
       '@protobufjs/path': 1.1.2
       '@protobufjs/pool': 1.1.0
       '@protobufjs/utf8': 1.1.0
-      '@types/node': 22.10.5
+      '@types/node': 22.10.7
       long: 5.2.4
 
   punycode@2.3.1: {}
@@ -2582,15 +2550,9 @@ snapshots:
       lodash.clonedeep: 4.5.0
       lodash.isequal: 4.5.0
 
-  quill-delta@5.1.0:
+  quill-image-uploader@1.3.0(quill@1.3.7):
     dependencies:
-      fast-diff: 1.3.0
-      lodash.clonedeep: 4.5.0
-      lodash.isequal: 4.5.0
-
-  quill-image-uploader@1.3.0(quill@2.0.3):
-    dependencies:
-      quill: 2.0.3
+      quill: 1.3.7
 
   quill@1.3.7:
     dependencies:
@@ -2600,13 +2562,6 @@ snapshots:
       extend: 3.0.2
       parchment: 1.1.4
       quill-delta: 3.6.3
-
-  quill@2.0.3:
-    dependencies:
-      eventemitter3: 5.0.1
-      lodash-es: 4.17.21
-      parchment: 3.0.0
-      quill-delta: 5.1.0
 
   readdirp@3.6.0:
     dependencies:
@@ -2706,13 +2661,13 @@ snapshots:
     dependencies:
       punycode: 2.3.1
 
-  vite@4.5.5(@types/node@22.10.5)(sass@1.64.2):
+  vite@4.5.5(@types/node@22.10.7)(sass@1.64.2):
     dependencies:
       esbuild: 0.18.20
-      postcss: 8.4.49
+      postcss: 8.5.1
       rollup: 3.29.5
     optionalDependencies:
-      '@types/node': 22.10.5
+      '@types/node': 22.10.7
       fsevents: 2.3.3
       sass: 1.64.2
 
